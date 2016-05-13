@@ -1,0 +1,214 @@
+#
+# IPA Symbols
+#
+# Syntax:
+# type,desc,xxxx
+#
+# type = consonant|vowel|diacritic|suprasegmental|tone
+# desc = description of the IPA symbol
+# xxxx = Unicode hexadecimal code point
+#        N/A       = Unicode codepoint not available
+#        xxxx      = single Unicode codepoint
+#        xxxx xxxx = alternative Unicode codepoints, first is the canonical
+#        xxxx+xxxx = sequence of Unicode codepoints 
+#
+
+consonant,voiceless bilabial plosive,0070
+consonant,voiced bilabial plosive,0062
+consonant,voiced bilabial nasal,006D
+consonant,voiced bilabial trill,0299
+consonant,voiceless bilabial fricative,0278
+consonant,voiced bilabial fricative,03B2
+consonant,voiced labiodental nasal,0271
+consonant,voiced labiodental flap,2C71 F25F
+consonant,voiceless labiodental fricative,0066
+consonant,voiced labiodental fricative,0076
+consonant,voiced labiodental approximant,028B
+consonant,voiceless alveolar plosive,0074
+consonant,voiced alveolar plosive,0064
+consonant,voiced alveolar nasal,006E
+consonant,voiced alveolar trill,0072
+consonant,voiced alveolar tap,027E
+consonant,voiceless dental fricative,03B8
+consonant,voiced dental fricative,00F0
+consonant,voiceless alveolar fricative,0073
+consonant,voiced alveolar fricative,007A
+consonant,voiceless postalveolar fricative,0283
+consonant,voiced postalveolar fricative,0292
+consonant,voiceless lateral alveolar fricative,026C
+consonant,voiced lateral alveolar fricative,026E
+consonant,voiced alveolar approximant,0279
+consonant,voiced lateral alveolar approximant,006C
+consonant,voiceless retroflex plosive,0288
+consonant,voiced retroflex plosive,0256
+consonant,voiced retroflex nasal,0273
+consonant,voiced retroflex flap,027D
+consonant,voiceless retroflex fricative,0282
+consonant,voiced retroflex fricative,0290
+consonant,voiced retroflex approximant,027B
+consonant,voiced retroflex lateral approximant,026D
+consonant,voiceless palatal plosive,0063
+consonant,voiced palatal plosive,025F
+consonant,voiced palatal nasal,0272
+consonant,voiceless palatal fricative,00E7
+consonant,voiced palatal fricative,029D
+consonant,voiced palatal approximant,006A
+consonant,voiced palatal lateral approximant,028E
+consonant,voiceless velar plosive,006B
+consonant,voiced velar plosive,0261 0067
+consonant,voiced velar nasal,014B
+consonant,voiceless velar fricative,0078
+consonant,voiced velar fricative,0263
+consonant,voiced velar approximant,0270
+consonant,voiced velar lateral approximant,029F
+consonant,voiceless uvular plosive,0071
+consonant,voiced uvular plosive,0262
+consonant,voiced uvular nasal,0274
+consonant,voiced uvular trill,0280
+consonant,voiceless uvular fricative,03C7
+consonant,voiced uvular fricative,0281
+consonant,voiceless pharyngeal fricative,0127
+consonant,voiced pharyngeal fricative,0295
+consonant,voiceless glottal plosive,0294
+consonant,voiceless glottal fricative,0068
+consonant,voiced glottal fricative,0266
+consonant,bilabial click,0298
+consonant,dental click,01C0
+consonant,postalveolar click,01C3
+consonant,palatoalveolar click,01C2
+consonant,alveolar lateral click,01C1
+consonant,voiced bilabial implosive,0253
+consonant,voiced dental-alveolar implosive,0257
+consonant,voiced palatal implosive,0284
+consonant,voiced velar implosive,0260
+consonant,voiced uvular implosive,029B
+consonant,voiceless labial-velar fricative,028D
+consonant,voiced labial-velar approximant,0077
+consonant,voiced labial-palatal approximant,0265
+consonant,voiceless epiglottal fricative,029C
+consonant,voiced epiglottal fricative,02A2
+consonant,voiced epiglottal plosive,02A1
+consonant,voiceless alveolo-palatal fricative,0255
+consonant,voiced alveolo-palatal fricative,0291
+consonant,voiced alveolar lateral flap,027A
+consonant,voiceless postalveolar velar fricative,0267
+
+# NOT in IPA chart
+consonant,voiced alveolar affricate,02A3
+consonant,voiced postalveolar affricate,02A4
+consonant,voiced alveolo-palatal affricate,02A5
+consonant,voiceless alveolar affricate,02A6
+consonant,voiceless postalveolar affricate,02A7
+consonant,voiceless alveolo-palatal affricate,02A8
+consonant,velarized alveolar lateral approximant,026B
+
+vowel,close front unrounded,0069
+vowel,close front rounded,0079
+vowel,lowered-close front unrounded,026A
+vowel,lowered-close front rounded,028F
+vowel,close-mid front unrounded,0065
+vowel,close-mid front rounded,00F8
+vowel,open-mid front unrounded,025B
+vowel,open-mid front rounded,0153
+vowel,raised-open front unrounded,00E6
+vowel,open front unrounded,0061
+vowel,open front rounded,0276
+vowel,close central unrounded,0268
+vowel,close central rounded,0289
+vowel,close-mid central unrounded,0258
+vowel,close-mid central rounded,0275
+vowel,mid central unrounded,0259
+vowel,open-mid central unrounded,025C
+vowel,open-mid central rounded,025E
+vowel,raised-open central unrounded,2050
+vowel,close back unrounded,026F
+vowel,close back rounded,0075
+vowel,lowered-close back rounded,028A
+vowel,close-mid back unrounded,0264
+vowel,close-mid back rounded,006F
+vowel,open-mid back unrounded,028C
+vowel,open-mid back rounded,0254
+vowel,open back unrounded,0251
+vowel,open back rounded,0252
+
+# NOT in IPA chart
+vowel,mid central unrounded rhotacized,025A
+vowel,open-mid central unrounded rhotacized,025D
+
+diacritic,ejective,02BC
+diacritic,tie-bar-above,0361
+diacritic,tie-bar-below,035C
+
+diacritic,voiceless,0325 030A
+diacritic,voiced,032C
+diacritic,aspirated,02B0
+diacritic,more-rounded,0339
+diacritic,less-rounded,031C
+diacritic,advanced,031F
+diacritic,retracted,0320
+diacritic,centralized,0308
+diacritic,mid-centralized,033D
+diacritic,syllabic,0329
+diacritic,non-syllabic,032F
+diacritic,rhotacized,02DE
+diacritic,breathy-voiced,0324
+diacritic,creaky-voiced,0330
+diacritic,linguolabial,032B
+diacritic,labialized,02B7
+diacritic,palatalized,02B2
+diacritic,velarized,02E0
+diacritic,pharyngealized,02E4
+diacritic,velarized-or-pharyngealized,0334
+diacritic,raised,031D
+diacritic,lowered,031E
+diacritic,advanced-tongue-root,0318
+diacritic,retracted-tongue-root,0319
+diacritic,dental,032A
+diacritic,apical,033A
+diacritic,laminal,033B
+diacritic,nasalized,0303
+diacritic,nasal-release,N/A
+diacritic,lateral-release,02E1
+diacritic,no-audible-release,031A 02FA
+
+# NOT in IPA chart
+diacritic,voiced glottal fricative,02B1
+diacritic,alveolar trill,02B3
+diacritic,alveolar approximant,02B4
+diacritic,retroflex approximant,02B5
+diacritic,uvular approximant,02B6
+diacritic,glottal stop,02C0
+diacritic,retroflex,0322
+diacritic,unexploded,02DA
+
+suprasegmental,primary-stress,02C8
+suprasegmental,secondary-stress,02CC
+suprasegmental,long,02D0
+suprasegmental,half-long,02D1
+suprasegmental,extra-short,0306
+suprasegmental,minor-group,007C
+suprasegmental,major-group,007C+007C
+suprasegmental,syllable-break,002E
+suprasegmental,linking,N/A
+suprasegmental,word-break,0020
+
+tone,extra-high-level,030B 02E5
+tone,high-level,0301 02E6
+tone,mid-level,0304 02E7
+tone,low-level,0300 02E8
+tone,extra-low-level,030F 02E9
+tone,rising-contour,030C N/A
+tone,falling-contour,0302 N/A
+tone,high-rising-contour,1DC4 N/A
+tone,low-rising-contour,1DC5 N/A
+tone,rising-falling-contour,1DC8 N/A
+tone,downstep,A71C
+tone,upstep,A71B
+tone,global-rise,2197
+tone,global-fall,2198
+
+# NOT in IPA chart
+tone,mid-low-falling-contour,1DC6
+tone,high-mid-falling-contour,1DC7
+tone,falling-rising-contour,1DC9
+

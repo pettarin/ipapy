@@ -1,0 +1,7 @@
+include LICENSE
+include README.md
+include README.rst
+include VERSION
+include bin/ipapy
+recursive-include ipapy/data *
+include requirements.txt
