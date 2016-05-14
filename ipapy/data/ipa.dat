@@ -17,7 +17,7 @@ consonant,voiceless bilabial plosive,0070
 consonant,voiced bilabial plosive,0062
 consonant,voiced bilabial nasal,006D
 consonant,voiced bilabial trill,0299
-consonant,voiceless bilabial fricative,0278
+consonant,voiceless bilabial fricative,0278 03A6
 consonant,voiced bilabial fricative,03B2
 consonant,voiced labiodental nasal,0271
 consonant,voiced labiodental flap,2C71 F25F
@@ -73,7 +73,7 @@ consonant,voiceless glottal plosive,0294
 consonant,voiceless glottal fricative,0068
 consonant,voiced glottal fricative,0266
 consonant,bilabial click,0298
-consonant,dental click,01C0
+consonant,dental click,01C0 0287
 consonant,postalveolar click,01C3
 consonant,palatoalveolar click,01C2
 consonant,alveolar lateral click,01C1

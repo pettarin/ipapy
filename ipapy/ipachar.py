@@ -7,10 +7,6 @@ ipapy contains data and functions to work with IPA strings.
 
 from __future__ import absolute_import
 from __future__ import print_function
-import io
-import os
-
-from ipapy.compatibility import hex2unichr
 
 __author__ = "Alberto Pettarin"
 __copyright__ = "Copyright 2016, Alberto Pettarin (www.albertopettarin.it)"
@@ -19,13 +15,12 @@ __version__ = "0.0.1"
 __email__ = "alberto@albertopettarin.it"
 __status__ = "Development"
 
-# IPA data file constants
-IPA_DATA_FILE_CODEPOINT_SEPARATOR = " "
-IPA_DATA_FILE_COMMENT = "#"
-IPA_DATA_FILE_COMPOUND_OPERATOR = "+"
-IPA_DATA_FILE_FIELD_SEPARATOR = ","
-IPA_DATA_FILE_NOT_AVAILABLE = "N/A"
-IPA_DATA_FILE_PATH = "data/ipa.all"
+# types
+T_CONSONANT = ["consonant", "cns"]
+T_VOWEL = ["vowel", "vwl"]
+T_DIACRITIC = ["diacritic", "dia"]
+T_SUPRASEGMENTAL = ["suprasegmental", "sup"]
+T_TONE = ["tone", "ton"]
 
 # consonants and diacritics
 D_ADVANCED = ["advanced"]
@@ -52,7 +47,7 @@ D_IMPLOSIVE = ["implosive", "imp"]
 D_LABIALIZED = ["labialized", "lzd"]
 D_LABIAL_PALATAL = ["labial-palatal"]
 D_LABIAL_VELAR = ["labial-velar"]
-D_LABIODENTAL = ["labiodental", "labio-dental", "blb"]
+D_LABIODENTAL = ["labiodental", "labio-dental", "lbd"]
 D_LAMINAL = ["laminal"]
 D_LATERAL = ["lateral", "lat"]
 D_LATERAL_RELEASE = ["lateral-release"]
@@ -71,14 +66,14 @@ D_PALATALIZED = ["palatalized", "pzd"]
 D_PALATO_ALVEOLAR = ["palato-alveolar"]
 D_PHARYNGEAL = ["pharyngeal", "phr"]
 D_PHARYNGEALIZED = ["pharyngealized", "fzd"]
-D_PLOSIVE = ["plosive", "imp"]
+D_PLOSIVE = ["plosive", "stp"]
 D_POSTALVEOLAR = ["postalveolar", "palato-alveolar", "pla"]
 D_RAISED = ["raised"]
 D_RETRACTED = ["retracted"]
 D_RETRACTED_TONGUE_ROOT = ["retracted-tongue-root"]
 D_RETROFLEX = ["retroflex", "rfx"]
 D_RHOTACIZED = ["rhotacized", "rzd"]
-D_STOP = ["stop", "stp"]
+D_STOP = ["stop"]
 D_SYLLABIC = ["syllabic", "syl"]
 D_TAP = ["tap"]
 D_TIE_BAR_ABOVE = ["tie-bar-above"]
@@ -117,7 +112,7 @@ G_HEIGHT = [
 ]
 
 V_FRONT = ["front", "fnt"]
-V_CENTER = ["center", "cnt"]
+V_CENTER = ["central", "center", "cnt"]
 V_BACK = ["back", "bck"]
 G_BACKNESS = [
     V_FRONT,
@@ -162,6 +157,109 @@ G_LENGTH = [
     S_HALF_LONG,
     S_EXTRA_SHORT
 ]
+
+G_ALL_PROPERTIES = [
+    T_CONSONANT,
+    T_VOWEL,
+    T_DIACRITIC,
+    T_SUPRASEGMENTAL,
+    T_TONE,
+    D_ADVANCED,
+    D_ADVANCED_TONGUE_ROOT,
+    D_AFFRICATE,
+    D_ALVEOLAR,
+    D_ALVEOLOPALATAL,
+    D_APICAL,
+    D_APPROXIMANT,
+    D_ASPIRATED,
+    D_BILABIAL,
+    D_BREATHY_VOICED,
+    D_CENTRALIZED,
+    D_CLICK,
+    D_CREAKY_VOICED,
+    D_DENTAL,
+    D_DENTAL_ALVEOLAR,
+    D_EJECTIVE,
+    D_EPIGLOTTAL,
+    D_FLAP,
+    D_FRICATIVE,
+    D_GLOTTAL,
+    D_IMPLOSIVE,
+    D_LABIALIZED,
+    D_LABIAL_PALATAL,
+    D_LABIAL_VELAR,
+    D_LABIODENTAL,
+    D_LAMINAL,
+    D_LATERAL,
+    D_LATERAL_RELEASE,
+    D_LESS_ROUNDED,
+    D_LINGUOLABIAL,
+    D_LOWERED,
+    D_MID_CENTRALIZED,
+    D_MORE_ROUNDED,
+    D_NASAL,
+    D_NASALIZED,
+    D_NASAL_RELEASE,
+    D_NON_SYLLABIC,
+    D_NO_AUDIBLE_RELEASE,
+    D_PALATAL,
+    D_PALATALIZED,
+    D_PALATO_ALVEOLAR,
+    D_PHARYNGEAL,
+    D_PHARYNGEALIZED,
+    D_PLOSIVE,
+    D_POSTALVEOLAR,
+    D_RAISED,
+    D_RETRACTED,
+    D_RETRACTED_TONGUE_ROOT,
+    D_RETROFLEX,
+    D_RHOTACIZED,
+    D_STOP,
+    D_SYLLABIC,
+    D_TAP,
+    D_TIE_BAR_ABOVE,
+    D_TIE_BAR_BELOW,
+    D_TRILL,
+    D_UNEXPLODED,
+    D_UVULAR,
+    D_VELAR,
+    D_VELARIZED,
+    D_VELARIZED_OR_PHARYNGEALIZED,
+    D_VOICED,
+    D_VOICELESS,
+    V_CLOSE,
+    V_LOWERED_CLOSE,
+    V_CLOSE_MID,
+    V_MID,
+    V_OPEN_MID,
+    V_RAISED_OPEN,
+    V_OPEN,
+    V_FRONT,
+    V_CENTER,
+    V_BACK,
+    V_ROUNDED,
+    V_UNROUNDED,
+    S_PRIMARY_STRESS,
+    S_SECONDARY_STRESS,
+    S_LONG,
+    S_HALF_LONG,
+    S_EXTRA_SHORT,
+    S_MINOR_GROUP,
+    S_MAJOR_GROUP,
+    S_SYLLABLE_BREAK,
+    S_LINKING,
+    S_WORD_BREAK,
+]
+
+def canonical_representation(properties):
+    """
+    Return the canonical representation of a list of properties,
+    that is, a frozenset built from properties.
+
+    :param list properties: a list of properties
+    :rtype: frozenset
+    """
+    return frozenset(sorted(properties))
 
 class IPAChar(object):
     TAG = "IPAChar"
@@ -215,11 +313,13 @@ class IPAChar(object):
         return False
 
     @property
-    def canonical_properties(self):
+    def canonical_representation(self):
         acc = []
-        for p in self.properties:
-            pass
-        return acc
+        for a in G_ALL_PROPERTIES:
+            for p in self.properties:
+                if p in a:
+                    acc.append(a[0])
+        return canonical_representation(acc)
 
     def alternative_property(self, alternatives, modifiers=None):
         if modifiers is None:
@@ -414,60 +514,6 @@ class IPAVowel(IPAPhone):
     @property
     def is_less_rounded(self):
         return self.has_property(V_LESS_ROUNDED)
-
-
-
-def load_ipa_data():
-    ipa_signs = []
-    unicode_to_ipa = {}
-    ipa_to_unicode = {}
-    file_path = os.path.join(os.path.dirname(__file__), IPA_DATA_FILE_PATH)
-    with io.open(file_path, "r", encoding="utf-8") as f:
-        for line in f:
-            line = line.strip()
-            if (len(line) > 0) and (not line.startswith(IPA_DATA_FILE_COMMENT)):
-                # unpack line
-                try:
-                    i_type, i_desc, i_unicode = line.split(IPA_DATA_FILE_FIELD_SEPARATOR)
-                except:
-                    raise ValueError("The IPA data file contains a bad line: '%s'" % line)
-                # create name
-                name = "%s %s" % (i_desc, i_type)
-                # create obj
-                if i_type == "consonant":
-                    obj = IPAConsonant(name=name, properties=i_desc)
-                elif i_type == "vowel":
-                    obj = IPAVowel(name=name, properties=i_desc)
-                elif i_type == "diacritic":
-                    obj = IPADiacritic(name=name, properties=i_desc)
-                elif i_type == "suprasegmental":
-                    obj = IPASuprasegmental(name=name, properties=i_desc)
-                elif i_type == "tone":
-                    obj = IPATone(name=name, properties=i_desc)
-                else:
-                    raise ValueError("The IPA data file contains a bad line: '%s'" % line)
-                ipa_signs.append(obj)
-                # map Unicode codepoint to object, if the former is available
-                primary_set = False
-                for codepoint in i_unicode.split(IPA_DATA_FILE_CODEPOINT_SEPARATOR):
-                    # deal with compound symbols, like '||' = major-group suprasegmental
-                    key = None
-                    if IPA_DATA_FILE_COMPOUND_OPERATOR in codepoint:
-                        ch1, ch2 = codepoint.split(IPA_DATA_FILE_COMPOUND_OPERATOR)
-                        key = hex2unichr(ch1) + hex2unichr(ch2)
-                    elif not IPA_DATA_FILE_NOT_AVAILABLE in codepoint:
-                        key = hex2unichr(codepoint)
-                    # if we have a key, map it
-                    if key is not None:
-                        if key in unicode_to_ipa:
-                            raise ValueError("The IPA data file contains a bad line, redefining codepoint'%s': '%s'" % (codepoint, line))
-                        unicode_to_ipa[key] = obj
-                        if not primary_set:
-                            primary_set = True
-                            ipa_to_unicode[obj.properties] = key
-                            obj.unicode_char = key
-    return ipa_signs, unicode_to_ipa, ipa_to_unicode
-IPA_SIGNS, UNICODE_TO_IPA, IPA_TO_UNICODE = load_ipa_data()
 
 
 

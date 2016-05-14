@@ -1,0 +1,224 @@
+#
+# ASCII IPA (Kirshenbaum) Symbols
+#
+# Syntax:
+# type,desc,xxxx,y
+#
+# type = consonant|vowel|diacritic|suprasegmental|tone
+# desc = description of the IPA symbol
+# xxxx = Unicode hexadecimal code point
+#        N/A       = Unicode codepoint not available
+#        xxxx      = single Unicode codepoint
+#        xxxx xxxx = alternative Unicode codepoints, first is the canonical
+#        xxxx+xxxx = sequence of Unicode codepoints
+# y    = hex value 00yy of a single ASCII char or string of ASCII chars
+#
+
+consonant,voiced bilabial nasal,006D,m
+consonant,voiceless bilabial plosive,0070,p
+consonant,voiced bilabial plosive,0062,b
+# K had 03A6 as its IPA Unicode (old Unicode/IPA)
+consonant,voiceless bilabial fricative,0278,P
+consonant,voiced bilabial fricative,03B2,B
+consonant,voiced bilabial trill,0299,b<trl>
+consonant,voiced bilabial implosive,0253,b`
+consonant,bilabial click,0298,p!
+consonant,voiced labiodental nasal,0271,M
+consonant,voiceless labiodental fricative,0066,f
+consonant,voiced labiodental fricative,0076,v
+consonant,voiced labiodental approximant,028B,r<lbd>
+consonant,voiceless dental fricative,03B8,T
+consonant,voiced dental fricative,00F0,D
+consonant,voiced dental-alveolar implosive,0257,d`
+# K had 0287 as its IPA Unicode (old Unicode/IPA)
+consonant,dental click,01C0,t!
+consonant,voiced alveolar nasal,006E,n
+consonant,voiceless alveolar plosive,0074,t
+consonant,voiced alveolar plosive,0064,d
+consonant,voiceless alveolar fricative,0073,s
+consonant,voiced alveolar fricative,007A,z
+consonant,voiceless lateral alveolar fricative,026C,s<lat>
+consonant,voiced lateral alveolar fricative,026E,z<lat>
+consonant,voiced alveolar approximant,0279,r
+consonant,voiced lateral alveolar approximant,006C,l
+consonant,voiced uvular trill,0280,r<trl>
+consonant,voiced alveolar trill,0072,R
+consonant,voiced alveolar tap,027E,*
+consonant,voiced alveolar lateral flap,027A,*<lat>
+# NOT in IPA Chart
+consonant,alveolar click,0297,c!
+consonant,postalveolar click,01C3,c!
+consonant,palatoalveolar click,01C2,c!
+# K had 0296 as its IPA Unicode (old Unicode/IPA)
+consonant,alveolar lateral click,01C1,l!
+consonant,voiced retroflex nasal,0273,n.
+consonant,voiceless retroflex plosive,0288,t.
+consonant,voiced retroflex plosive,0256,d.
+consonant,voiceless retroflex fricative,0282,s.
+consonant,voiced retroflex fricative,0290,z.
+# K had 0256 as its IPA Unicode (typo)
+consonant,voiced retroflex approximant,027B,r.
+consonant,voiced retroflex flap,027D,*.
+consonant,voiceless postalveolar fricative,0283,S
+consonant,voiced postalveolar fricative,0292,Z
+consonant,voiceless palatal plosive,0063,c
+consonant,voiced palatal plosive,025F,J
+consonant,voiceless palatal fricative,00E7,C
+consonant,voiced palatal fricative,029D,C<vcd>
+consonant,voiced palatal approximant,006A,j
+consonant,voiced labial-palatal approximant,0265,j<rnd>
+consonant,voiced palatal lateral approximant,028E,l^
+consonant,voiced palatal implosive,0284,J`
+consonant,voiced velar nasal,014B,N
+consonant,voiceless velar plosive,006B,k
+consonant,voiced velar plosive,0261,g
+consonant,voiceless velar fricative,0078,x
+consonant,voiced velar fricative,0263,Q
+consonant,voiced velar approximant,0270,j<vel>
+consonant,velarized alveolar lateral approximant,026B,L
+consonant,voiced velar lateral approximant,029F,L
+consonant,voiced velar implosive,0260,g`
+consonant,voiceless labial-velar fricative,028D,w<vls>
+consonant,voiced labial-velar approximant,0077,w
+consonant,voiced uvular nasal,0274,n"
+consonant,voiceless uvular plosive,0071,q
+consonant,voiced uvular plosive,0262,G
+consonant,voiceless uvular fricative,03C7,X
+consonant,voiced uvular fricative,0281,g"
+consonant,voiced uvular implosive,029B,G`
+consonant,voiceless pharyngeal fricative,0127,H
+consonant,voiced pharyngeal fricative,0295,H<vcd>
+consonant,voiceless glottal plosive,0294,?
+consonant,voiceless glottal fricative,0068,h
+consonant,voiced glottal fricative,0266,h<?>
+
+#consonant,voiced labiodental flap,2C71 F25F
+#consonant,voiced retroflex lateral approximant,026D
+#consonant,voiced palatal nasal,0272
+#consonant,voiceless epiglottal fricative,029C
+#consonant,voiced epiglottal fricative,02A2
+#consonant,voiced epiglottal plosive,02A1
+#consonant,voiceless alveolo-palatal fricative,0255
+#consonant,voiced alveolo-palatal fricative,0291
+#consonant,voiceless postalveolar velar fricative,0267
+# NOT in IPA chart
+#consonant,voiced alveolar affricate,02A3
+#consonant,voiced postalveolar affricate,02A4
+#consonant,voiced alveolo-palatal affricate,02A5
+#consonant,voiceless alveolar affricate,02A6
+#consonant,voiceless postalveolar affricate,02A7
+#consonant,voiceless alveolo-palatal affricate,02A8
+
+vowel,close front unrounded,0069,i
+vowel,close front rounded,0079,y
+vowel,lowered-close front unrounded,026A,I
+vowel,lowered-close front rounded,028F,I.
+vowel,close-mid front unrounded,0065,e
+vowel,close-mid front rounded,00F8,Y
+vowel,open-mid front unrounded,025B,E
+vowel,open-mid front rounded,0153,W
+vowel,raised-open front unrounded,00E6,&
+vowel,open front unrounded,0061,a
+vowel,open front rounded,0276,&.
+vowel,close central unrounded,0268,i"
+vowel,close central rounded,0289,u"
+vowel,close-mid central unrounded,0258,@<umd>
+# K had 025D as its IPA Unicode (old Unicode/IPA)
+vowel,close-mid central rounded,0275,R<umd>
+vowel,mid central unrounded,0259,@
+vowel,open-mid central unrounded,025C,V"
+vowel,open-mid central rounded,025E,O"
+#vowel,raised-open central unrounded,2050
+vowel,close back unrounded,026F,u-
+vowel,close back rounded,0075,u
+vowel,lowered-close back rounded,028A,U
+vowel,close-mid back unrounded,0264,o-
+vowel,close-mid back rounded,006F,o
+vowel,open-mid back unrounded,028C,V
+vowel,open-mid back rounded,0254,O
+vowel,open back unrounded,0251,A
+vowel,open back rounded,0252,A.
+
+# NOT in IPA chart
+vowel,mid central unrounded rhotacized,025A,R
+vowel,open-mid central unrounded rhotacized,025D,R<umd>
+
+diacritic,ejective,02BC,0060
+#diacritic,tie-bar-above,0361
+#diacritic,tie-bar-below,035C
+diacritic,voiceless,0325 030A,<o>
+# NOT in K
+diacritic,voiced,032C,<vcd>
+diacritic,aspirated,02B0,<h>
+#diacritic,more-rounded,0339
+#diacritic,less-rounded,031C
+#diacritic,advanced,031F
+#diacritic,retracted,0320
+#diacritic,centralized,0308
+#diacritic,mid-centralized,033D
+diacritic,syllabic,0329,002D
+#diacritic,non-syllabic,032F
+#diacritic,rhotacized,02DE
+diacritic,breathy-voiced,0324,<?>
+#diacritic,creaky-voiced,0330
+diacritic,linguolabial,032B,<w>
+diacritic,labialized,02B7,<w>
+diacritic,palatalized,02B2,003B
+# NOT in K
+diacritic,velarized,02E0,007E
+# NOT in K
+diacritic,pharyngealized,02E4,007E
+diacritic,velarized-or-pharyngealized,0334,007E
+diacritic,dental,032A,005B
+diacritic,nasalized,0303,007E
+#diacritic,raised,031D
+#diacritic,lowered,031E
+#diacritic,advanced-tongue-root,0318
+#diacritic,retracted-tongue-root,0319
+#diacritic,apical,033A
+#diacritic,laminal,033B
+#diacritic,nasal-release,N/A
+#diacritic,lateral-release,02E1
+#diacritic,no-audible-release,031A 02FA
+
+# NOT in IPA chart
+diacritic,voiced glottal fricative,02B1,<?>
+diacritic,alveolar trill,02B3,<r>
+# NOT in K
+diacritic,glottal stop,02C0,<?>
+diacritic,retroflex,0322,002E
+diacritic,unexploded,02DA,<o>
+#diacritic,alveolar approximant,02B4
+#diacritic,retroflex approximant,02B5
+#diacritic,uvular approximant,02B6
+
+suprasegmental,primary-stress,02C8,0027
+suprasegmental,secondary-stress,02CC,002C
+suprasegmental,long,02D0,003A
+#suprasegmental,half-long,02D1
+#suprasegmental,extra-short,0306
+#suprasegmental,minor-group,007C
+#suprasegmental,major-group,007C+007C
+suprasegmental,syllable-break,002E,0023
+#suprasegmental,linking,N/A
+suprasegmental,word-break,0020,0023
+
+tone,extra-high-level,030B 02E5,0035
+tone,high-level,0301 02E6,0034
+tone,mid-level,0304 02E7,0033
+tone,low-level,0300 02E8,0032
+tone,extra-low-level,030F 02E9,0031
+tone,rising-contour,030C N/A,0035
+tone,falling-contour,0302 N/A,0034
+tone,high-rising-contour,1DC4 N/A,0033
+tone,low-rising-contour,1DC5 N/A,0032
+tone,rising-falling-contour,1DC8 N/A,0031
+#tone,downstep,A71C
+#tone,upstep,A71B
+#tone,global-rise,2197
+#tone,global-fall,2198
+# NOT in IPA chart
+#tone,mid-low-falling-contour,1DC6
+#tone,high-mid-falling-contour,1DC7
+#tone,falling-rising-contour,1DC9
+

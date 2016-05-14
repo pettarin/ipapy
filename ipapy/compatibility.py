@@ -23,6 +23,11 @@ def is_unicode_string(s):
         return isinstance(s, unicode)
     return isinstance(s, str)
 
+def to_unicode_string(s):
+    if PY2:
+        return unicode(s, encoding="utf-8")
+    return s
+
 def int2unichr(n):
     if PY2:
         return unichr(n)

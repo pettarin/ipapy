@@ -8,8 +8,10 @@ ipapy contains data and functions to work with IPA strings.
 from __future__ import absolute_import
 from __future__ import print_function
 
+from ipapy import UNICODE_TO_IPA
+from ipapy import is_valid_ipa
+from ipapy import remove_invalid_ipa_characters
 from ipapy.compatibility import is_unicode_string
-from ipapy.ipachar import UNICODE_TO_IPA
 from ipapy.ipachar import IPAPhone
 from ipapy.ipachar import IPADiacritic
 from ipapy.ipachar import IPASuprasegmental
@@ -30,9 +32,9 @@ class IPAString(object):
         elif unicode_string is not None:
             if not is_unicode_string(unicode_string):
                 raise ValueError("The given string is not a Unicode string.")
-            if (not ignore) and (not self.is_valid_ipa(unicode_string)):
-                raise ValueError("The given string contains characters not IPA valid. Use ignore=True to ignore.")
-            self.ipa_chars = [UNICODE_TO_IPA[c] for c in self.remove_invalid_ipa_characters(unicode_string)]
+            if (not ignore) and (not is_valid_ipa(unicode_string)):
+                raise ValueError("The given string contains characters not IPA valid. Use the 'ignore' option to ignore them.")
+            self.ipa_chars = [UNICODE_TO_IPA[c] for c in remove_invalid_ipa_characters(unicode_string=unicode_string, return_invalid=False)]
 
     def __str__(self):
         return u"".join([c.__str__() for c in self.ipa_chars])
@@ -66,22 +68,7 @@ class IPAString(object):
     def cns_vwl_str_len_wb(self):
         return IPAString(ipa_chars=[c for c in self.ipa_chars if (isinstance(c, IPAPhone)) or (isinstance(c, IPASuprasegmental) and c.is_char_of_type("slw"))])
 
-    @classmethod
-    def invalid_ipa_characters(cls, unicode_string, indices=False):
-        if indices:
-            return [(i, unicode_string[i]) for i in range(len(unicode_string)) if unicode_string[i] not in UNICODE_TO_IPA]
-        return set(sorted([c for c in unicode_string if c not in UNICODE_TO_IPA]))
 
-    @classmethod
-    def is_valid_ipa(cls, unicode_string):
-        for char in unicode_string:
-            if not char in UNICODE_TO_IPA:
-                return False
-        return True
-
-    @classmethod
-    def remove_invalid_ipa_characters(cls, unicode_string):
-        return [c for c in unicode_string if c in UNICODE_TO_IPA]
 
 
 

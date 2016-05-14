@@ -9,7 +9,7 @@ This is the main script, intended to be run from command line.
 
 from __future__ import absolute_import
 
-from ipapy import main as package_main
+from ipapy.__main__ import main as package_main
 
 __author__ = "Alberto Pettarin"
 __copyright__ = "Copyright 2016, Alberto Pettarin (www.albertopettarin.it)"

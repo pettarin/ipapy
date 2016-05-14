@@ -16,8 +16,8 @@ __status__ = "Development"
 
 setup(
     name="ipapy",
-    packages=["ipapy"],
-    package_data={"ipapy": ["data/*"]},
+    packages=["ipapy", "ipapy.data"],
+    package_data={"ipapy.data": ["*.dat"]},
     version="0.0.1.0",
     description="ipapy is a Python module to work with IPA strings",
     author="Alberto Pettarin",
