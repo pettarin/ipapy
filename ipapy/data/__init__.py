@@ -8,6 +8,7 @@ ipapy contains data and functions to work with IPA strings.
 from __future__ import absolute_import
 from __future__ import print_function
 import io
+import re
 import os
 
 from ipapy.compatibility import hex2unichr
@@ -50,24 +51,26 @@ def load_ipa_data():
     ipa_signs = []
     unicode_to_ipa = {}
     ipa_to_unicode = {}
+    max_key_length = 0
     for line in load_csv_file(IPA_DATA_FILE_PATH, 3):
         # unpack data
         i_type, i_desc, i_unicode = line
 
-        # create name
-        name = "%s %s" % (i_desc, i_type)
+        # create prop string and name string
+        prop = "%s %s" % (i_desc, i_type)
+        name = re.sub(r" [ ]*", " ", prop)
 
         # create a suitable IPACharacter obj
         if i_type == "consonant":
-            obj = IPAConsonant(name=name, properties=name)
+            obj = IPAConsonant(name=name, properties=prop)
         elif i_type == "vowel":
-            obj = IPAVowel(name=name, properties=name)
+            obj = IPAVowel(name=name, properties=prop)
         elif i_type == "diacritic":
-            obj = IPADiacritic(name=name, properties=name)
+            obj = IPADiacritic(name=name, properties=prop)
         elif i_type == "suprasegmental":
-            obj = IPASuprasegmental(name=name, properties=name)
+            obj = IPASuprasegmental(name=name, properties=prop)
         elif i_type == "tone":
-            obj = IPATone(name=name, properties=name)
+            obj = IPATone(name=name, properties=prop)
         else:
             raise ValueError("The IPA data file contains a bad line, defining an unknown type '%s': '%s'" % (i_type, line))
         ipa_signs.append(obj)
@@ -77,11 +80,8 @@ def load_ipa_data():
         for codepoint in i_unicode.split(IPA_DATA_FILE_CODEPOINT_SEPARATOR):
             # deal with compound symbols, like '||' = major-group suprasegmental
             key = None
-            if IPA_DATA_FILE_COMPOUND_OPERATOR in codepoint:
-                ch1, ch2 = codepoint.split(IPA_DATA_FILE_COMPOUND_OPERATOR)
-                key = hex2unichr(ch1) + hex2unichr(ch2)
-            elif not IPA_DATA_FILE_NOT_AVAILABLE in codepoint:
-                key = hex2unichr(codepoint)
+            if not IPA_DATA_FILE_NOT_AVAILABLE in codepoint:
+                key = u"".join([hex2unichr(c) for c in codepoint.split(IPA_DATA_FILE_COMPOUND_OPERATOR)])
             # if we have a key, map it
             if key is not None:
                 if key in unicode_to_ipa:
@@ -89,10 +89,11 @@ def load_ipa_data():
                 unicode_to_ipa[key] = obj
                 if not primary_set:
                     primary_set = True
-                    ipa_to_unicode[obj.properties] = key
-                    obj.unicode_char = key
-    return ipa_signs, unicode_to_ipa, ipa_to_unicode
-IPA_SIGNS, UNICODE_TO_IPA, IPA_TO_UNICODE = load_ipa_data()
+                    ipa_to_unicode[obj.canonical_representation] = key
+                    obj.unicode_repr = key
+                    max_key_length = max(max_key_length, len(key))
+    return ipa_signs, unicode_to_ipa, ipa_to_unicode, max_key_length
+IPA_SIGNS, UNICODE_TO_IPA, IPA_TO_UNICODE, MAX_KEY_LENGTH_U2I = load_ipa_data()
 
 
 

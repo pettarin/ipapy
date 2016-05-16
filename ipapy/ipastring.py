@@ -34,6 +34,7 @@ class IPAString(object):
                 raise ValueError("The given string is not a Unicode string.")
             if (not ignore) and (not is_valid_ipa(unicode_string)):
                 raise ValueError("The given string contains characters not IPA valid. Use the 'ignore' option to ignore them.")
+            # TODO deal with compound IPAChar s
             self.ipa_chars = [UNICODE_TO_IPA[c] for c in remove_invalid_ipa_characters(unicode_string=unicode_string, return_invalid=False)]
 
     def __str__(self):
