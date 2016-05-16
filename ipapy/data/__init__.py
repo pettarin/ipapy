@@ -92,8 +92,8 @@ def load_ipa_data():
                     ipa_to_unicode[obj.canonical_representation] = key
                     obj.unicode_repr = key
                     max_key_length = max(max_key_length, len(key))
-    return ipa_signs, unicode_to_ipa, ipa_to_unicode, max_key_length
-IPA_SIGNS, UNICODE_TO_IPA, IPA_TO_UNICODE, MAX_KEY_LENGTH_U2I = load_ipa_data()
+    return ipa_signs, unicode_to_ipa, max_key_length, ipa_to_unicode
+IPA_SIGNS, UNICODE_TO_IPA, UNICODE_TO_IPA_MAX_KEY_LENGTH, IPA_TO_UNICODE = load_ipa_data()
 
 
 

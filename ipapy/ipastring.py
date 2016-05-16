@@ -25,7 +25,7 @@ __status__ = "Development"
 
 class IPAString(object):
 
-    def __init__(self, ipa_chars=None, unicode_string=None, ignore=False):
+    def __init__(self, ipa_chars=None, unicode_string=None, ignore=False, single_char_parsing=False):
         self.ipa_chars = []
         if ipa_chars is not None:
             self.ipa_chars = ipa_chars
@@ -34,8 +34,15 @@ class IPAString(object):
                 raise ValueError("The given string is not a Unicode string.")
             if (not ignore) and (not is_valid_ipa(unicode_string)):
                 raise ValueError("The given string contains characters not IPA valid. Use the 'ignore' option to ignore them.")
-            # TODO deal with compound IPAChar s
-            self.ipa_chars = [UNICODE_TO_IPA[c] for c in remove_invalid_ipa_characters(unicode_string=unicode_string, return_invalid=False)]
+            # get prefix-maximal Unicode substrings
+            # that are valid IPA characters
+            # and store them
+            substrings = remove_invalid_ipa_characters(
+                unicode_string=unicode_string,
+                return_invalid=False,
+                single_char_parsing=single_char_parsing
+            )
+            self.ipa_chars = [UNICODE_TO_IPA[substring] for substring in substrings]
 
     def __str__(self):
         return u"".join([c.__str__() for c in self.ipa_chars])
@@ -55,21 +62,19 @@ class IPAString(object):
 
     @property
     def cns_vwl(self):
-        return IPAString(ipa_chars=[c for c in self.ipa_chars if isinstance(c, IPAPhone)])
+        return IPAString(ipa_chars=[c for c in self.ipa_chars if c.is_vowel or c.is_consonant])
 
     @property
     def cns_vwl_str(self):
-        return IPAString(ipa_chars=[c for c in self.ipa_chars if (isinstance(c, IPAPhone)) or (isinstance(c, IPASuprasegmental) and c.is_char_of_type("s"))])
+        return IPAString(ipa_chars=[c for c in self.ipa_chars if c.is_vowel or c.is_consonant or (c.is_suprasegmental and c.is_char_of_type("s"))])
 
     @property
     def cns_vwl_str_len(self):
-        return IPAString(ipa_chars=[c for c in self.ipa_chars if (isinstance(c, IPAPhone)) or (isinstance(c, IPASuprasegmental) and c.is_char_of_type("sl"))])
+        return IPAString(ipa_chars=[c for c in self.ipa_chars if c.is_vowel or c.is_consonant or (c.is_suprasegmental and c.is_char_of_type("sl"))])
 
     @property
     def cns_vwl_str_len_wb(self):
-        return IPAString(ipa_chars=[c for c in self.ipa_chars if (isinstance(c, IPAPhone)) or (isinstance(c, IPASuprasegmental) and c.is_char_of_type("slw"))])
-
-
+        return IPAString(ipa_chars=[c for c in self.ipa_chars if c.is_vowel or c.is_consonant or (c.is_suprasegmental and c.is_char_of_type("slw"))])
 
 
 
