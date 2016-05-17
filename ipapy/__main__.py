@@ -108,6 +108,7 @@ def main():
     command = vargs["command"]
     string = to_unicode_string(vargs["string"])
     ignore = vargs["ignore"]
+    
     if command == "u2a":
         try:
             print(unicode_string_to_ascii_string(unicode_string=string, ignore=ignore))

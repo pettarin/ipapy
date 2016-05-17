@@ -1,6 +1,9 @@
 #
 # IPA Symbols
 #
+# Version: 0.0.1
+# Date:    2016-05-17
+#
 # Syntax:
 # type,desc,xxxx
 #
@@ -10,7 +13,7 @@
 #        N/A       = Unicode codepoint not available
 #        xxxx      = single Unicode codepoint
 #        xxxx xxxx = alternative Unicode codepoints, first is the canonical
-#        xxxx+xxxx = sequence of Unicode codepoints 
+#        xxxx+xxxx = sequence of Unicode codepoints
 #
 #
 
@@ -760,7 +763,7 @@ suprasegmental,extra-short,0306
 suprasegmental,minor-group,007C
 suprasegmental,major-group,007C+007C
 suprasegmental,syllable-break,002E
-suprasegmental,linking,N/A
+suprasegmental,linking,203F
 suprasegmental,word-break,0020
 
 

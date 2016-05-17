@@ -3,6 +3,8 @@
 
 """
 ipapy contains data and functions to work with IPA strings.
+
+This module defines data constants and it loads the built-in IPA database.
 """
 
 from __future__ import absolute_import
@@ -25,15 +27,47 @@ __version__ = "0.0.1"
 __email__ = "alberto@albertopettarin.it"
 __status__ = "Development"
 
-# constants
 DATA_FILE_FIELD_SEPARATOR = u","
+""" Field separator for the data file """
+
 DATA_FILE_COMMENT = u"#"
+""" Ignore lines starting with this character """
+
 IPA_DATA_FILE_CODEPOINT_SEPARATOR = u" "
+"""
+Separator between Unicode codepoints or
+Unicode compound strings for a given IPAChar
+"""
+
 IPA_DATA_FILE_COMPOUND_OPERATOR = u"+"
+"""
+Operator to specify Unicode compound strings,
+e.g. 0070+032A = LATIN SMALL LETTER P + COMBINING BRIDGE BELOW
+"""
+
 IPA_DATA_FILE_NOT_AVAILABLE = u"N/A"
+""" Placeholder for an IPAChar not encoded in Unicode """
+
 IPA_DATA_FILE_PATH = u"ipa.dat"
+"""
+Path of the built-in IPA database,
+relative to this source code file
+"""
 
 def load_csv_file(relative_file_path, values_per_line=None):
+    """
+    Load a comma-separated file, returning a list of tuples.
+
+    It ignores lines starting with "#" or empty lines.
+
+    If ``values_per_line`` is not ``None``,
+    check that each line (tuple)
+    has the prescribed number of values.
+
+    :param str relative_file_path: path of the file to load, relative to this source code file
+    :param int values_per_line: number of elements of each line; if ``None``, do not check
+    :rtype: list of tuples
+    """
     tuples = []
     file_path = os.path.join(os.path.dirname(__file__), relative_file_path)
     with io.open(file_path, "r", encoding="utf-8") as f:
@@ -48,6 +82,14 @@ def load_csv_file(relative_file_path, values_per_line=None):
     return tuples
 
 def load_ipa_data():
+    """
+    Load the IPA data from the built-in IPA database, creating the following globals:
+
+    1. ``IPA_CHARS``: list of all IPAChar objects
+    2. ``UNICODE_TO_IPA``: dict mapping a Unicode string (often, a single char) to an IPAChar
+    3. ``UNICODE_TO_IPA_MAX_KEY_LENGTH``: length of a longest key in ``UNICODE_TO_IPA``
+    4. ``IPA_TO_UNICODE``: map an IPAChar canonical representation to the corresponding Unicode string (or char)
+    """
     ipa_signs = []
     unicode_to_ipa = {}
     ipa_to_unicode = {}
@@ -93,7 +135,7 @@ def load_ipa_data():
                     obj.unicode_repr = key
                     max_key_length = max(max_key_length, len(key))
     return ipa_signs, unicode_to_ipa, max_key_length, ipa_to_unicode
-IPA_SIGNS, UNICODE_TO_IPA, UNICODE_TO_IPA_MAX_KEY_LENGTH, IPA_TO_UNICODE = load_ipa_data()
+IPA_CHARS, UNICODE_TO_IPA, UNICODE_TO_IPA_MAX_KEY_LENGTH, IPA_TO_UNICODE = load_ipa_data()
 
 
 

@@ -379,6 +379,16 @@ def variant_to_frozenset(obj):
     return frozenset(variant_to_list(obj))
 
 class IPAChar(object):
+    """
+    An IPA character, that is, an IPA letter or diacritic.
+
+    Note that an IPAChar might correspond to 0, 1, or more Unicode characters.
+
+    :param str name: an arbitrary mnemonic name for the character
+    :param frozenset properties: the properties of the character
+    :param str unicode_repr: the (optional) Unicode representation for the character
+    """
+    
     TAG = "IPAChar"
 
     def __init__(self, name, properties, unicode_repr=None):
@@ -413,33 +423,86 @@ class IPAChar(object):
         return "%s (%s)" % (self.name, str(self.canonical_representation))
 
     @property
-    def is_vowel(self):
+    def is_letter(self):
+        """
+        Return ``True`` if the character is a letter.
+
+        :rtype: bool
+        """
         return False
 
     @property
     def is_consonant(self):
+        """
+        Return ``True`` if the character is a consonant.
+
+        :rtype: bool
+        """
         return False
 
     @property
+    def is_vowel(self):
+        """
+        Return ``True`` if the character is a vowel.
+
+        :rtype: bool
+        """
+        return False
+
+
+    @property
     def is_diacritic(self):
+        """
+        Return ``True`` if the character is a diacritic mark.
+
+        :rtype: bool
+        """
         return False
 
     @property
     def is_suprasegmental(self):
+        """
+        Return ``True`` if the character is a suprasegmental mark.
+
+        :rtype: bool
+        """
         return False
 
     @property
     def is_tone(self):
+        """
+        Return ``True`` if the character is a tone mark.
+
+        :rtype: bool
+        """
         return False
 
-    def has_property(self, descriptors):
-        for d in descriptors:
-            if d in self.properties:
+    def has_property(self, values):
+        """
+        Return ``True`` if the character has a property listed
+        in the given list of values.
+
+        :param list values: a list of values (synonyms) to check against
+        :rtype: bool
+        """
+        for v in values:
+            if v in self.properties:
                 return True
         return False
 
     @property
     def canonical_representation(self):
+        """
+        The canonical representation of the character.
+
+        Each property of the character is represented
+        with its canonical value.
+
+        The canonical representation is a frozenset
+        so that it can be hashed.
+
+        :rtype: frozenset
+        """
         acc = []
         for g in G_ALL_PROPERTIES:
             for p in self.properties:
@@ -448,6 +511,27 @@ class IPAChar(object):
         return canonical_representation(acc)
 
     def alternative_property(self, alternatives, modifiers=None):
+        """
+        Check if the character has a property whose value
+        is contained in one of the lists forming the given
+        ``alternatives`` list-of-lists.
+
+        If it has it, return the canonical value for the property.
+        Otherwise, return ``None``.
+
+        If ``modifiers`` are specified, it also checks if the character
+        has a modifier property.
+        For example, you might want to set
+        ``alternatives=G_ROUNDNESS`` and
+        ``modifiers=G_ROUNDNESS_MODIFIERS``
+        to know the roundness of a vowel and its modifier, if any
+        (e.g., ``(rounded, less-roundend)``).
+
+        :param list alternatives: list-of-lists, each being the synonyms for a given value
+        :param boolean modifiers: if ``True``, also checks against the given modifiers,
+                                  and return a pair ``(value, modifier)`` instead of just ``value``
+        :rtype: str
+        """
         if modifiers is None:
             for a in alternatives:
                 if self.has_property(a):
@@ -468,6 +552,10 @@ class IPAChar(object):
 
 
 class IPADiacritic(IPAChar):
+    """
+    An IPA diacritic mark.
+    """
+    
     TAG = "IPADiacritic"
     
     @property
@@ -477,6 +565,10 @@ class IPADiacritic(IPAChar):
 
 
 class IPASuprasegmental(IPAChar):
+    """
+    An IPA suprasegmental mark.
+    """
+    
     TAG = "IPASuprasegmental"
     
     @property
@@ -485,33 +577,67 @@ class IPASuprasegmental(IPAChar):
 
     @property
     def stress(self):
+        """
+        Return the stress value of the suprasegmental,
+        or ``None`` if not a stress mark.
+
+        :rtype: str
+        """
         return self.alternative_property(G_STRESS)
 
     @property
     def length(self):
+        """
+        Return the length value of the suprasegmental,
+        or ``None`` if not a length mark.
+
+        :rtype: str
+        """
         return self.alternative_property(G_LENGTH)
 
     @property
-    def is_syllable_break(self):
-        return self.has_property(S_SYLLABLE_BREAK)
+    def is_stress(self):
+        """
+        Return ``True`` if the suprasegmental is a stress mark.
+
+        :rtype: bool
+        """
+        return self.stress is not None
+
+    @property
+    def is_length(self):
+        """
+        Return ``True`` if the suprasegmental is a length mark.
+
+        :rtype: bool
+        """
+        return self.length is not None
 
     @property
     def is_word_break(self):
+        """
+        Return ``True`` if the suprasegmental is a word break mark.
+
+        :rtype: bool
+        """
         return self.has_property(S_WORD_BREAK)
 
-    def is_char_of_type(self, query):
-        for c in query:
-            if (c == "s") and (self.stress is not None):
-                return True
-            elif (c == "l") and (self.length is not None):
-                return True
-            elif (c == "w") and (self.is_word_break):
-                return True
-        return False
+    @property
+    def is_syllable_break(self):
+        """
+        Return ``True`` if the suprasegmental is a syllable break mark.
+
+        :rtype: bool
+        """
+        return self.has_property(S_SYLLABLE_BREAK)
 
 
 
 class IPATone(IPAChar):
+    """
+    An IPA tone mark.
+    """
+
     TAG = "IPATone"
     
     @property
@@ -520,20 +646,61 @@ class IPATone(IPAChar):
 
 
 
-class IPAPhone(IPAChar):
-    TAG = "IPAPhone"
+class IPALetter(IPAChar):
+    """
+    An IPA letter, either a consonant or a vowel.
+    """
+    
+    TAG = "IPALetter"
+
+    @property
+    def is_letter(self):
+        return True 
 
     @property
     def modifiers(self):
+        """
+        The modifiers (e.g., "velarized" or "more-rounded") of the letter.
+
+        :rtype: list
+        """
         return self.__modifiers
     @modifiers.setter
     def modifiers(self, value):
+        """
+        Set the modifiers of the letter.
+
+        :param variant value: a parsable property (list or strings or string with space-separated values)
+        """
         self.__modifiers = variant_to_list(value)
 
 
 
+class IPAConsonant(IPALetter):
+    """
+    An IPA consonant.
 
-class IPAConsonant(IPAPhone):
+    The object can be initialized using the ``properties`` as in the generic IPAChar,
+    or via the consonant-specific properties:
+
+    1. voicing (e.g. "voiceless"),
+    2. place (e.g., "bilabial"),
+    3. manner (e.g., "plosive").
+
+    In both cases, a value for each of the three properties must be present,
+    otherwise a ValueError will be raised.
+
+    Modifiers (e.g. "velarized") are optional.
+
+    :param str name: an arbitrary mnemonic name for the consonant 
+    :param frozenset properties: the properties of the consonant
+    :param str unicode_repr: the (optional) Unicode representation for the consonant
+    :param str voicing: the voicing of the consonant
+    :param str place: the articulation place of the consonant
+    :param str manner: the articulation manner of the consonant
+    :param variant modifiers: optional modifiers of the consonant
+    """
+    
     TAG = "IPAConsonant"
 
     def __init__(self, name, properties=None, unicode_repr=None, voicing=None, place=None, manner=None, modifiers=None):
@@ -550,6 +717,10 @@ class IPAConsonant(IPAPhone):
         elif (voicing, place, manner) != (None, None, None):
             raise ValueError("You must specify either a properties list/string, or a triple (voicing, place, manner)")
         self.properties = properties
+
+    @property
+    def is_consonant(self):
+        return True
 
     @property
     def properties(self):
@@ -581,38 +752,88 @@ class IPAConsonant(IPAPhone):
 
     @property
     def voicing(self):
+        """
+        The voicing of the consonant.
+
+        :rtype: str
+        """
         return self.__voicing
     @voicing.setter
     def voicing(self, value):
+        """
+        Set the voicing of the consonant.
+
+        :param str value: the value to be set
+        """
         if (value is not None) and (not value in FG_VOICING):
             raise ValueError("Unrecognized value for voicing: '%s'" % value)
         self.__voicing = value
 
     @property
     def place(self):
+        """
+        The place of articulation of the consonant.
+
+        :rtype: str
+        """
         return self.__place
     @place.setter
     def place(self, value):
+        """
+        Set the place of articulation of the consonant.
+
+        :param str value: the value to be set
+        """
         if (value is not None) and (not value in FG_PLACE):
             raise ValueError("Unrecognized value for place: '%s'" % value)
         self.__place = value
 
     @property
     def manner(self):
+        """
+        The manner of articulation of the consonant.
+
+        :rtype: str
+        """
         return self.__manner
     @manner.setter
     def manner(self, value):
+        """
+        Set the manner of articulation of the consonant.
+
+        :param str value: the value to be set
+        """
         if (value is not None) and (not value in FG_MANNER):
             raise ValueError("Unrecognized value for manner: '%s'" % value)
         self.__manner = value
 
-    @property
-    def is_consonant(self):
-        return True
 
 
+class IPAVowel(IPALetter):
+    """
+    An IPA vowel.
 
-class IPAVowel(IPAPhone):
+    The object can be initialized using the ``properties`` as in the generic IPAChar,
+    or via the consonant-specific properties:
+
+    1. height (e.g. "open"),
+    2. backness (e.g., "front"),
+    3. roundness (e.g., "unrounded").
+
+    In both cases, a value for each of the three properties must be present,
+    otherwise a ValueError will be raised.
+
+    Modifiers (e.g. "more-rounded") are optional.
+
+    :param str name: an arbitrary mnemonic name for the vowel
+    :param frozenset properties: the properties of the vowel
+    :param str unicode_repr: the (optional) Unicode representation for the vowel
+    :param str height: the voicing of the vowel
+    :param str backness: the articulation place of the vowel
+    :param str roundness: the articulation manner of the vowel
+    :param variant modifiers: optional modifiers of the vowel
+    """
+    
     TAG = "IPAVowel"
 
     def __init__(self, name, properties=None, unicode_repr=None, height=None, backness=None, roundness=None, modifiers=None):
@@ -629,6 +850,10 @@ class IPAVowel(IPAPhone):
         elif (height, backness, roundness) != (None, None, None):
             raise ValueError("You must specify either a properties list/string, or a triple (height, backness, roundness)")
         self.properties = properties
+
+    @property
+    def is_vowel(self):
+        return True
 
     @property
     def properties(self):
@@ -660,34 +885,60 @@ class IPAVowel(IPAPhone):
 
     @property
     def height(self):
+        """
+        The height of the vowel.
+
+        :rtype: str
+        """
         return self.__height
     @height.setter
     def height(self, value):
+        """
+        Set the height of the vowel.
+
+        :param str value: the value to be set
+        """
         if (value is not None) and (not value in FG_HEIGHT):
             raise ValueError("Unrecognized value for height: '%s'" % value)
         self.__height = value
 
     @property
     def backness(self):
+        """
+        The backness of the vowel.
+
+        :rtype: str
+        """
         return self.__backness
     @backness.setter
     def backness(self, value):
+        """
+        Set the backness of the vowel.
+
+        :param str value: the value to be set
+        """
         if (value is not None) and (not value in FG_BACKNESS):
             raise ValueError("Unrecognized value for backness: '%s'" % value)
         self.__backness = value
 
     @property
     def roundness(self):
+        """
+        The roundness of the vowel.
+
+        :rtype: str
+        """
         return self.__roundness
     @roundness.setter
     def roundness(self, value):
+        """
+        Set the roundness of the vowel.
+
+        :param str value: the value to be set
+        """
         if (value is not None) and (not value in FG_ROUNDNESS):
             raise ValueError("Unrecognized value for roundness: '%s'" % value)
         self.__roundness = value
-
-    @property
-    def is_vowel(self):
-        return True
 
 
 

@@ -3,6 +3,9 @@
 
 """
 ipapy contains data and functions to work with IPA strings.
+
+This module defines constants and functions
+to make ipapy compatible with both Python 2 and Python 3.
 """
 
 from __future__ import absolute_import
@@ -17,24 +20,57 @@ __email__ = "alberto@albertopettarin.it"
 __status__ = "Development"
 
 PY2 = (sys.version_info[0] == 2)
+"""
+``True`` if running on Python 2, and ``False`` otherwise
+"""
 
-def is_unicode_string(s):
+def is_unicode_string(string):
+    """
+    Return ``True`` if the given string is a Unicode string,
+    that is, of type ``unicode`` in Python 2 or ``str`` in Python 3.
+
+    :param str string: the string to be checked
+    :rtype: bool
+    """
     if PY2:
-        return isinstance(s, unicode)
-    return isinstance(s, str)
+        return isinstance(string, unicode)
+    return isinstance(string, str)
 
-def to_unicode_string(s):
+def to_unicode_string(string):
+    """
+    Return a Unicode string out of the given string.
+    
+    On Python 2, it calls ``unicode`` with ``utf-8`` encoding.
+    On Python 3, it just returns the given string.
+
+    :param str string: the string to convert to Unicode
+    :rtype: (Unicode) str
+    """
     if PY2:
-        return unicode(s, encoding="utf-8")
-    return s
+        return unicode(string, encoding="utf-8")
+    return string
 
-def int2unichr(n):
+def int2unichr(codepoint):
+    """
+    Return the Unicode character with the given codepoint,
+    given as an integer.
+
+    :param int codepoint: the Unicode codepoint of the desired character
+    :rtype: (Unicode) str
+    """
     if PY2:
-        return unichr(n)
-    return chr(n)
+        return unichr(codepoint)
+    return chr(codepoint)
 
-def hex2unichr(s):
-    return int2unichr(int(s, base=16))
+def hex2unichr(hex_string):
+    """
+    Return the Unicode character with the given codepoint,
+    given as an hexadecimal string.
+
+    :param str hex_string: the Unicode codepoint of the desired character
+    :rtype: (Unicode) str
+    """
+    return int2unichr(int(hex_string, base=16))
 
 
 

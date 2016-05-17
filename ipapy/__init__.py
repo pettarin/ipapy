@@ -3,12 +3,14 @@
 
 """
 ipapy contains data and functions to work with IPA strings.
+
+This module defines common functions and it exposes the built-in IPA database.
 """
 
 from __future__ import absolute_import
 from __future__ import print_function
 
-from ipapy.data import IPA_SIGNS
+from ipapy.data import IPA_CHARS
 from ipapy.data import IPA_TO_UNICODE
 from ipapy.data import UNICODE_TO_IPA
 from ipapy.data import UNICODE_TO_IPA_MAX_KEY_LENGTH

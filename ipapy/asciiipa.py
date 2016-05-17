@@ -39,8 +39,8 @@ def load_ascii_ipa_data():
     return ascii_ipa_signs, ipa_properties_to_ascii_ipa
 ASCII_IPA_SIGNS, IPA_PROPERTIES_TO_ASCII_IPA = load_ascii_ipa_data()
 
-def unicode_string_to_ascii_string(unicode_string, ignore=False):
-    ipa_string = IPAString(unicode_string=unicode_string, ignore=ignore)
+def unicode_string_to_ascii_string(unicode_string, ignore=False, single_char_parsing=False):
+    ipa_string = IPAString(unicode_string=unicode_string, ignore=ignore, single_char_parsing=single_char_parsing)
     return ipa_string_to_ascii_string(ipa_string=ipa_string, ignore=ignore)
 
 def ipa_string_to_ascii_string(ipa_string, ignore=False):
