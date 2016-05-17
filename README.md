@@ -14,7 +14,7 @@
 $ pip install ipapy
 ```
 
-(NOTE: ipapy is not on PyPI yet. It will be uploaded as soon as finished.)
+(NOTE: **ipapy** is **not** on PyPI yet. It will be uploaded as soon as finished.)
 
 or
 
@@ -24,6 +24,8 @@ $ cd ipapy
 ```
 
 ## Usage
+
+### As A Python Module
 
 ```python
 # Unicode string for "achene acanthology"
@@ -128,12 +130,12 @@ my_a1 == my_ee      # False
 my_a1 == my_b1      # False
 my_b1 == my_b2      # True
 my_b1 == my_tS      # False
-my_ts == ts1        # True
-my_ts == ts2        # True
-my_ts == ts3        # True
-my_ts == ts4        # True
-my_ts == ts5        # True
-my_ts == ts6        # True
+my_tS == ts1        # True
+my_tS == ts2        # True
+my_tS == ts3        # True
+my_tS == ts4        # True
+my_tS == ts5        # True
+my_tS == ts6        # True
 
 # compare IPA char and Unicode string
 my_b1 == u"\u03B2"  # True
@@ -168,6 +170,102 @@ from ipapy.asciiipa import unicode_string_to_ascii_string
 a_s2 = unicode_string_to_ascii_string(s_uni)                    # u"@'ki:n#&,k&n'TA#l@#dZi"
 
 a_s1 == a_s2    # True
+```
+
+### As A Command Line Tool
+
+**ipapy** comes with a command line tool to perform operations
+on a given UTF-8 encoded Unicode string,
+representing an IPA string.
+
+Currently, the supported operations are:
+
+* ``canonize``: canonize the Unicode representation of the IPA string
+* ``chars``: list all IPA characters appearing in the IPA string
+* ``check``: check if the given Unicode string is IPA valid
+* ``clean``: remove characters that are not IPA valid
+* ``u2a``: print the corresponding ASCII IPA (Kirshenbaum) string
+
+Run:
+
+```bash
+$ python -m ipapy --help
+```
+
+to get the usage message:
+
+```
+usage: __main__.py [-h] [-i] [-p] [-s] [-u] command string
+
+ipapy perform a command on the given IPA/Unicode string
+
+positional arguments:
+  command               [canonize|chars|check|clean|u2a]
+  string                String to canonize, check, or convert
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i, --ignore          Ignore Unicode characters that are not IPA valid
+  -p, --print-invalid   Print Unicode characters that are not IPA valid
+  -s, --single-char-parsing
+                        Perform single character parsing instead of maximal
+                        parsing
+  -u, --unicode         Print each Unicode character that is not IPA valid
+                        with its Unicode codepoint and name
+```
+
+Examples:
+
+```bash
+$ python -m ipapy canonize "eʧiu"
+et͡ʃiu
+
+$ python -m ipapy chars "eʧiu"
+'e'	close-mid front unrounded vowel (U+0065)
+'t͡ʃ'	voiceless palato-alveolar sibilant-affricate consonant (U+0074 U+0361 U+0283)
+'i'	close front unrounded vowel (U+0069)
+'u'	close back rounded vowel (U+0075)
+
+$ python -m ipapy chars "et͡ʃiu"
+'e'	close-mid front unrounded vowel (U+0065)
+'t͡ʃ'	voiceless palato-alveolar sibilant-affricate consonant (U+0074 U+0361 U+0283)
+'i'	close front unrounded vowel (U+0069)
+'u'	close back rounded vowel (U+0075)
+
+$ python -m ipapy chars "et͡ʃiu" -s
+'e'	close-mid front unrounded vowel (U+0065)
+'t'	voiceless alveolar plosive consonant (U+0074)
+'͡'	tie-bar-above diacritic (U+0361)
+'ʃ'	voiceless palato-alveolar sibilant-fricative consonant (U+0283)
+'i'	close front unrounded vowel (U+0069)
+'u'	close back rounded vowel (U+0075)
+
+$ python -m ipapy check "eʧiu"
+True
+
+$ python -m ipapy check "LoL"
+False
+
+$ python -m ipapy check "LoL" -p
+False
+LL
+
+$ python -m ipapy check "LoL" -p -u
+False
+LL
+'L'	0x4c	LATIN CAPITAL LETTER L
+
+$ python -m ipapy clean "(eʧiu)"
+eʧiu
+
+$ python -m ipapy u2a "eʧiu"
+etSiu
+
+$ python -m ipapy u2a "eTa"
+The given string contains characters not IPA valid. Use the 'ignore' option to ignore them.
+
+$ python -m ipapy u2a "eTa" -i
+ea
 ```
 
 ## License

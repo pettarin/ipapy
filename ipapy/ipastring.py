@@ -23,6 +23,17 @@ __status__ = "Development"
 class IPAString(object):
     """
     An IPA string, that is, a list of IPAChar objects.
+
+    If the ``ipa_char`` parameter is set, the IPAString
+    will be built using the provided list of IPAChar objects.
+
+    Otherwise, if the ``unicode_string`` parameter is set,
+    the IPAString will be built by parsing it.
+
+    :param list ipa_chars: the list of IPAChar objects
+    :param str unicode_string: the Unicode string to be parsed
+    :param bool ignore: if ``True``, ignore Unicode characters that are not IPA valid
+    :param bool single_char_parsing: if ``True``, parse one Unicode character at a time
     """
 
     TAG = "IPAString"
@@ -36,9 +47,6 @@ class IPAString(object):
                 raise ValueError("The given string is not a Unicode string.")
             if (not ignore) and (not is_valid_ipa(unicode_string)):
                 raise ValueError("The given string contains characters not IPA valid. Use the 'ignore' option to ignore them.")
-            # get prefix-maximal Unicode substrings
-            # that are valid IPA characters
-            # and store them
             substrings = remove_invalid_ipa_characters(
                 unicode_string=unicode_string,
                 return_invalid=False,

@@ -13,7 +13,7 @@ import io
 import re
 import os
 
-from ipapy.compatibility import hex2unichr
+from ipapy.compatibility import hex_to_unichr
 from ipapy.ipachar import IPAConsonant
 from ipapy.ipachar import IPAVowel
 from ipapy.ipachar import IPADiacritic
@@ -51,7 +51,7 @@ IPA_DATA_FILE_NOT_AVAILABLE = u"N/A"
 IPA_DATA_FILE_PATH = u"ipa.dat"
 """
 Path of the built-in IPA database,
-relative to this source code file
+relative to the ``data/`` directory
 """
 
 def load_csv_file(relative_file_path, values_per_line=None):
@@ -123,7 +123,7 @@ def load_ipa_data():
             # deal with compound symbols, like '||' = major-group suprasegmental
             key = None
             if not IPA_DATA_FILE_NOT_AVAILABLE in codepoint:
-                key = u"".join([hex2unichr(c) for c in codepoint.split(IPA_DATA_FILE_COMPOUND_OPERATOR)])
+                key = u"".join([hex_to_unichr(c) for c in codepoint.split(IPA_DATA_FILE_COMPOUND_OPERATOR)])
             # if we have a key, map it
             if key is not None:
                 if key in unicode_to_ipa:

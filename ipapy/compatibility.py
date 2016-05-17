@@ -50,10 +50,13 @@ def to_unicode_string(string):
         return unicode(string, encoding="utf-8")
     return string
 
-def int2unichr(codepoint):
+def int_to_unichr(codepoint):
     """
     Return the Unicode character with the given codepoint,
     given as an integer.
+
+    Example::
+        141 => a
 
     :param int codepoint: the Unicode codepoint of the desired character
     :rtype: (Unicode) str
@@ -62,15 +65,39 @@ def int2unichr(codepoint):
         return unichr(codepoint)
     return chr(codepoint)
 
-def hex2unichr(hex_string):
+def hex_to_unichr(hex_string):
     """
     Return the Unicode character with the given codepoint,
     given as an hexadecimal string.
 
+    Example::
+        "0061"   => a
+        "U+0061" => a
+
     :param str hex_string: the Unicode codepoint of the desired character
     :rtype: (Unicode) str
     """
-    return int2unichr(int(hex_string, base=16))
+    if hex_string.startswith("U+"):
+        hex_string = hex_string[2:]
+    return int_to_unichr(int(hex_string, base=16))
+
+def unicode_to_hex(unicode_string):
+    """
+    Return a string containing the Unicode hexadecimal codepoint
+    of each Unicode character in the given Unicode string.
+
+    Example::
+        a  => U+0061
+        ab => U+0061 U+0062
+
+    :param str unicode_string: the Unicode string to convert
+    :rtype: (Unicode) str
+    """
+    acc = []
+    for c in unicode_string:
+        s = hex(ord(c)).replace("0x", "").upper()
+        acc.append("U+" + ("0" * (4 - len(s))) + s)
+    return u" ".join(acc)
 
 
 
