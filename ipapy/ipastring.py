@@ -7,12 +7,14 @@ ipapy contains data and functions to work with IPA strings.
 
 from __future__ import absolute_import
 from __future__ import print_function
+from collections import MutableSequence
 
 from ipapy import UNICODE_TO_IPA
 from ipapy import is_valid_ipa
 from ipapy import remove_invalid_ipa_characters
 from ipapy.compatibility import is_unicode_string
 from ipapy.ipachar import is_list_of_ipachars
+from ipapy.ipachar import IPAChar 
 
 __author__ = "Alberto Pettarin"
 __copyright__ = "Copyright 2016, Alberto Pettarin (www.albertopettarin.it)"
@@ -21,7 +23,7 @@ __version__ = "0.0.1"
 __email__ = "alberto@albertopettarin.it"
 __status__ = "Development"
 
-class IPAString(object):
+class IPAString(MutableSequence):
     """
     An IPA string, that is, a list of IPAChar objects.
 
@@ -59,6 +61,40 @@ class IPAString(object):
             )
             self.ipa_chars = [UNICODE_TO_IPA[substring] for substring in substrings]
 
+    def _check(self, value):
+        if not isinstance(value, IPAChar):
+            raise TypeError("The given value is not an IPAChar object: '%s'" % value)
+
+    def __str__(self):
+        return u"".join([c.__str__() for c in self.ipa_chars])
+
+    def __unicode__(self):
+        return u"".join([c.__unicode__() for c in self.ipa_chars])
+
+    def __repr__(self):
+        return u"\n".join([c.__repr__() for c in self.ipa_chars])
+
+    def __iter__(self):
+        for ipa_char in self.ipa_chars:
+            yield ipa_char
+
+    def __len__(self):
+        return len(self.ipa_chars)
+
+    def __getitem__(self, i):
+        return self.ipa_chars[i]
+
+    def __delitem__(self, i):
+        del self.ipa_chars[i]
+
+    def __setitem__(self, i, value):
+        self._check(value)
+        self.ipa_chars[i] = value
+    
+    def insert(self, i, value):
+        self._check(value)
+        self.ipa_chars.insert(i, value)
+
     @property
     def ipa_chars(self):
         """
@@ -81,22 +117,6 @@ class IPAString(object):
                 self.__ipa_chars = value
             else:
                 raise ValueError("ipa_chars only accepts a list of IPAChar objects")
-
-    def __str__(self):
-        return u"".join([c.__str__() for c in self.ipa_chars])
-
-    def __unicode__(self):
-        return u"".join([c.__unicode__() for c in self.ipa_chars])
-
-    def __repr__(self):
-        return u"\n".join([c.__repr__() for c in self.ipa_chars])
-
-    def __iter__(self):
-        for ipa_char in self.ipa_chars:
-            yield ipa_char
-
-    def __len__(self):
-        return len(self.ipa_chars)
 
     def is_equivalent(self, other, ignore=False):
         """
