@@ -98,21 +98,21 @@ def load_ipa_data():
         # unpack data
         i_type, i_desc, i_unicode = line
 
-        # create prop string and name string
-        prop = "%s %s" % (i_desc, i_type)
-        name = re.sub(r" [ ]*", " ", prop)
+        # create desc string and name string
+        desc = "%s %s" % (i_desc, i_type)
+        name = re.sub(r" [ ]*", " ", desc)
 
         # create a suitable IPACharacter obj
         if i_type == "consonant":
-            obj = IPAConsonant(name=name, properties=prop)
+            obj = IPAConsonant(name=name, descriptors=desc)
         elif i_type == "vowel":
-            obj = IPAVowel(name=name, properties=prop)
+            obj = IPAVowel(name=name, descriptors=desc)
         elif i_type == "diacritic":
-            obj = IPADiacritic(name=name, properties=prop)
+            obj = IPADiacritic(name=name, descriptors=desc)
         elif i_type == "suprasegmental":
-            obj = IPASuprasegmental(name=name, properties=prop)
+            obj = IPASuprasegmental(name=name, descriptors=desc)
         elif i_type == "tone":
-            obj = IPATone(name=name, properties=prop)
+            obj = IPATone(name=name, descriptors=desc)
         else:
             raise ValueError("The IPA data file contains a bad line, defining an unknown type '%s': '%s'" % (i_type, line))
         ipa_signs.append(obj)

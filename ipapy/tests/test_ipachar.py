@@ -5,28 +5,28 @@ import os
 import unittest
 
 from ipapy.ipachar import IPAChar
-from ipapy.ipachar import IPALetter
 from ipapy.ipachar import IPAConsonant
-from ipapy.ipachar import IPAVowel
+from ipapy.ipachar import IPADescriptor
+from ipapy.ipachar import IPADescriptorGroup
 from ipapy.ipachar import IPADiacritic
+from ipapy.ipachar import IPALetter
 from ipapy.ipachar import IPASuprasegmental
 from ipapy.ipachar import IPATone
-from ipapy.ipachar import flatten
+from ipapy.ipachar import IPAVowel
 from ipapy.ipachar import is_list_of_ipachars
-from ipapy.ipachar import canonical_representation
-from ipapy.ipachar import variant_to_list
 from ipapy.ipachar import variant_to_frozenset
+from ipapy.ipachar import variant_to_list
 
 class TestIPAChar(unittest.TestCase):
 
     def create_generic(self, arg=None):
-        cha = IPAChar(name=u"generic IPAChar", properties=u"foo_c")
-        let = IPALetter(name="generic IPALetter", properties=u"foo_l")
-        cns = IPAConsonant(name="generic IPAConsonant", properties=u"voiceless bilabial plosive")
-        vwl = IPAVowel(name="generic IPAVowel", properties=u"close front unrounded")
-        dia = IPADiacritic(name="generic IPADiacritic", properties=u"foo_d")
-        sup = IPASuprasegmental(name="generic IPA", properties=u"foo_s")
-        ton = IPATone(name="generic IPA", properties=u"foo_t")
+        cha = IPAChar(name=u"generic IPAChar", descriptors=u"foo_c")
+        let = IPALetter(name="generic IPALetter", descriptors=u"foo_l")
+        cns = IPAConsonant(name="generic IPAConsonant", descriptors=u"voiceless bilabial plosive")
+        vwl = IPAVowel(name="generic IPAVowel", descriptors=u"close front unrounded")
+        dia = IPADiacritic(name="generic IPADiacritic", descriptors=u"foo_d")
+        sup = IPASuprasegmental(name="generic IPA", descriptors=u"foo_s")
+        ton = IPATone(name="generic IPA", descriptors=u"foo_t")
         if arg == "cha":
             return cha
         elif arg == "let":
@@ -45,47 +45,47 @@ class TestIPAChar(unittest.TestCase):
 
     def test_constructor_no_property(self):
         with self.assertRaises(ValueError):
-            c = IPAChar(name=u"generic IPAChar", properties=u"")
+            c = IPAChar(name=u"generic IPAChar", descriptors=u"")
 
     def test_constructor(self):
-        c = IPAChar(name=u"generic IPAChar", properties=u"consonant")
+        c = IPAChar(name=u"generic IPAChar", descriptors=u"consonant")
 
     def test_constructor_unknown_property(self):
         # OK to give an unknown property
-        c = IPAChar(name=u"generic IPAChar", properties=u"foobarbaz")
+        c = IPAChar(name=u"generic IPAChar", descriptors=u"foobarbaz")
 
-    def test_get_properties(self):
-        c = IPAChar(name=u"generic IPAChar", properties=u"consonant")
-        prop = c.properties
+    def test_get_descriptors(self):
+        c = IPAChar(name=u"generic IPAChar", descriptors=u"consonant")
+        prop = c.descriptors
         self.assertTrue(len(prop) > 0)
 
-    def test_set_properties_bad_type(self):
-        c = IPAChar(name=u"generic IPAChar", properties=u"consonant")
+    def test_set_descriptors_bad_type(self):
+        c = IPAChar(name=u"generic IPAChar", descriptors=u"consonant")
         for v in [
             None,
             1,
             {"k": "v"}
         ]:
             with self.assertRaises(TypeError):
-                c.properties = v
+                c.descriptors = v
 
-    def test_set_properties_bad_empty(self):
-        c = IPAChar(name=u"generic IPAChar", properties=u"consonant")
+    def test_set_descriptors_bad_empty(self):
+        c = IPAChar(name=u"generic IPAChar", descriptors=u"consonant")
         with self.assertRaises(ValueError):
-            c.properties = u""
+            c.descriptors = u""
 
-    def test_set_properties(self):
-        c = IPAChar(name=u"generic IPAChar", properties=u"consonant")
-        c.properties = u"diacritic long" 
+    def test_set_descriptors(self):
+        c = IPAChar(name=u"generic IPAChar", descriptors=u"consonant")
+        c.descriptors = u"diacritic long" 
 
     def test_equal(self):
-        c1 = IPAChar(name=u"generic IPAChar", properties=u"consonant")
-        c2 = IPAChar(name=u"generic IPAChar", properties=u"consonant")
+        c1 = IPAChar(name=u"generic IPAChar", descriptors=u"consonant")
+        c2 = IPAChar(name=u"generic IPAChar", descriptors=u"consonant")
         self.assertFalse(c1 == c2)
 
     def test_is_equivalent(self):
-        c1 = IPAChar(name=u"generic IPAChar", properties=u"consonant")
-        c2 = IPAChar(name=u"generic IPAChar", properties=u"consonant")
+        c1 = IPAChar(name=u"generic IPAChar", descriptors=u"consonant")
+        c2 = IPAChar(name=u"generic IPAChar", descriptors=u"consonant")
         self.assertTrue(c1.is_equivalent(c1))
         self.assertTrue(c2.is_equivalent(c2))
         self.assertTrue(c1.is_equivalent(c2))
@@ -133,7 +133,7 @@ class TestIPAChar(unittest.TestCase):
             u"bilabial plosive"
         ]:
             with self.assertRaises(ValueError):
-                c = IPAConsonant(name="mycns", properties=v) 
+                c = IPAConsonant(name="mycns", descriptors=v) 
 
     def test_ipaconsonant_init_bad_2(self):
         for v, p, m in [
@@ -148,11 +148,11 @@ class TestIPAChar(unittest.TestCase):
             with self.assertRaises(ValueError):
                 c = IPAConsonant(name="mycns", voicing=v, place=p, manner=m) 
 
-    def test_ipaconsonant_properties(self):
+    def test_ipaconsonant_descriptors(self):
         cns = self.create_generic("cns")
-        self.assertEqual(cns.properties, frozenset(["voiceless", "bilabial", "plosive", "consonant"]))
+        self.assertEqual(cns.descriptors, frozenset(["voiceless", "bilabial", "plosive", "consonant"]))
 
-    def test_ipaconsonant_properties_set(self):
+    def test_ipaconsonant_descriptors_set(self):
         cns = self.create_generic("cns")
         for v in [
             u"voiced bilabial plosive",
@@ -164,10 +164,10 @@ class TestIPAChar(unittest.TestCase):
             frozenset([u"voiced", u"bilabial", u"plosive"]),
             frozenset([u"voiced", u"bilabial", u"plosive", u"consonant"]),
         ]:
-            cns.properties = v
-            self.assertEqual(cns.properties, frozenset(["voiced", "bilabial", "plosive", "consonant"]))
+            cns.descriptors = v
+            self.assertEqual(cns.descriptors, frozenset(["voiced", "bilabial", "plosive", "consonant"]))
 
-    def test_ipaconsonant_properties_set_bad(self):
+    def test_ipaconsonant_descriptors_set_bad(self):
         cns = self.create_generic("cns")
         for v in [
             None,
@@ -183,7 +183,7 @@ class TestIPAChar(unittest.TestCase):
             u"bilabial plosive"
         ]:
             with self.assertRaises((ValueError, TypeError)):
-                cns.properties = v
+                cns.descriptors = v
 
     def test_ipaconsonant_voicing(self):
         cns = self.create_generic("cns")
@@ -208,12 +208,6 @@ class TestIPAChar(unittest.TestCase):
         cns.manner = "nas"
         with self.assertRaises(ValueError):
             cns.manner = "foo"
-
-
-
-
-
-
 
     def test_is_list_of_ipachars(self):
         cha, let, cns, vwl, dia, sup, ton = self.create_generic()
@@ -272,69 +266,6 @@ class TestIPAChar(unittest.TestCase):
         for v in values:
             with self.assertRaises(TypeError):
                 variant_to_frozenset(v)
-
-    def test_canonical_representation(self):
-        values = [
-            ([], frozenset([])),
-            ([u"c", u"a", "b"], frozenset([u"a", u"b", u"c"])),
-        ]
-        for v, e in values:
-            self.assertEqual(canonical_representation(v), e)
-
-    def test_canonical_representation_bad(self):
-        values = [
-            set([]),
-            frozenset([]),
-            u"c a b",
-        ]
-        for v in values:
-            with self.assertRaises(TypeError):
-                canonical_representation(v)
-
-
-    def test_flatten(self):
-        values = [
-            ([["a"]], ["a"]),
-            ([["a", "b"]], ["a", "b"]),
-            ([["a"], ["b"]], ["a", "b"]),
-            ([["a"], ["b", "c"]], ["a", "b", "c"]),
-        ]
-        for v, e in values:
-            self.assertEqual(flatten(v), e)
-
-    def test_flatten_bad_not_list(self):
-        values = [
-            None,
-            1,
-            u"b",
-            "b",
-            set(["b"]),
-            frozenset(["b"]),
-            {"k": "v"}
-        ]
-        for v in values:
-            with self.assertRaises(TypeError):
-                flatten(v)
-
-    def test_flatten_bad_not_list_of_lists(self):
-        values = [
-            [None],
-            [1],
-            [u"b"],
-            ["b"],
-            set(["b"]),
-            frozenset(["b"]),
-            {"k": "v"},
-            [["a"], None],
-            [["a"], 1],
-            [["a"], "b"],
-            [["a"], set(["b"])],
-            [["a"], frozenset(["b"])],
-            [["a"], {"k": "v"}]
-        ]
-        for v in values:
-            with self.assertRaises(TypeError):
-                flatten(v)
 
 
 

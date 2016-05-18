@@ -71,12 +71,12 @@ tS1 == tS7  # True (idem)
 tS1 == tS8  # True (idem)
 
 # create custom IPAChars
-my_a1 = IPAVowel(name="my_a_1", properties="open front unrounded", unicode_repr="a")
-my_a2 = IPAVowel(name="my_a_2", properties=["open", "front", "unrounded"], unicode_repr="a")
+my_a1 = IPAVowel(name="my_a_1", descriptors="open front unrounded", unicode_repr="a")
+my_a2 = IPAVowel(name="my_a_2", descriptors=["open", "front", "unrounded"], unicode_repr="a")
 my_a3 = IPAVowel(name="my_a_3", height="open", backness="front", roundness="unrounded", unicode_repr="a")
-my_a4 = IPAVowel(name="my_a_4", properties=["low", "fnt", "unr"], unicode_repr="a")
-my_ee = IPAVowel(name="my_e_1", properties="close-mid front unrounded", unicode_repr="e")
-my_b1 = IPAConsonant(name="bilabial fricative", properties="voiced bilabial non-sibilant-fricative", unicode_repr=u"\u03B2")
+my_a4 = IPAVowel(name="my_a_4", descriptors=["low", "fnt", "unr"], unicode_repr="a")
+my_ee = IPAVowel(name="my_e_1", descriptors="close-mid front unrounded", unicode_repr="e")
+my_b1 = IPAConsonant(name="bilabial fricative", descriptors="voiced bilabial non-sibilant-fricative", unicode_repr=u"\u03B2")
 my_b2 = IPAConsonant(name="bf", voicing="voiced", place="bilabial", manner="non-sibilant-fricative", unicode_repr=u"\u03B2")
 my_tS = IPAConsonant(name="tS", voicing="voiceless", place="palato-alveolar", manner="sibilant-affricate", unicode_repr=u"t͡ʃ")
 my_a1 == my_a2                  # False (two different objects)
@@ -84,7 +84,7 @@ my_a1 == c1                     # False (two different objects)
 my_a1 == UNICODE_TO_IPA["a"]    # False (two different objects)
 
 # associate non-standard Unicode representation
-my_aa = IPAVowel(name="a special", properties=["low", "fnt", "unr"], unicode_repr="a{*}")
+my_aa = IPAVowel(name="a special", descriptors=["low", "fnt", "unr"], unicode_repr="a{*}")
 print(my_aa)    # "a{*}"
 
 # equality vs. equivalence
@@ -109,7 +109,7 @@ my_tS.is_equivalent(u"tS")      # False
 my_tS.is_equivalent(u"tʃ")      # False (missing the combining diacritic)
 my_tS.is_equivalent(u"t͜ʃ")      # True (has combining diacritic)
 
-# compare IPAChar and a string listing properties
+# compare IPAChar and a string listing descriptors
 my_a1.is_equivalent("open front unrounded")                                 # False (missing 'vowel')
 my_a1.is_equivalent("open front unrounded vowel")                           # True
 my_a1.is_equivalent("low fnt unr vwl")                                      # True (known abbreviations are good as well)
@@ -119,7 +119,7 @@ my_b1.is_equivalent("voiced bilabial non-sibilant-fricative consonant")     # Tr
 my_b1.is_equivalent("consonant non-sibilant-fricative bilabial voiced")     # True (the order does not matter)
 my_b1.is_equivalent("consonant non-sibilant-fricative bilabial voiceless")  # False
 
-# compare IPAChar and list of properties
+# compare IPAChar and list of descriptors
 my_a1.is_equivalent(["open", "front", "unrounded"])             # False
 my_a1.is_equivalent(["vowel", "open", "front", "unrounded"])    # True
 my_a1.is_equivalent(["open", "unrounded", "vowel", "front"])    # True
