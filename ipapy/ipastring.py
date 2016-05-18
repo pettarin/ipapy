@@ -12,6 +12,7 @@ from ipapy import UNICODE_TO_IPA
 from ipapy import is_valid_ipa
 from ipapy import remove_invalid_ipa_characters
 from ipapy.compatibility import is_unicode_string
+from ipapy.ipachar import is_list_of_ipachars
 
 __author__ = "Alberto Pettarin"
 __copyright__ = "Copyright 2016, Alberto Pettarin (www.albertopettarin.it)"
@@ -28,7 +29,11 @@ class IPAString(object):
     will be built using the provided list of IPAChar objects.
 
     Otherwise, if the ``unicode_string`` parameter is set,
-    the IPAString will be built by parsing it.
+    the IPAString will be built by parsing it,
+    respecting the ``ignore`` and ``single_char_parsing`` options.
+    By default (``single_char_parsing == False``),
+    this method builds the canonical representation of the IPA string,
+    that is, the one composed by the (prefix) minimum number of IPAChar objects.
 
     :param list ipa_chars: the list of IPAChar objects
     :param str unicode_string: the Unicode string to be parsed
@@ -54,6 +59,29 @@ class IPAString(object):
             )
             self.ipa_chars = [UNICODE_TO_IPA[substring] for substring in substrings]
 
+    @property
+    def ipa_chars(self):
+        """
+        Return the list of IPAChar objects composing the IPA string
+
+        :rtype: list of IPAChar
+        """
+        return self.__ipa_chars
+    @ipa_chars.setter
+    def ipa_chars(self, value):
+        """
+        Set the list of IPAChar objects composing the IPA string
+
+        :param list value: list of IPAChar objects
+        """
+        if value is None:
+            self.__ipa_chars = []
+        else:
+            if is_list_of_ipachars(value):
+                self.__ipa_chars = value
+            else:
+                raise ValueError("ipa_chars only accepts a list of IPAChar objects")
+
     def __str__(self):
         return u"".join([c.__str__() for c in self.ipa_chars])
 
@@ -69,6 +97,61 @@ class IPAString(object):
 
     def __len__(self):
         return len(self.ipa_chars)
+
+    def is_equivalent(self, other, ignore=False):
+        """
+        Return ``True`` if the IPA string is equivalent to the ``other`` object.
+
+        The ``other`` object can be:
+
+        1. a Unicode string,
+        2. a list of IPAChar objects, and
+        3. another IPAString.
+
+        :param variant other: the object to be compared against
+        :param bool ignore: if other is a Unicode string, ignore Unicode characters not IPA valid
+        :rtype: bool
+        """
+        def is_equivalent_to_list_of_ipachars(other):
+            """
+            Return ``True`` if the list of IPAChar objects
+            in the canonical representation of the string
+            is the same as the given list.
+
+            :param list other: list of IPAChar objects
+            :rtype: bool
+            """
+            my_ipa_chars = self.canonical_representation.ipa_chars
+            if len(my_ipa_chars) != len(other):
+                return False
+            for i in range(len(my_ipa_chars)):
+                if not my_ipa_chars[i].is_equivalent(other[i]):
+                    return False
+            return True
+
+        if is_unicode_string(other):
+            try:
+                return is_equivalent_to_list_of_ipachars(IPAString(unicode_string=other, ignore=ignore).ipa_chars)
+            except:
+                return False
+        if is_list_of_ipachars(other):
+            try:
+                return is_equivalent_to_list_of_ipachars(other) 
+            except:
+                return False
+        if isinstance(other, IPAString):
+            return is_equivalent_to_list_of_ipachars(other.canonical_representation.ipa_chars)
+        return False
+
+    @property
+    def canonical_representation(self):
+        """
+        Return a new IPAString, containing the canonical representation of the current string,
+        that is, the one composed by the (prefix) minimum number of IPAChar objects.
+
+        :rtype: IPAString
+        """
+        return IPAString(unicode_string=u"".join([c.__unicode__() for c in self.ipa_chars]))
 
     @property
     def consonants(self):

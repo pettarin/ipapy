@@ -156,8 +156,6 @@ G_CONSONANTS = [
 ]
 FG_CONSONANTS = flatten(G_CONSONANTS)
 
-
-
 # diacritics
 D_ADVANCED = ["advanced"]
 D_ADVANCED_TONGUE_ROOT = ["advanced-tongue-root"]
@@ -223,8 +221,6 @@ G_DIACRITICS = [
 ]
 FG_DIACRITICS = flatten(G_DIACRITICS)
 
-
-
 # vowels
 V_CLOSE = ["close", "high", "hgh"]
 V_NEAR_CLOSE = ["near-close", "lowered-close", "semi-high", "smh"]
@@ -283,7 +279,6 @@ G_VOWELS = [
 ]
 FG_VOWELS = flatten(G_VOWELS)
 
-
 # suprasegmentals
 S_PRIMARY_STRESS = ["primary-stress"]
 S_SECONDARY_STRESS = ["secondary-stress"]
@@ -318,16 +313,77 @@ G_SUPRASEGMENTALS = [
 ]
 FG_SUPRASEGMENTALS = flatten(G_SUPRASEGMENTALS)
 
-
-
-# TODO tones 
-G_TONES = []
+# tones 
+T_EXTRA_HIGH_LEVEL = ["extra-high-level"]
+T_HIGH_LEVEL = ["high-level"]
+T_MID_LEVEL = ["mid-level"]
+T_LOW_LEVEL = ["low-level"]
+T_EXTRA_LOW_LEVEL = ["extra-low-level"]
+T_RISING_CONTOUR = ["rising-contour"]
+T_FALLING_CONTOUR = ["falling-contour"]
+T_HIGH_RISING_CONTOUR = ["high-rising-contour"]
+T_LOW_RISING_CONTOUR = ["low-rising-contour"]
+T_RISING_FALLING_CONTOUR = ["rising-falling-contour"]
+T_MID_LOW_FALLING_CONTOUR = ["mid-low-falling-contour"]
+T_HIGH_MID_FALLING_CONTOUR = ["high-mid-falling-contour"]
+T_FALLING_RISING_CONTOUR = ["falling-rising-contour"]
+T_DOWNSTEP = ["downstep"]
+T_UPSTEP = ["upstep"]
+T_GLOBAL_RISE = ["global-rise"]
+T_GLOBAL_FALL = ["global-fall"]
+G_TONE_LEVEL = [
+    T_EXTRA_HIGH_LEVEL,
+    T_HIGH_LEVEL,
+    T_MID_LEVEL,
+    T_LOW_LEVEL,
+    T_EXTRA_LOW_LEVEL,
+]
+G_TONE_CONTOUR = [
+    T_RISING_CONTOUR,
+    T_FALLING_CONTOUR,
+    T_HIGH_RISING_CONTOUR,
+    T_LOW_RISING_CONTOUR,
+    T_RISING_FALLING_CONTOUR,
+    T_MID_LOW_FALLING_CONTOUR,
+    T_HIGH_MID_FALLING_CONTOUR,
+    T_FALLING_RISING_CONTOUR, 
+]
+G_TONE_GLOBAL = [
+    T_DOWNSTEP,
+    T_UPSTEP,
+    T_GLOBAL_RISE,
+    T_GLOBAL_FALL,
+]
+G_TONES = [
+    T_EXTRA_HIGH_LEVEL,
+    T_HIGH_LEVEL,
+    T_MID_LEVEL,
+    T_LOW_LEVEL,
+    T_EXTRA_LOW_LEVEL,
+    T_RISING_CONTOUR,
+    T_FALLING_CONTOUR,
+    T_HIGH_RISING_CONTOUR,
+    T_LOW_RISING_CONTOUR,
+    T_RISING_FALLING_CONTOUR,
+    T_MID_LOW_FALLING_CONTOUR,
+    T_HIGH_MID_FALLING_CONTOUR,
+    T_FALLING_RISING_CONTOUR, 
+    T_DOWNSTEP,
+    T_UPSTEP,
+    T_GLOBAL_RISE,
+    T_GLOBAL_FALL,
+]
 FG_TONES = flatten(G_TONES)
 
-
-
 # all properties
-G_ALL_PROPERTIES = G_TYPES + G_DIACRITICS + G_SUPRASEGMENTALS + G_TONES + (G_VOICING + G_PLACE + G_MANNER) + (G_HEIGHT + G_BACKNESS + G_ROUNDNESS)
+G_ALL_PROPERTIES = (
+    G_TYPES +
+    G_DIACRITICS +
+    G_SUPRASEGMENTALS +
+    G_TONES +
+    (G_VOICING + G_PLACE + G_MANNER) +
+    (G_HEIGHT + G_BACKNESS + G_ROUNDNESS)
+)
 FG_ALL_PROPERTIES = flatten(G_ALL_PROPERTIES)
 
 def canonical_representation(properties):
@@ -378,31 +434,54 @@ def variant_to_frozenset(obj):
     """
     return frozenset(variant_to_list(obj))
 
+
+
 class IPAChar(object):
     """
-    An IPA character, that is, an IPA letter or diacritic.
+    An IPA character, that is, an IPA letter or diacritic/suprasegmental/tone mark.
 
     Note that an IPAChar might correspond to 0, 1, or more Unicode characters.
 
     :param str name: an arbitrary mnemonic name for the character
     :param frozenset properties: the properties of the character
-    :param str unicode_repr: the (optional) Unicode representation for the character
+    :param str unicode_repr: the Unicode representation for the character
     """
     
     TAG = "IPAChar"
 
     def __init__(self, name, properties, unicode_repr=None):
         self.name = name
-        self.properties = variant_to_frozenset(properties)
+        self.properties = properties
         self.unicode_repr = unicode_repr
 
-    def __eq__(self, other):
-        """
-        If other is a Unicode string, and we have a Unicode representation, return True if they match.
-        
-        Otherwise, if other is an IPAChar, compare their canonical representation.
+    def __str__(self):
+        return "" if self.unicode_repr is None else self.unicode_repr
+    
+    def __unicode__(self):
+        return u"" if self.unicode_repr is None else self.unicode_repr
 
-        Otherwise, try converting other to IPAChar, and compare their canonical representation.
+    def __repr__(self):
+        return "%s (%s)" % (self.name, str(self.canonical_representation))
+
+    @property
+    def properties(self):
+        return self.__properties
+    @properties.setter
+    def properties(self, value):
+        self.__properties = variant_to_frozenset(value)
+
+    def is_equivalent(self, other):
+        """
+        Return ``True`` if the IPA character is equivalent to the ``other`` object.
+
+        The ``other`` object can be:
+
+        1. a Unicode string, containing the representation of the IPA character,
+        2. a Unicode string, containing a space-separated list of properties,
+        3. a list of Unicode strings, containing properties, and
+        4. another IPAChar.
+
+        :rtype: bool
         """
         if (self.unicode_repr is not None) and (is_unicode_string(other)) and (self.unicode_repr == other):
             return True
@@ -412,15 +491,6 @@ class IPAChar(object):
             return self.canonical_representation == IPAChar(name=None, properties=other).canonical_representation
         except:
             return False
-
-    def __str__(self):
-        return self.unicode_repr
-    
-    def __unicode__(self):
-        return self.unicode_repr
-
-    def __repr__(self):
-        return "%s (%s)" % (self.name, str(self.canonical_representation))
 
     @property
     def is_letter(self):
@@ -551,98 +621,19 @@ class IPAChar(object):
 
 
 
-class IPADiacritic(IPAChar):
+def is_list_of_ipachars(obj):
     """
-    An IPA diacritic mark.
+    Return ``True`` if the given object is a list of IPAChar objects.
+
+    :param object obj: the object to test
+    :rtype: bool
     """
-    
-    TAG = "IPADiacritic"
-    
-    @property
-    def is_diacritic(self):
+    if isinstance(obj, list):
+        for e in obj:
+            if not isinstance(e, IPAChar):
+                return False
         return True
-
-
-
-class IPASuprasegmental(IPAChar):
-    """
-    An IPA suprasegmental mark.
-    """
-    
-    TAG = "IPASuprasegmental"
-    
-    @property
-    def is_suprasegmental(self):
-        return True
-
-    @property
-    def stress(self):
-        """
-        Return the stress value of the suprasegmental,
-        or ``None`` if not a stress mark.
-
-        :rtype: str
-        """
-        return self.alternative_property(G_STRESS)
-
-    @property
-    def length(self):
-        """
-        Return the length value of the suprasegmental,
-        or ``None`` if not a length mark.
-
-        :rtype: str
-        """
-        return self.alternative_property(G_LENGTH)
-
-    @property
-    def is_stress(self):
-        """
-        Return ``True`` if the suprasegmental is a stress mark.
-
-        :rtype: bool
-        """
-        return self.stress is not None
-
-    @property
-    def is_length(self):
-        """
-        Return ``True`` if the suprasegmental is a length mark.
-
-        :rtype: bool
-        """
-        return self.length is not None
-
-    @property
-    def is_word_break(self):
-        """
-        Return ``True`` if the suprasegmental is a word break mark.
-
-        :rtype: bool
-        """
-        return self.has_property(S_WORD_BREAK)
-
-    @property
-    def is_syllable_break(self):
-        """
-        Return ``True`` if the suprasegmental is a syllable break mark.
-
-        :rtype: bool
-        """
-        return self.has_property(S_SYLLABLE_BREAK)
-
-
-
-class IPATone(IPAChar):
-    """
-    An IPA tone mark.
-    """
-
-    TAG = "IPATone"
-    
-    @property
-    def is_tone(self):
-        return True
+    return False
 
 
 
@@ -939,6 +930,144 @@ class IPAVowel(IPALetter):
         if (value is not None) and (not value in FG_ROUNDNESS):
             raise ValueError("Unrecognized value for roundness: '%s'" % value)
         self.__roundness = value
+
+
+
+class IPADiacritic(IPAChar):
+    """
+    An IPA diacritic mark.
+    """
+    
+    TAG = "IPADiacritic"
+    
+    @property
+    def is_diacritic(self):
+        return True
+
+
+
+class IPASuprasegmental(IPAChar):
+    """
+    An IPA suprasegmental mark.
+    """
+    
+    TAG = "IPASuprasegmental"
+    
+    @property
+    def is_suprasegmental(self):
+        return True
+
+    @property
+    def stress(self):
+        """
+        Return the stress value of the suprasegmental,
+        or ``None`` if not a stress mark.
+
+        :rtype: str
+        """
+        return self.alternative_property(G_STRESS)
+
+    @property
+    def length(self):
+        """
+        Return the length value of the suprasegmental,
+        or ``None`` if not a length mark.
+
+        :rtype: str
+        """
+        return self.alternative_property(G_LENGTH)
+
+    @property
+    def is_stress(self):
+        """
+        Return ``True`` if the suprasegmental is a stress mark.
+
+        :rtype: bool
+        """
+        return self.stress is not None
+
+    @property
+    def is_length(self):
+        """
+        Return ``True`` if the suprasegmental is a length mark.
+
+        :rtype: bool
+        """
+        return self.length is not None
+
+    @property
+    def is_word_break(self):
+        """
+        Return ``True`` if the suprasegmental is a word break mark.
+
+        :rtype: bool
+        """
+        return self.has_property(S_WORD_BREAK)
+
+    @property
+    def is_syllable_break(self):
+        """
+        Return ``True`` if the suprasegmental is a syllable break mark.
+
+        :rtype: bool
+        """
+        return self.has_property(S_SYLLABLE_BREAK)
+
+    @property
+    def is_minor_or_major_break(self):
+        """
+        Return ``True`` if the suprasegmental is a minor (foot) or major (intonation) break.
+        
+        :rtype: bool
+        """
+        return self.has_property(S_MINOR_GROUP) or self.has_property(S_MAJOR_GROUP)
+
+
+
+class IPATone(IPAChar):
+    """
+    An IPA tone mark.
+    """
+
+    TAG = "IPATone"
+    
+    @property
+    def tone_level(self):
+        """
+        Return the tone level value of the tone mark,
+        or ``None`` if not a tone level mark.
+
+        :rtype: str
+        """
+        return self.alternative_property(G_TONE_LEVEL)
+
+    @property
+    def tone_contour(self):
+        """
+        Return the tone contour value of the tone mark,
+        or ``None`` if not a tone contour mark.
+
+        :rtype: str
+        """
+        return self.alternative_property(G_TONE_CONTOUR)
+
+    @property
+    def is_level_or_contour(self):
+        """
+        Return ``True`` if the tone mark is a tone level or a tone contour mark.
+        
+        :rtype: bool
+        """
+        return (self.tone_level is not None) or (self.tone_contour is not None)
+
+    @property
+    def is_global(self):
+        """
+        Return ``True`` if the tone mark is a global tone mark.
+        
+        :rtype: bool
+        """
+        return self.alternative_property(G_TONE_GLOBAL) is not None
 
 
 
