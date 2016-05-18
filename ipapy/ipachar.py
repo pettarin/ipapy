@@ -26,6 +26,11 @@ def flatten(lists):
     :param list lists: a list-of-lists
     :rtype: list
     """
+    if not isinstance(lists, list):
+        raise TypeError("The given object is not a list")
+    for l in lists:
+        if not isinstance(l, list):
+            raise TypeError("The given object contains an element which is not a list")
     acc = []
     for l in lists:
         acc.extend(l)
@@ -397,7 +402,10 @@ def canonical_representation(properties):
 
     :param list properties: a list of properties
     :rtype: frozenset
+    :raise TypeError: if the ``properties`` is not a list
     """
+    if not isinstance(properties, list):
+        raise TypeError("The properties parameter must be a list")
     return frozenset(sorted(properties))
 
 def variant_to_list(obj):
@@ -410,7 +418,7 @@ def variant_to_list(obj):
 
     :param variant obj: the object to be parsed
     :rtype: list 
-    :raise ValueError: if the ``obj`` has a type not listed above
+    :raise TypeError: if the ``obj`` has a type not listed above
     """
     if isinstance(obj, list):
         return obj
@@ -418,7 +426,7 @@ def variant_to_list(obj):
         return list(obj)
     elif is_unicode_string(obj):
         return [s for s in obj.split() if len(s) > 0]
-    raise ValueError("The given value must be a frozenset, a set, a list or a Unicode string.")
+    raise TypeError("The given value must be a frozenset, a set, a list or a Unicode string.")
 
 def variant_to_frozenset(obj):
     """
@@ -430,7 +438,7 @@ def variant_to_frozenset(obj):
 
     :param variant obj: the object to be parsed
     :rtype: frozenset
-    :raise ValueError: if the ``obj`` has a type not listed above
+    :raise TypeError: if the ``obj`` has a type not listed above
     """
     return frozenset(variant_to_list(obj))
 
@@ -461,14 +469,17 @@ class IPAChar(object):
         return u"" if self.unicode_repr is None else self.unicode_repr
 
     def __repr__(self):
-        return "%s (%s)" % (self.name, str(self.canonical_representation))
+        return u"%s (%s)" % (self.name, str(self.canonical_representation))
 
     @property
     def properties(self):
         return self.__properties
     @properties.setter
     def properties(self, value):
-        self.__properties = variant_to_frozenset(value)
+        prop = variant_to_frozenset(value)
+        if len(prop) < 1:
+            raise ValueError("The IPAChar must have at least one property")
+        self.__properties = prop
 
     def is_equivalent(self, other):
         """
@@ -707,6 +718,8 @@ class IPAConsonant(IPALetter):
                 properties.extend(variant_to_list(modifiers))
         elif (voicing, place, manner) != (None, None, None):
             raise ValueError("You must specify either a properties list/string, or a triple (voicing, place, manner)")
+        elif properties is None:
+            raise ValueError("You must specify either a properties list/string, or a triple (voicing, place, manner)")
         self.properties = properties
 
     @property
@@ -839,6 +852,8 @@ class IPAVowel(IPALetter):
             if modifiers is not None:
                 properties.extend(variant_to_list(modifiers))
         elif (height, backness, roundness) != (None, None, None):
+            raise ValueError("You must specify either a properties list/string, or a triple (height, backness, roundness)")
+        elif properties is None:
             raise ValueError("You must specify either a properties list/string, or a triple (height, backness, roundness)")
         self.properties = properties
 
@@ -1030,7 +1045,11 @@ class IPATone(IPAChar):
     """
 
     TAG = "IPATone"
-    
+
+    @property
+    def is_tone(self):
+        return True
+
     @property
     def tone_level(self):
         """
