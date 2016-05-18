@@ -13,6 +13,7 @@ from ipapy import UNICODE_TO_IPA
 from ipapy import is_valid_ipa
 from ipapy import remove_invalid_ipa_characters
 from ipapy.compatibility import is_unicode_string
+from ipapy.compatibility import to_str
 from ipapy.ipachar import is_list_of_ipachars
 from ipapy.ipachar import IPAChar 
 
@@ -66,7 +67,7 @@ class IPAString(MutableSequence):
             raise TypeError("The given value is not an IPAChar object: '%s'" % value)
 
     def __str__(self):
-        return u"".join([c.__str__() for c in self.ipa_chars])
+        return to_str(u"".join([c.__str__() for c in self.ipa_chars]))
 
     def __unicode__(self):
         return u"".join([c.__unicode__() for c in self.ipa_chars])

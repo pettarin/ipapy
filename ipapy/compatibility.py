@@ -50,6 +50,21 @@ def to_unicode_string(string):
         return unicode(string, encoding="utf-8")
     return string
 
+def to_str(string):
+    """
+    Return the given string (either byte string or Unicode string)
+    converted to native-str, that is,
+    a byte string on Python 2, or a Unicode string on Python 3.
+
+    :param str string: the string to convert to native-str
+    :rtype: native-str
+    """
+    if isinstance(string, str):
+        return string
+    if PY2:
+        return string.encode("utf-8")
+    return string.decode("utf-8")
+
 def int_to_unichr(codepoint):
     """
     Return the Unicode character with the given codepoint,

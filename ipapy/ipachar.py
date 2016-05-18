@@ -23,18 +23,23 @@ class IPADescriptor(object):
 
     The first label in the list is assumed to be the canonical label.
 
-    :param list labels: list of labels (str)
+    :param list labels: list of labels, each being a (Unicode) string
     """
     
     TAG = u"IPADescriptor"
     
     def __init__(self, labels):
         if not isinstance(labels, list):
-            raise TypeError("Parameter labels must be a list of strings")
+            raise TypeError("Parameter labels must be a list of Unicode strings")
         if len(labels) < 1:
             raise ValueError("Parameter labels must contain at least one string")
-        self.name = labels[0] 
-        self.labels = set(labels)
+        for l in labels:
+            if not is_unicode_string(l):
+                raise TypeError("Parameter labels must be a list of Unicode strings")
+        self.__labels = labels
+
+    def __len__(self):
+        return len(self.labels)
 
     def __str__(self):
         return " ".join(self.labels)
@@ -44,6 +49,33 @@ class IPADescriptor(object):
 
     def __contains__(self, other):
         return other in self.labels
+
+    @property
+    def canonical_label(self):
+        """
+        Return the canonical label for this descriptor.
+
+        :rtype: str
+        """
+        return self.__labels[0]
+
+    @canonical_label.setter
+    def canonical_label(self, value):
+        raise ValueError("The canonical_label field is read-only.")
+
+    @property
+    def labels(self):
+        """
+        Return all the labels for this descriptor,
+        the first being the canonical label.
+
+        :rtype: list of str
+        """
+        return self.__labels
+
+    @labels.setter
+    def labels(self, value):
+        raise ValueError("The labels field is read-only.")
 
 
 
@@ -61,16 +93,21 @@ class IPADescriptorGroup(object):
     def __init__(self, descriptors):
         if not isinstance(descriptors, list):
             raise TypeError("Parameter descriptors must be a list of IPADescriptor objects")
+        if len(descriptors) < 1:
+            raise ValueError("Parameter descriptors must contain at least one descriptor")
         for d in descriptors:
             if not isinstance(d, IPADescriptor):
                 raise TypeError("Parameter descriptors must be a list of IPADescriptor objects")
-        self.descriptors = descriptors
+        self.__descriptors = descriptors
+
+    def __len__(self):
+        return len(self.descriptors)
 
     def __str__(self):
         return "\n".join([d.__str__() for d in self.descriptors])
 
     def __unicode__(self):
-        return u"\n".join([d.__unicode__() for d in self.labels])
+        return u"\n".join([d.__unicode__() for d in self.descriptors])
 
     def __contains__(self, value):
         if isinstance(value, IPADescriptor):
@@ -82,6 +119,19 @@ class IPADescriptorGroup(object):
             raise TypeError("Cannot concatenate an object that is not an IPADescriptorGroup")
         return IPADescriptorGroup(descriptors=self.descriptors + other.descriptors)
 
+    @property
+    def descriptors(self):
+        """
+        Return all the descriptors in this group.
+
+        :rtype: list of IPADescriptor objects
+        """
+        return self.__descriptors
+
+    @descriptors.setter
+    def descriptors(self, value):
+        raise ValueError("The descriptors field is read-only.")
+
     def canonical_value(self, query):
         """
         Return the canonical value corresponding to the given query value.
@@ -92,17 +142,17 @@ class IPADescriptorGroup(object):
         """
         for d in self.descriptors:
             if query in d:
-                return d.name
+                return d.canonical_label
         return None
 
 
 
 # types
-D_CONSONANT = IPADescriptor(["consonant", "cns"])
-D_VOWEL = IPADescriptor(["vowel", "vwl"])
-D_DIACRITIC = IPADescriptor(["diacritic", "dia"])
-D_SUPRASEGMENTAL = IPADescriptor(["suprasegmental", "sup"])
-D_TONE = IPADescriptor(["tone", "ton"])
+D_CONSONANT = IPADescriptor([u"consonant", u"cns"])
+D_VOWEL = IPADescriptor([u"vowel", u"vwl"])
+D_DIACRITIC = IPADescriptor([u"diacritic", u"dia"])
+D_SUPRASEGMENTAL = IPADescriptor([u"suprasegmental", u"sup"])
+D_TONE = IPADescriptor([u"tone", u"ton"])
 DG_TYPES = IPADescriptorGroup([
     D_CONSONANT,
     D_VOWEL,
@@ -113,34 +163,34 @@ DG_TYPES = IPADescriptorGroup([
 
 
 # consonants
-D_C_VOICED = IPADescriptor(["voiced", "vcd"])
-D_C_VOICELESS = IPADescriptor(["voiceless", "tenuis", "vls"])
+D_C_VOICED = IPADescriptor([u"voiced", u"vcd"])
+D_C_VOICELESS = IPADescriptor([u"voiceless", u"tenuis", u"vls"])
 DG_C_VOICING = IPADescriptorGroup([
     D_C_VOICED,
     D_C_VOICELESS,
 ])
-D_C_ALVEOLAR = IPADescriptor(["alveolar", "alv"])
-D_C_ALVEOLO_NASAL = IPADescriptor(["alveolo-nasal", "alveolar-nasal"])
-D_C_ALVEOLO_PALATAL = IPADescriptor(["alveolo-palatal", "alveolar-palatal"])
-D_C_BILABIAL = IPADescriptor(["bilabial", "blb"])
-D_C_DENTAL = IPADescriptor(["dental", "dnt"])
-D_C_DENTO_NASAL = IPADescriptor(["dento-nasal", "dental-nasal"])
-D_C_GLOTTAL = IPADescriptor(["glottal", "glt"])
-D_C_LABIO_ALVEOLAR = IPADescriptor(["labio-alveolar", "labial-alveolar", "labioalveolar"])
-D_C_LABIO_DENTAL = IPADescriptor(["labio-dental", "labial-dental", "labiodental", "lbd"])
-D_C_LABIO_PALATAL = IPADescriptor(["labio-palatal", "labial-palatal", "labiopalatal"])
-D_C_LABIO_VELAR = IPADescriptor(["labio-velar", "labial-velar", "labiovelar"])
-D_C_LINGUOLABIAL = IPADescriptor(["linguolabial"])
-D_C_PALATAL = IPADescriptor(["palatal", "pal"])
-D_C_PALATO_ALVEOLAR = IPADescriptor(["palato-alveolar", "palatal-alveolar", "palatoalveolar", "postalveolar", "pla"])
-D_C_PALATO_ALVEOLO_VELAR = IPADescriptor(["palato-alveolo-velar", "palatoalveolar-velar"])
-D_C_PALATO_NASAL = IPADescriptor(["palato-nasal", "palatal-nasal", "palatonasal"])
-D_C_PHARYNGEAL = IPADescriptor(["pharyngeal", "epiglottal", "phr"])
-D_C_RETROFLEX = IPADescriptor(["retroflex", "rfx"])
-D_C_RETROFLEX_NASAL = IPADescriptor(["retroflex-nasal", "retroflexnasal"])
-D_C_UVULAR = IPADescriptor(["uvular", "uvl"])
-D_C_UVULO_PHARYNGEAL = IPADescriptor(["uvulo-pharyngeal", "uvular-pharyngeal", "uvulopharyngeal"])
-D_C_VELAR = IPADescriptor(["velar", "vel"])
+D_C_ALVEOLAR = IPADescriptor([u"alveolar", u"alv"])
+D_C_ALVEOLO_NASAL = IPADescriptor([u"alveolo-nasal", u"alveolar-nasal"])
+D_C_ALVEOLO_PALATAL = IPADescriptor([u"alveolo-palatal", u"alveolar-palatal"])
+D_C_BILABIAL = IPADescriptor([u"bilabial", u"blb"])
+D_C_DENTAL = IPADescriptor([u"dental", u"dnt"])
+D_C_DENTO_NASAL = IPADescriptor([u"dento-nasal", u"dental-nasal"])
+D_C_GLOTTAL = IPADescriptor([u"glottal", u"glt"])
+D_C_LABIO_ALVEOLAR = IPADescriptor([u"labio-alveolar", u"labial-alveolar", u"labioalveolar"])
+D_C_LABIO_DENTAL = IPADescriptor([u"labio-dental", u"labial-dental", u"labiodental", u"lbd"])
+D_C_LABIO_PALATAL = IPADescriptor([u"labio-palatal", u"labial-palatal", u"labiopalatal"])
+D_C_LABIO_VELAR = IPADescriptor([u"labio-velar", u"labial-velar", u"labiovelar"])
+D_C_LINGUOLABIAL = IPADescriptor([u"linguolabial"])
+D_C_PALATAL = IPADescriptor([u"palatal", u"pal"])
+D_C_PALATO_ALVEOLAR = IPADescriptor([u"palato-alveolar", u"palatal-alveolar", u"palatoalveolar", u"postalveolar", u"pla"])
+D_C_PALATO_ALVEOLO_VELAR = IPADescriptor([u"palato-alveolo-velar", u"palatoalveolar-velar"])
+D_C_PALATO_NASAL = IPADescriptor([u"palato-nasal", u"palatal-nasal", u"palatonasal"])
+D_C_PHARYNGEAL = IPADescriptor([u"pharyngeal", u"epiglottal", u"phr"])
+D_C_RETROFLEX = IPADescriptor([u"retroflex", u"rfx"])
+D_C_RETROFLEX_NASAL = IPADescriptor([u"retroflex-nasal", u"retroflexnasal"])
+D_C_UVULAR = IPADescriptor([u"uvular", u"uvl"])
+D_C_UVULO_PHARYNGEAL = IPADescriptor([u"uvulo-pharyngeal", u"uvular-pharyngeal", u"uvulopharyngeal"])
+D_C_VELAR = IPADescriptor([u"velar", u"vel"])
 DG_C_PLACE = IPADescriptorGroup([
     D_C_ALVEOLAR,
     D_C_ALVEOLO_NASAL,
@@ -165,27 +215,27 @@ DG_C_PLACE = IPADescriptorGroup([
     D_C_UVULO_PHARYNGEAL,
     D_C_VELAR,
 ])
-D_C_APPROXIMANT = IPADescriptor(["approximant", "apr"])
-D_C_CLICK = IPADescriptor(["click", "clk"])
-D_C_EJECTIVE = IPADescriptor(["ejective", "ejc"])
-D_C_EJECTIVE_AFFRICATE = IPADescriptor(["ejective-affricate"])
-D_C_EJECTIVE_FRICATIVE = IPADescriptor(["ejective-fricative"])
-D_C_FLAP = IPADescriptor(["flap", "tap", "flp"])
-D_C_IMPLOSIVE = IPADescriptor(["implosive", "imp"])
-D_C_LATERAL_AFFRICATE = IPADescriptor(["lateral-affricate"])
-D_C_LATERAL_APPROXIMANT = IPADescriptor(["lateral-approximant"])
-D_C_LATERAL_CLICK = IPADescriptor(["lateral-click"])
-D_C_LATERAL_EJECTIVE_AFFRICATE = IPADescriptor(["lateral-ejective-affricate"])
-D_C_LATERAL_EJECTIVE_FRICATIVE = IPADescriptor(["lateral-ejective-fricative"])
-D_C_LATERAL_FLAP = IPADescriptor(["lateral-flap"])
-D_C_LATERAL_FRICATIVE = IPADescriptor(["lateral-fricative"])
-D_C_NASAL = IPADescriptor(["nasal", "nas"])
-D_C_NON_SIBILANT_AFFRICATE = IPADescriptor(["non-sibilant-affricate"])
-D_C_NON_SIBILANT_FRICATIVE = IPADescriptor(["non-sibilant-fricative"])
-D_C_PLOSIVE = IPADescriptor(["plosive", "stop", "stp"])
-D_C_SIBILANT_AFFRICATE = IPADescriptor(["sibilant-affricate"])
-D_C_SIBILANT_FRICATIVE = IPADescriptor(["sibilant-fricative"])
-D_C_TRILL = IPADescriptor(["trill", "trl"])
+D_C_APPROXIMANT = IPADescriptor([u"approximant", u"apr"])
+D_C_CLICK = IPADescriptor([u"click", u"clk"])
+D_C_EJECTIVE = IPADescriptor([u"ejective", u"ejc"])
+D_C_EJECTIVE_AFFRICATE = IPADescriptor([u"ejective-affricate"])
+D_C_EJECTIVE_FRICATIVE = IPADescriptor([u"ejective-fricative"])
+D_C_FLAP = IPADescriptor([u"flap", u"tap", u"flp"])
+D_C_IMPLOSIVE = IPADescriptor([u"implosive", u"imp"])
+D_C_LATERAL_AFFRICATE = IPADescriptor([u"lateral-affricate"])
+D_C_LATERAL_APPROXIMANT = IPADescriptor([u"lateral-approximant"])
+D_C_LATERAL_CLICK = IPADescriptor([u"lateral-click"])
+D_C_LATERAL_EJECTIVE_AFFRICATE = IPADescriptor([u"lateral-ejective-affricate"])
+D_C_LATERAL_EJECTIVE_FRICATIVE = IPADescriptor([u"lateral-ejective-fricative"])
+D_C_LATERAL_FLAP = IPADescriptor([u"lateral-flap"])
+D_C_LATERAL_FRICATIVE = IPADescriptor([u"lateral-fricative"])
+D_C_NASAL = IPADescriptor([u"nasal", u"nas"])
+D_C_NON_SIBILANT_AFFRICATE = IPADescriptor([u"non-sibilant-affricate"])
+D_C_NON_SIBILANT_FRICATIVE = IPADescriptor([u"non-sibilant-fricative"])
+D_C_PLOSIVE = IPADescriptor([u"plosive", u"stop", u"stp"])
+D_C_SIBILANT_AFFRICATE = IPADescriptor([u"sibilant-affricate"])
+D_C_SIBILANT_FRICATIVE = IPADescriptor([u"sibilant-fricative"])
+D_C_TRILL = IPADescriptor([u"trill", u"trl"])
 DG_C_MANNER = IPADescriptorGroup([
     D_C_APPROXIMANT,
     D_C_CLICK,
@@ -213,13 +263,13 @@ DG_CONSONANTS = DG_C_VOICING + DG_C_PLACE + DG_C_MANNER
 
 
 # vowels
-D_V_CLOSE = IPADescriptor(["close", "high", "hgh"])
-D_V_NEAR_CLOSE = IPADescriptor(["near-close", "lowered-close", "semi-high", "smh"])
-D_V_CLOSE_MID = IPADescriptor(["close-mid", "upper-mid", "umd"])
-D_V_MID = IPADescriptor(["mid"])
-D_V_OPEN_MID = IPADescriptor(["open-mid", "lower-mid", "lmd"])
-D_V_NEAR_OPEN = IPADescriptor(["near-open", "raised-open", "semi-low", "slw"])
-D_V_OPEN = IPADescriptor(["open", "low"])
+D_V_CLOSE = IPADescriptor([u"close", u"high", u"hgh"])
+D_V_NEAR_CLOSE = IPADescriptor([u"near-close", u"lowered-close", u"semi-high", u"smh"])
+D_V_CLOSE_MID = IPADescriptor([u"close-mid", u"upper-mid", u"umd"])
+D_V_MID = IPADescriptor([u"mid"])
+D_V_OPEN_MID = IPADescriptor([u"open-mid", u"lower-mid", u"lmd"])
+D_V_NEAR_OPEN = IPADescriptor([u"near-open", u"raised-open", u"semi-low", u"slw"])
+D_V_OPEN = IPADescriptor([u"open", u"low"])
 DG_V_HEIGHT = IPADescriptorGroup([
     D_V_CLOSE,
     D_V_NEAR_CLOSE,
@@ -229,11 +279,11 @@ DG_V_HEIGHT = IPADescriptorGroup([
     D_V_NEAR_OPEN,
     D_V_OPEN,
 ])
-D_V_FRONT = IPADescriptor(["front", "fnt"])
-D_V_NEAR_FRONT = IPADescriptor(["near-front"])
-D_V_CENTER = IPADescriptor(["central", "center", "cnt"])
-D_V_NEAR_BACK = IPADescriptor(["near-back"])
-D_V_BACK = IPADescriptor(["back", "bck"])
+D_V_FRONT = IPADescriptor([u"front", u"fnt"])
+D_V_NEAR_FRONT = IPADescriptor([u"near-front"])
+D_V_CENTER = IPADescriptor([u"central", u"center", u"cnt"])
+D_V_NEAR_BACK = IPADescriptor([u"near-back"])
+D_V_BACK = IPADescriptor([u"back", u"bck"])
 DG_V_BACKNESS = IPADescriptorGroup([
     D_V_FRONT,
     D_V_NEAR_FRONT,
@@ -241,8 +291,8 @@ DG_V_BACKNESS = IPADescriptorGroup([
     D_V_NEAR_BACK,
     D_V_BACK,
 ])
-D_V_ROUNDED = IPADescriptor(["rounded", "rnd"])
-D_V_UNROUNDED = IPADescriptor(["unrounded", "unr"])
+D_V_ROUNDED = IPADescriptor([u"rounded", u"rnd"])
+D_V_UNROUNDED = IPADescriptor([u"unrounded", u"unr"])
 DG_V_ROUNDNESS = IPADescriptorGroup([
     D_V_ROUNDED,
     D_V_UNROUNDED,
@@ -251,36 +301,36 @@ DG_VOWELS = DG_V_HEIGHT + DG_V_BACKNESS + DG_V_ROUNDNESS
 
 
 # diacritics
-D_D_ADVANCED = IPADescriptor(["advanced"])
-D_D_ADVANCED_TONGUE_ROOT = IPADescriptor(["advanced-tongue-root"])
-D_D_APICAL = IPADescriptor(["apical"])
-D_D_ASPIRATED = IPADescriptor(["aspirated", "asp"])
-D_D_BREATHY_VOICED = IPADescriptor(["breathy-voiced"])
-D_D_CENTRALIZED = IPADescriptor(["centralized"])
-D_D_CREAKY_VOICED = IPADescriptor(["creaky-voiced"])
-D_D_LABIALIZED = IPADescriptor(["labialized", "lzd"])
-D_D_LAMINAL = IPADescriptor(["laminal"])
-D_D_LATERAL_RELEASE = IPADescriptor(["lateral-release"])
-D_D_LESS_ROUNDED = IPADescriptor(["less-rounded"])
-D_D_LOWERED = IPADescriptor(["lowered"])
-D_D_MID_CENTRALIZED = IPADescriptor(["mid-centralized"])
-D_D_MORE_ROUNDED = IPADescriptor(["more-rounded"])
-D_D_NASALIZED = IPADescriptor(["nasalized"])
-D_D_NASAL_RELEASE = IPADescriptor(["nasal-release"])
-D_D_NON_SYLLABIC = IPADescriptor(["non-syllabic"])
-D_D_NO_AUDIBLE_RELEASE = IPADescriptor(["no-audible-release"])
-D_D_PALATALIZED = IPADescriptor(["palatalized", "pzd"])
-D_D_PHARYNGEALIZED = IPADescriptor(["pharyngealized", "fzd"])
-D_D_RAISED = IPADescriptor(["raised"])
-D_D_RETRACTED = IPADescriptor(["retracted"])
-D_D_RETRACTED_TONGUE_ROOT = IPADescriptor(["retracted-tongue-root"])
-D_D_RHOTACIZED = IPADescriptor(["rhotacized", "rzd"])
-D_D_SYLLABIC = IPADescriptor(["syllabic", "syl"])
-D_D_TIE_BAR_ABOVE = IPADescriptor(["tie-bar-above"])
-D_D_TIE_BAR_BELOW = IPADescriptor(["tie-bar-below"])
-D_D_UNEXPLODED = IPADescriptor(["unexploded"])
-D_D_VELARIZED = IPADescriptor(["velarized", "vzd"])
-D_D_VELARIZED_OR_PHARYNGEALIZED = IPADescriptor(["velarized-or-pharyngealized"])
+D_D_ADVANCED = IPADescriptor([u"advanced"])
+D_D_ADVANCED_TONGUE_ROOT = IPADescriptor([u"advanced-tongue-root"])
+D_D_APICAL = IPADescriptor([u"apical"])
+D_D_ASPIRATED = IPADescriptor([u"aspirated", u"asp"])
+D_D_BREATHY_VOICED = IPADescriptor([u"breathy-voiced"])
+D_D_CENTRALIZED = IPADescriptor([u"centralized"])
+D_D_CREAKY_VOICED = IPADescriptor([u"creaky-voiced"])
+D_D_LABIALIZED = IPADescriptor([u"labialized", u"lzd"])
+D_D_LAMINAL = IPADescriptor([u"laminal"])
+D_D_LATERAL_RELEASE = IPADescriptor([u"lateral-release"])
+D_D_LESS_ROUNDED = IPADescriptor([u"less-rounded"])
+D_D_LOWERED = IPADescriptor([u"lowered"])
+D_D_MID_CENTRALIZED = IPADescriptor([u"mid-centralized"])
+D_D_MORE_ROUNDED = IPADescriptor([u"more-rounded"])
+D_D_NASALIZED = IPADescriptor([u"nasalized"])
+D_D_NASAL_RELEASE = IPADescriptor([u"nasal-release"])
+D_D_NON_SYLLABIC = IPADescriptor([u"non-syllabic"])
+D_D_NO_AUDIBLE_RELEASE = IPADescriptor([u"no-audible-release"])
+D_D_PALATALIZED = IPADescriptor([u"palatalized", u"pzd"])
+D_D_PHARYNGEALIZED = IPADescriptor([u"pharyngealized", u"fzd"])
+D_D_RAISED = IPADescriptor([u"raised"])
+D_D_RETRACTED = IPADescriptor([u"retracted"])
+D_D_RETRACTED_TONGUE_ROOT = IPADescriptor([u"retracted-tongue-root"])
+D_D_RHOTACIZED = IPADescriptor([u"rhotacized", u"rzd"])
+D_D_SYLLABIC = IPADescriptor([u"syllabic", u"syl"])
+D_D_TIE_BAR_ABOVE = IPADescriptor([u"tie-bar-above"])
+D_D_TIE_BAR_BELOW = IPADescriptor([u"tie-bar-below"])
+D_D_UNEXPLODED = IPADescriptor([u"unexploded"])
+D_D_VELARIZED = IPADescriptor([u"velarized", u"vzd"])
+D_D_VELARIZED_OR_PHARYNGEALIZED = IPADescriptor([u"velarized-or-pharyngealized"])
 DG_DIACRITICS = IPADescriptorGroup([
     D_D_ADVANCED,
     D_D_ADVANCED_TONGUE_ROOT,
@@ -316,16 +366,16 @@ DG_DIACRITICS = IPADescriptorGroup([
 
 
 # suprasegmentals
-D_S_PRIMARY_STRESS = IPADescriptor(["primary-stress"])
-D_S_SECONDARY_STRESS = IPADescriptor(["secondary-stress"])
-D_S_LONG = IPADescriptor(["long", "lng"])
-D_S_HALF_LONG = IPADescriptor(["half-long"])
-D_S_EXTRA_SHORT = IPADescriptor(["extra-short"])
-D_S_MINOR_GROUP = IPADescriptor(["minor-group"])
-D_S_MAJOR_GROUP = IPADescriptor(["major-group"])
-D_S_SYLLABLE_BREAK = IPADescriptor(["syllable-break"])
-D_S_LINKING = IPADescriptor(["linking"])
-D_S_WORD_BREAK = IPADescriptor(["word-break"])
+D_S_PRIMARY_STRESS = IPADescriptor([u"primary-stress"])
+D_S_SECONDARY_STRESS = IPADescriptor([u"secondary-stress"])
+D_S_LONG = IPADescriptor([u"long", u"lng"])
+D_S_HALF_LONG = IPADescriptor([u"half-long"])
+D_S_EXTRA_SHORT = IPADescriptor([u"extra-short"])
+D_S_MINOR_GROUP = IPADescriptor([u"minor-group"])
+D_S_MAJOR_GROUP = IPADescriptor([u"major-group"])
+D_S_SYLLABLE_BREAK = IPADescriptor([u"syllable-break"])
+D_S_LINKING = IPADescriptor([u"linking"])
+D_S_WORD_BREAK = IPADescriptor([u"word-break"])
 DG_S_STRESS = IPADescriptorGroup([
     D_S_PRIMARY_STRESS,
     D_S_SECONDARY_STRESS,
@@ -346,23 +396,23 @@ DG_SUPRASEGMENTALS = DG_S_STRESS + DG_S_LENGTH + DG_S_BREAK
 
 
 # tones 
-D_T_EXTRA_HIGH_LEVEL = IPADescriptor(["extra-high-level"])
-D_T_HIGH_LEVEL = IPADescriptor(["high-level"])
-D_T_MID_LEVEL = IPADescriptor(["mid-level"])
-D_T_LOW_LEVEL = IPADescriptor(["low-level"])
-D_T_EXTRA_LOW_LEVEL = IPADescriptor(["extra-low-level"])
-D_T_RISING_CONTOUR = IPADescriptor(["rising-contour"])
-D_T_FALLING_CONTOUR = IPADescriptor(["falling-contour"])
-D_T_HIGH_RISING_CONTOUR = IPADescriptor(["high-rising-contour"])
-D_T_LOW_RISING_CONTOUR = IPADescriptor(["low-rising-contour"])
-D_T_RISING_FALLING_CONTOUR = IPADescriptor(["rising-falling-contour"])
-D_T_MID_LOW_FALLING_CONTOUR = IPADescriptor(["mid-low-falling-contour"])
-D_T_HIGH_MID_FALLING_CONTOUR = IPADescriptor(["high-mid-falling-contour"])
-D_T_FALLING_RISING_CONTOUR = IPADescriptor(["falling-rising-contour"])
-D_T_DOWNSTEP = IPADescriptor(["downstep"])
-D_T_UPSTEP = IPADescriptor(["upstep"])
-D_T_GLOBAL_RISE = IPADescriptor(["global-rise"])
-D_T_GLOBAL_FALL = IPADescriptor(["global-fall"])
+D_T_EXTRA_HIGH_LEVEL = IPADescriptor([u"extra-high-level"])
+D_T_HIGH_LEVEL = IPADescriptor([u"high-level"])
+D_T_MID_LEVEL = IPADescriptor([u"mid-level"])
+D_T_LOW_LEVEL = IPADescriptor([u"low-level"])
+D_T_EXTRA_LOW_LEVEL = IPADescriptor([u"extra-low-level"])
+D_T_RISING_CONTOUR = IPADescriptor([u"rising-contour"])
+D_T_FALLING_CONTOUR = IPADescriptor([u"falling-contour"])
+D_T_HIGH_RISING_CONTOUR = IPADescriptor([u"high-rising-contour"])
+D_T_LOW_RISING_CONTOUR = IPADescriptor([u"low-rising-contour"])
+D_T_RISING_FALLING_CONTOUR = IPADescriptor([u"rising-falling-contour"])
+D_T_MID_LOW_FALLING_CONTOUR = IPADescriptor([u"mid-low-falling-contour"])
+D_T_HIGH_MID_FALLING_CONTOUR = IPADescriptor([u"high-mid-falling-contour"])
+D_T_FALLING_RISING_CONTOUR = IPADescriptor([u"falling-rising-contour"])
+D_T_DOWNSTEP = IPADescriptor([u"downstep"])
+D_T_UPSTEP = IPADescriptor([u"upstep"])
+D_T_GLOBAL_RISE = IPADescriptor([u"global-rise"])
+D_T_GLOBAL_FALL = IPADescriptor([u"global-fall"])
 DG_T_LEVEL = IPADescriptorGroup([
     D_T_EXTRA_HIGH_LEVEL,
     D_T_HIGH_LEVEL,
@@ -398,9 +448,9 @@ def variant_to_list(obj):
     """
     Return a list containing the descriptors in the given object.
 
-    The ``obj`` can be a frozenset, a set, a list (of single descriptors) or a Unicode string.
+    The ``obj`` can be a frozenset, a set, a list of descriptor strings, or a Unicode string.
     
-    If ``obj`` is a Unicode string, it will be split using spaces.
+    If ``obj`` is a Unicode string, it will be split using spaces as delimiters.
 
     :param variant obj: the object to be parsed
     :rtype: list 
@@ -418,9 +468,9 @@ def variant_to_frozenset(obj):
     """
     Return a frozenset containing the descriptors in the given object.
 
-    The ``obj`` can be a frozenset, a set, a list (of single descriptors) or a Unicode string.
+    The ``obj`` can be a frozenset, a set, a list of descriptor strings, or a Unicode string.
     
-    If ``obj`` is a Unicode string, it will be split using spaces.
+    If ``obj`` is a Unicode string, it will be split using spaces as delimiters.
 
     :param variant obj: the object to be parsed
     :rtype: frozenset
@@ -449,7 +499,7 @@ class IPAChar(object):
         self.unicode_repr = unicode_repr
 
     def __str__(self):
-        return "" if self.unicode_repr is None else self.unicode_repr
+        return u"" if self.unicode_repr is None else self.unicode_repr
     
     def __unicode__(self):
         return u"" if self.unicode_repr is None else self.unicode_repr
@@ -543,7 +593,6 @@ class IPAChar(object):
         :rtype: bool
         """
         return False
-
 
     @property
     def canonical_representation(self):
@@ -674,7 +723,7 @@ class IPAConsonant(IPALetter):
         self.roundness = None
         self.modifiers = []
         if (voicing is not None) and (place is not None) and (manner is not None):
-            descriptors = [D_CONSONANT.name, voicing, place, manner]
+            descriptors = [D_CONSONANT.canonical_label, voicing, place, manner]
             if modifiers is not None:
                 descriptors.extend(variant_to_list(modifiers))
         elif (voicing, place, manner) != (None, None, None):
@@ -689,7 +738,7 @@ class IPAConsonant(IPALetter):
 
     @property
     def descriptors(self):
-        desc = [D_CONSONANT.name, self.voicing, self.place, self.manner]
+        desc = [D_CONSONANT.canonical_label, self.voicing, self.place, self.manner]
         desc.extend(self.modifiers)
         return frozenset(desc)
     @descriptors.setter
@@ -809,7 +858,7 @@ class IPAVowel(IPALetter):
         self.roundness = None
         self.modifiers = []
         if (height is not None) and (backness is not None) and (roundness is not None):
-            descriptors = [D_VOWEL.name, height, backness, roundness]
+            descriptors = [D_VOWEL.canonical_label, height, backness, roundness]
             if modifiers is not None:
                 descriptors.extend(variant_to_list(modifiers))
         elif (height, backness, roundness) != (None, None, None):
@@ -824,7 +873,7 @@ class IPAVowel(IPALetter):
 
     @property
     def descriptors(self):
-        desc = [D_VOWEL.name, self.height, self.backness, self.roundness]
+        desc = [D_VOWEL.canonical_label, self.height, self.backness, self.roundness]
         desc.extend(self.modifiers)
         return frozenset(desc)
     @descriptors.setter
