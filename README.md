@@ -15,9 +15,6 @@
 $ pip install ipapy
 ```
 
-(NOTE: **ipapy** is **not** on PyPI yet.
-It will be uploaded as soon as the first development stint is completed.)
-
 or
 
 ```bash
