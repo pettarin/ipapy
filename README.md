@@ -3,7 +3,7 @@
 **ipapy** is a Python module to work with IPA strings.
 
 * Version: 0.0.1
-* Date: 2016-05-18
+* Date: 2016-05-19
 * Developer: [Alberto Pettarin](http://www.albertopettarin.it/)
 * License: the MIT License (MIT)
 * Contact: [click here](http://www.albertopettarin.it/contact.html)
@@ -172,7 +172,7 @@ s_ipa.cns_vwl_str_len                   # "əˈkiːnæˌkænˈθɑləd͡ʒi"    
 s_ipa.cns_vwl_str_len_wb                # "əˈkiːn æˌkænˈθɑləd͡ʒi"    (      + word breaks)
 s_ipa.cns_vwl_str_len_wb_sb             # "əˈkiːn æˌkænˈθɑ.lə.d͡ʒi"  (        + syllable breaks)
 cns = s_ipa.consonants                  # (store new IPA string)
-cns == s_ipa.consonants                 # False
+cns == s_ipa.consonants                 # False (two different objects)
 cns.is_equivalent(s_ipa.consonants)     # True
 cns.is_equivalent(s_ipa)                # False
 
@@ -217,17 +217,17 @@ s_ipa_1.is_equivalent(s_ipa_3)  # True
 s_ipa_2.is_equivalent(s_ipa_3)  # True
 
 # compare IPAString and list of IPAChar objects
-s_ipa_1.is_equivalent([my_a1, my_tS, my_ee])
+s_ipa_1.is_equivalent([my_a1, my_tS, my_ee])    # True
 
 # compare IPAString and Unicode string
 s_ipa_d.is_equivalent(u"diff")                  # True
-s_ipa_d.is_equivalent(u"less")                  # False
+s_ipa_1.is_equivalent(u"atse")                  # False
+s_ipa_1.is_equivalent(u"atSe")                  # False
 s_ipa_1.is_equivalent(u"at͡ʃe")                  # True
 s_ipa_1.is_equivalent(u"at͜ʃe")                  # True
 s_ipa_1.is_equivalent(u"aʧe")                   # True
 s_ipa_1.is_equivalent(u"at͡ʃeLOL", ignore=True)  # True (ignore chars non IPA valid)
 s_ipa_1.is_equivalent(u"at͡ʃeLoL", ignore=True)  # False (ignore chars non IPA valid, note extra "o")
-s_ipa_1.is_equivalent(u"atse")                  # False
 
 
 ########################

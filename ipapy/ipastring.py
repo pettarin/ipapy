@@ -122,7 +122,7 @@ class IPAString(MutableSequence):
             if is_list_of_ipachars(value):
                 self.__ipa_chars = value
             else:
-                raise ValueError("ipa_chars only accepts a list of IPAChar objects")
+                raise TypeError("ipa_chars only accepts a list of IPAChar objects")
 
     def is_equivalent(self, other, ignore=False):
         """
