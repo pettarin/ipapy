@@ -7,7 +7,7 @@
 * Developer: [Alberto Pettarin](http://www.albertopettarin.it/)
 * License: the MIT License (MIT)
 * Contact: [click here](http://www.albertopettarin.it/contact.html)
-
+* Links: [GitHub](https://github.com/pettarin/ipapy) - [PyPI](https://pypi.python.org/pypi/ipapy)
 
 ## Installation
 

@@ -4,4 +4,5 @@ include README.rst
 include VERSION
 include bin/ipapy
 recursive-include ipapy/data *
+recursive-exclude ipapy/data/zzz* *
 include requirements.txt
