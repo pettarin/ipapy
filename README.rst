@@ -17,7 +17,7 @@ Installation
     $ pip install ipapy
 
 (NOTE: **ipapy** is **not** on PyPI yet. It will be uploaded as soon as
-finished.)
+the first development stint is completed.)
 
 or
 
@@ -162,6 +162,8 @@ As A Python Module
     len(new_s_ipa)                          # 6
     new_s_ipa.extend(s_ipa)                 # (append s_ipa to new_s_ipa)
     len(new_s_ipa)                          # 27
+    double = s_ipa + new_s_ipa              # (concatenate s_ipa and new_s_ipa)
+    len(double)                             # 48
 
     # new IPAString objects containing only...
     s_ipa.consonants                        # "knknθld͡ʒ"                (consonants)
@@ -242,7 +244,8 @@ As A Command Line Tool
 ~~~~~~~~~~~~~~~~~~~~~~
 
 **ipapy** comes with a command line tool to perform operations on a
-given UTF-8 encoded Unicode string, representing an IPA string.
+given Unicode UTF-8 encoded string, representing an IPA string.
+Therefore, it is recommended to run it on a shell supporting UTF-8.
 
 Currently, the supported operations are:
 
@@ -334,6 +337,13 @@ Examples:
 
     $ python -m ipapy u2a "eTa" -i
     ea
+
+Unit Testing
+------------
+
+.. code:: bash
+
+    $ python run_all_unit_tests.py
 
 License
 -------

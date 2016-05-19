@@ -84,7 +84,7 @@ def invalid_ipa_characters(unicode_string, indices=False):
         return None
     if indices:
         return [(i, unicode_string[i]) for i in range(len(unicode_string)) if unicode_string[i] not in UNICODE_TO_IPA]
-    return set(sorted([c for c in unicode_string if c not in UNICODE_TO_IPA]))
+    return set([c for c in unicode_string if c not in UNICODE_TO_IPA])
 
 def is_valid_ipa(unicode_string):
     """
@@ -110,6 +110,8 @@ def remove_invalid_ipa_characters(unicode_string, return_invalid=False, single_c
     and return a list of substrings of the given string,
     each mapping to a (known) valid IPA character.
 
+    Return ``None`` if ``unicode_string`` is ``None``.
+
     :param str unicode_string: the Unicode string to be parsed
     :param bool return_invalid: if ``True``, return a pair ``(valid, invalid)``,
                                 where ``invalid`` is a list of Unicode characters
@@ -117,6 +119,8 @@ def remove_invalid_ipa_characters(unicode_string, return_invalid=False, single_c
     :param bool single_char_parsing: if ``True``, parse one Unicode character at a time
     :rtype: list of str
     """
+    if unicode_string is None:
+        return None
     substrings = ipa_substrings(unicode_string, single_char_parsing=single_char_parsing)
     valid = [s for s in substrings if s in UNICODE_TO_IPA]
     if return_invalid:

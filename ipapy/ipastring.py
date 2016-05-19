@@ -82,6 +82,11 @@ class IPAString(MutableSequence):
     def __len__(self):
         return len(self.ipa_chars)
 
+    def __add__(self, other):
+        if not isinstance(other, IPAString):
+            raise TypeError("Cannot concatenate an object that is not an IPAString")
+        return IPAString(ipa_chars=(self.ipa_chars + other.ipa_chars))
+
     def __getitem__(self, i):
         return self.ipa_chars[i]
 
@@ -91,7 +96,7 @@ class IPAString(MutableSequence):
     def __setitem__(self, i, value):
         self._check(value)
         self.ipa_chars[i] = value
-    
+
     def insert(self, i, value):
         self._check(value)
         self.ipa_chars.insert(i, value)

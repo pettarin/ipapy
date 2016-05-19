@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # coding=utf-8
 
-import os
 import unittest
 
 from ipapy.ipachar import D_D_MORE_ROUNDED
