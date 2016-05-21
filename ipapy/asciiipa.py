@@ -9,15 +9,21 @@ from __future__ import absolute_import
 from __future__ import print_function
 
 from ipapy.compatibility import hex_to_unichr
-from ipapy.data import load_csv_file
+from ipapy.data import load_data_file
 from ipapy.ipastring import IPAString
 
 __author__ = "Alberto Pettarin"
 __copyright__ = "Copyright 2016, Alberto Pettarin (www.albertopettarin.it)"
 __license__ = "MIT"
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 __email__ = "alberto@albertopettarin.it"
 __status__ = "Production"
+
+ASCII_IPA_DATA_FILE_FIELD_SEPARATOR = u","
+""" Field separator for the data file """
+
+ASCII_IPA_DATA_FILE_COMMENT = u"#"
+""" Ignore lines starting with this character """
 
 ASCII_IPA_DATA_FILE_PATH = "asciiipa.dat"
 """
@@ -34,7 +40,12 @@ def load_ascii_ipa_data():
     """
     ascii_ipa_signs = []
     ipa_descriptors_to_ascii_ipa = {}
-    for line in load_csv_file(ASCII_IPA_DATA_FILE_PATH, 4):
+    for line in load_data_file(
+        relative_file_path=ASCII_IPA_DATA_FILE_PATH,
+        comment_string=ASCII_IPA_DATA_FILE_COMMENT,
+        field_separator=ASCII_IPA_DATA_FILE_FIELD_SEPARATOR,
+        values_per_line=4
+    ):
         # unpack line
         i_type, i_desc, i_unicode, i_ascii = line
         # if i_ascii is given as 4 hex chars (e.g., 00A1), convert it to unicode

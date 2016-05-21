@@ -10,7 +10,7 @@ from setuptools import setup, Extension
 __author__ = "Alberto Pettarin"
 __copyright__ = "Copyright 2016, Alberto Pettarin (www.albertopettarin.it)"
 __license__ = "MIT"
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 __email__ = "alberto@albertopettarin.it"
 __status__ = "Production"
 
@@ -18,7 +18,7 @@ setup(
     name="ipapy",
     packages=["ipapy", "ipapy.data"],
     package_data={"ipapy.data": ["*.dat"]},
-    version="0.0.1.0",
+    version="0.0.2.0",
     description="ipapy is a Python module to work with IPA strings",
     author="Alberto Pettarin",
     author_email="alberto@albertopettarin.it",

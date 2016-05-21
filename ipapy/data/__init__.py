@@ -23,15 +23,9 @@ from ipapy.ipachar import IPATone
 __author__ = "Alberto Pettarin"
 __copyright__ = "Copyright 2016, Alberto Pettarin (www.albertopettarin.it)"
 __license__ = "MIT"
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 __email__ = "alberto@albertopettarin.it"
 __status__ = "Production"
-
-DATA_FILE_FIELD_SEPARATOR = u","
-""" Field separator for the data file """
-
-DATA_FILE_COMMENT = u"#"
-""" Ignore lines starting with this character """
 
 IPA_DATA_FILE_CODEPOINT_SEPARATOR = u" "
 """
@@ -39,11 +33,17 @@ Separator between Unicode codepoints or
 Unicode compound strings for a given IPAChar
 """
 
+IPA_DATA_FILE_COMMENT = u"#"
+""" Ignore lines starting with this character """
+
 IPA_DATA_FILE_COMPOUND_OPERATOR = u"+"
 """
 Operator to specify Unicode compound strings,
 e.g. 0070+032A = LATIN SMALL LETTER P + COMBINING BRIDGE BELOW
 """
+
+IPA_DATA_FILE_FIELD_SEPARATOR = u","
+""" Field separator for the data file """
 
 IPA_DATA_FILE_NOT_AVAILABLE = u"N/A"
 """ Placeholder for an IPAChar not encoded in Unicode """
@@ -54,7 +54,7 @@ Path of the built-in IPA database,
 relative to the ``data/`` directory
 """
 
-def load_csv_file(relative_file_path, values_per_line=None):
+def load_data_file(relative_file_path, comment_string, field_separator, values_per_line=None):
     """
     Load a comma-separated file, returning a list of tuples.
 
@@ -73,9 +73,9 @@ def load_csv_file(relative_file_path, values_per_line=None):
     with io.open(file_path, "r", encoding="utf-8") as f:
         for line in f:
             line = line.strip()
-            if (len(line) > 0) and (not line.startswith(DATA_FILE_COMMENT)):
+            if (len(line) > 0) and (not line.startswith(comment_string)):
                 # unpack line
-                values = line.split(DATA_FILE_FIELD_SEPARATOR)
+                values = line.split(field_separator)
                 if (values_per_line is not None) and (len(values) != values_per_line):
                     raise ValueError("Data file '%s' contains a bad line: '%s'" % (file_path, line))
                 tuples.append(tuple(values))
@@ -94,7 +94,12 @@ def load_ipa_data():
     unicode_to_ipa = {}
     ipa_to_unicode = {}
     max_key_length = 0
-    for line in load_csv_file(IPA_DATA_FILE_PATH, 3):
+    for line in load_data_file(
+        relative_file_path=IPA_DATA_FILE_PATH,
+        comment_string=IPA_DATA_FILE_COMMENT,
+        field_separator=IPA_DATA_FILE_FIELD_SEPARATOR,
+        values_per_line=3
+    ):
         # unpack data
         i_type, i_desc, i_unicode = line
 
