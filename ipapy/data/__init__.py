@@ -65,7 +65,8 @@ def convert_unicode_field(string):
     """
     values = []
     for codepoint in [s for s in string.split(DATA_FILE_CODEPOINT_SEPARATOR) if s != DATA_FILE_VALUE_NOT_AVAILABLE]:
-        values.append(u"".join([hex_to_unichr(c) for c in codepoint.split(DATA_FILE_CODEPOINT_JOINER)]))
+        if len(codepoint) > 0:
+            values.append(u"".join([hex_to_unichr(c) for c in codepoint.split(DATA_FILE_CODEPOINT_JOINER)]))
     return values
 
 def convert_ascii_field(string):
@@ -98,7 +99,10 @@ def convert_raw_tuple(value_tuple, format_string):
     """ 
     values = []
     for v, c in zip(value_tuple, format_string):
-        if c == u"s":
+        if v is None:
+            # append None
+            values.append(v)
+        elif c == u"s":
             # string
             values.append(v)
         elif c == u"S":
