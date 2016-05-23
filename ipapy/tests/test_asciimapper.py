@@ -3,13 +3,13 @@
 
 import unittest
 
-from ipapy.asciiipa import unicode_string_to_ascii_string
-from ipapy.asciiipa import ipa_string_to_ascii_string
+from ipapy.asciimapper import ASCIIMapper
 from ipapy.ipastring import IPAString
 
-class TestASCIIIPA(unittest.TestCase):
+class TestASCIIMapper(unittest.TestCase):
 
-    def test_unicode_string_to_ascii_string(self):
+    def test_map_unicode_string(self):
+        mapper = ASCIIMapper()
         values = [
             (None, None),
             (u"", u""),
@@ -26,9 +26,10 @@ class TestASCIIIPA(unittest.TestCase):
             (u"\u02A7", u"tS"),
         ]
         for v, e in values:
-            self.assertEqual(unicode_string_to_ascii_string(v), e)
+            self.assertEqual(mapper.map_unicode_string(v), e)
 
-    def test_ipa_string_to_ascii_string(self):
+    def test_map_ipa_string(self):
+        mapper = ASCIIMapper()
         values = [
             (u"", u""),
             (u"foo", u"foo"),
@@ -44,9 +45,10 @@ class TestASCIIIPA(unittest.TestCase):
             (u"\u02A7", u"tS"),
         ]
         for v, e in values:
-            self.assertEqual(ipa_string_to_ascii_string(IPAString(unicode_string=v)), e)
+            self.assertEqual(mapper.map_ipa_string(IPAString(unicode_string=v)), e)
 
-    def test_unicode_string_to_ascii_string_ignore(self):
+    def test_map_unicode_string_ignore(self):
+        mapper = ASCIIMapper()
         values = [
             (None, None),
             (u"", u""),
@@ -75,9 +77,10 @@ class TestASCIIIPA(unittest.TestCase):
             (u"\u02A7M", u"tS"),
         ]
         for v, e in values:
-            self.assertEqual(unicode_string_to_ascii_string(v, ignore=True), e)
+            self.assertEqual(mapper.map_unicode_string(v, ignore=True), e)
 
-    def test_ipa_string_to_ascii_string_ignore(self):
+    def test_map_ipa_string_ignore(self):
+        mapper = ASCIIMapper()
         values = [
             (u"", u""),
             (u"foo", u"foo"),
@@ -105,9 +108,10 @@ class TestASCIIIPA(unittest.TestCase):
             (u"\u02A7M", u"tS"),
         ]
         for v, e in values:
-            self.assertEqual(ipa_string_to_ascii_string(IPAString(unicode_string=v, ignore=True)), e)
+            self.assertEqual(mapper.map_ipa_string(IPAString(unicode_string=v, ignore=True)), e)
 
-    def test_unicode_string_to_ascii_string_single(self):
+    def test_map_unicode_string_single(self):
+        mapper = ASCIIMapper()
         values = [
             (None, None),
             (u"", u""),
@@ -124,7 +128,7 @@ class TestASCIIIPA(unittest.TestCase):
             (u"\u02A7", u"tS"),
         ]
         for v, e in values:
-            self.assertEqual(unicode_string_to_ascii_string(v, single_char_parsing=True), e)
+            self.assertEqual(mapper.map_unicode_string(v, single_char_parsing=True), e)
 
 
 

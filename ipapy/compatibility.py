@@ -15,9 +15,7 @@ import sys
 __author__ = "Alberto Pettarin"
 __copyright__ = "Copyright 2016, Alberto Pettarin (www.albertopettarin.it)"
 __license__ = "MIT"
-__version__ = "0.0.2"
 __email__ = "alberto@albertopettarin.it"
-__status__ = "Production"
 
 PY2 = (sys.version_info[0] == 2)
 """

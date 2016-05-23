@@ -3,8 +3,8 @@ ipapy
 
 **ipapy** is a Python module to work with IPA strings.
 
--  Version: 0.0.2
--  Date: 2016-05-21
+-  Version: 0.0.3
+-  Date: 2016-05-23
 -  Developer: `Alberto Pettarin <http://www.albertopettarin.it/>`__
 -  License: the MIT License (MIT)
 -  Contact: `click here <http://www.albertopettarin.it/contact.html>`__
@@ -38,8 +38,7 @@ As A Python Module
     ###########
     from ipapy import UNICODE_TO_IPA
     from ipapy import is_valid_ipa
-    from ipapy.asciiipa import ipa_string_to_ascii_string
-    from ipapy.asciiipa import unicode_string_to_ascii_string
+    from ipapy.asciimapper import ASCIIMapper
     from ipapy.ipachar import IPAConsonant
     from ipapy.ipachar import IPAVowel
     from ipapy.ipastring import IPAString
@@ -111,7 +110,7 @@ As A Python Module
     my_b1.is_equivalent(u"b")       # False
     my_tS.is_equivalent(u"tS")      # False
     my_tS.is_equivalent(u"tʃ")      # False (missing the combining diacritic)
-    my_tS.is_equivalent(u"t͜ʃ")      # True (has combining diacritic)
+    my_tS.is_equivalent(u"t͡ʃ")      # True (has combining diacritic)
 
     # compare IPAChar and a string listing descriptors
     my_a1.is_equivalent(u"open front unrounded")                                # False (missing 'vowel')
@@ -235,9 +234,10 @@ As A Python Module
     ########################
     # CONVERSION FUNCTIONS #
     ########################
-    s_ascii_ipa = ipa_string_to_ascii_string(s_ipa)     # IPA string to ASCII IPA (Kirshenbaum)
-    s_ascii_uni = unicode_string_to_ascii_string(s_uni) # Unicode string to ASCII IPA (Kirshenbaum)
-    s_ascii_ipa == s_ascii_uni                          # True, both are u"@'ki:n#&,k&n'TA#l@#dZi"
+    mapper = ASCIIMapper()                          # mapper to ASCII IPA (Kirshenbaum)
+    s_ascii_ipa = mapper.map_ipa_string(s_ipa)      # u"@'ki:n#&,k&n'TA#l@#dZi"
+    s_ascii_uni = mapper.map_unicode_string(s_uni)  # u"@'ki:n#&,k&n'TA#l@#dZi"
+    s_ascii_ipa == s_ascii_uni                      # True
 
 As A Command Line Tool
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -254,28 +254,28 @@ Currently, the supported operations are:
 -  ``clean``: remove characters that are not IPA valid
 -  ``u2a``: print the corresponding ASCII IPA (Kirshenbaum) string
 
-Run:
+Run with the ``--help`` parameter to list all the available options:
 
 .. code:: bash
 
     $ python -m ipapy --help
 
-to get the usage message:
-
-::
-
-    usage: __main__.py [-h] [-i] [-p] [-s] [-u] command string
+    usage: __main__.py [-h] [-i] [-p] [--separator [SEPARATOR]] [-s] [-u]
+                       command string
 
     ipapy perform a command on the given IPA/Unicode string
 
     positional arguments:
       command               [canonize|chars|check|clean|u2a]
-      string                String to canonize, check, or convert
+      string                String to canonize, check, clean, or convert
 
     optional arguments:
       -h, --help            show this help message and exit
       -i, --ignore          Ignore Unicode characters that are not IPA valid
       -p, --print-invalid   Print Unicode characters that are not IPA valid
+      --separator [SEPARATOR]
+                            Print IPA chars separated by this character (default:
+                            '')
       -s, --single-char-parsing
                             Perform single character parsing instead of maximal
                             parsing
@@ -288,6 +288,9 @@ Examples:
 
     $ python -m ipapy canonize "eʧiu"
     et͡ʃiu
+
+    $ python -m ipapy canonize "eʧiu" --separator " "
+    e t͡ʃ i u
 
     $ python -m ipapy chars "eʧiu"
     'e' close-mid front unrounded vowel (U+0065)

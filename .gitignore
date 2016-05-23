@@ -1,5 +1,6 @@
 *.pyc
 __pycache__
+bak
 dist
 ipapy.egg-info
 zzz_*

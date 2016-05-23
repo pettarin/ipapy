@@ -15,7 +15,7 @@ import unicodedata
 
 from ipapy import is_valid_ipa
 from ipapy import remove_invalid_ipa_characters
-from ipapy.asciiipa import unicode_string_to_ascii_string
+from ipapy.asciimapper import ASCIIMapper
 from ipapy.compatibility import to_unicode_string
 from ipapy.compatibility import unicode_to_hex
 from ipapy.ipastring import IPAString
@@ -23,9 +23,7 @@ from ipapy.ipastring import IPAString
 __author__ = "Alberto Pettarin"
 __copyright__ = "Copyright 2016, Alberto Pettarin (www.albertopettarin.it)"
 __license__ = "MIT"
-__version__ = "0.0.2"
 __email__ = "alberto@albertopettarin.it"
-__status__ = "Production"
 
 DESCRIPTION = "ipapy perform a command on the given IPA/Unicode string"
 
@@ -44,7 +42,7 @@ ARGUMENTS = [
         "nargs": None,
         "type": str,
         "default": None,
-        "help": "String to canonize, check, or convert"
+        "help": "String to canonize, check, clean, or convert"
     },
     {
         "long": "--ignore",
@@ -57,6 +55,14 @@ ARGUMENTS = [
         "short": "-p",
         "action": "store_true",
         "help": "Print Unicode characters that are not IPA valid"
+    },
+    {
+        "long": "--separator",
+        "short": None,
+        "nargs": "?",
+        "type": str,
+        "default": "",
+        "help": "Print IPA chars separated by this character (default: '')"
     },
     {
         "long": "--single-char-parsing",
@@ -112,7 +118,7 @@ def command_canonize(string, vargs):
             ignore=vargs["ignore"],
             single_char_parsing=vargs["single_char_parsing"]
         )
-        print(ipa_string)
+        print(vargs["separator"].join([(u"%s" % c) for c in ipa_string]))
     except ValueError as exc:
         print_error(str(exc))
 
@@ -181,11 +187,13 @@ def command_u2a(string, vargs):
     :param dict vargs: the command line arguments
     """
     try:
-        print(unicode_string_to_ascii_string(
+        l = ASCIIMapper().map_unicode_string(
             unicode_string=string,
             ignore=vargs["ignore"],
-            single_char_parsing=vargs["single_char_parsing"]
-        ))
+            single_char_parsing=vargs["single_char_parsing"],
+            return_as_list=True
+        )
+        print(vargs["separator"].join(l))
     except ValueError as exc:
         print_error(str(exc))
 
