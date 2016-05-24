@@ -890,6 +890,24 @@ class IPASuprasegmental(IPAChar):
         return self.stress is not None
 
     @property
+    def is_primary_stress(self):
+        """
+        Return ``True`` if the suprasegmental is a primary stress mark.
+
+        :rtype: bool
+        """
+        return self.has_descriptor(D_S_PRIMARY_STRESS)
+
+    @property
+    def is_long(self):
+        """
+        Return ``True`` if the suprasegmental is a long mark.
+
+        :rtype: bool
+        """
+        return self.has_descriptor(D_S_LONG)
+
+    @property
     def is_length(self):
         """
         Return ``True`` if the suprasegmental is a length mark.

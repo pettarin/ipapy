@@ -1,0 +1,27 @@
+Changelog
+=========
+
+v0.0.4 (2016-05-24)
+-------------------
+
+#. Added cns_vwl_pstr and cns_vwl_pstr_long to IPAString
+
+
+v0.0.3 (2016-05-23)
+-------------------
+
+#. Added Mapper concept
+#. Refactored ASCIIIPA into ASCIIMapper
+
+
+v0.0.2 (2016-05-21)
+-------------------
+
+#. Generic data loading from files
+
+
+v0.0.1 (2016-05-19)
+-------------------
+
+#. Initial release
+

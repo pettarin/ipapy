@@ -20,7 +20,7 @@ __copyright__ = "Copyright 2016, Alberto Pettarin (www.albertopettarin.it)"
 __license__ = "MIT"
 __email__ = "alberto@albertopettarin.it"
 
-__version__ = "0.0.3"
+__version__ = "0.0.4"
 __status__ = "Production"
 
 def ipa_substrings(unicode_string, single_char_parsing=False):
