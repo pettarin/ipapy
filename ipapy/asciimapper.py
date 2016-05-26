@@ -20,6 +20,8 @@ __email__ = "alberto@albertopettarin.it"
 
 class ASCIIMapper(Mapper):
 
+    DATA_FILE_PATH = u"asciiipa.dat"
+
     def __init__(self):
         super(ASCIIMapper, self).__init__(self._load_data())
 
@@ -29,7 +31,7 @@ class ASCIIMapper(Mapper):
         """
         ipadesc_to_ascii_str = dict()
         for line in load_data_file(
-            file_path=u"asciiipa.dat",
+            file_path=self.DATA_FILE_PATH,
             file_path_is_relative=True,
             line_format=u"ssxA"
         ):
@@ -37,7 +39,7 @@ class ASCIIMapper(Mapper):
             name = "%s %s" % (i_desc, i_type)
             descriptors = frozenset([p for p in name.split() if len(p) > 0])
             if len(i_ascii) == 0:
-                raise ValueError("Data file '%s' contains a bad line: '%s'" % (ASCII_IPA_DATA_FILE_PATH, line))
+                raise ValueError("Data file '%s' contains a bad line: '%s'" % (self.DATA_FILE_PATH, line))
             ipadesc_to_ascii_str[descriptors] = i_ascii[0]
         return ipadesc_to_ascii_str
 

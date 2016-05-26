@@ -81,6 +81,20 @@ class Mapper(MutableMapping):
         """
         return list(self.ipadescriptors_to_str.keys())
 
+    def can_map_ipa_string(self, ipa_string):
+        """
+        Return ``True`` if the mapper can map all the IPA characters
+        in the given IPA string.
+
+        :param IPAString ipa_string: the IPAString to be parsed
+        :rtype: bool
+        """
+        for ipa_char in ipa_string:
+            canonical = ipa_char.canonical_representation
+            if not canonical in self.ipadescriptors_to_str:
+                return False
+        return True
+
     def map_ipa_string(self, ipa_string, ignore=False, return_as_list=False):
         """
         Convert the given IPAString to a string

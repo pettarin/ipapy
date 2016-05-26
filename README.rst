@@ -3,8 +3,8 @@ ipapy
 
 **ipapy** is a Python module to work with IPA strings.
 
--  Version: 0.0.4
--  Date: 2016-05-24
+-  Version: 0.0.5
+-  Date: 2016-05-26
 -  Developer: `Alberto Pettarin <http://www.albertopettarin.it/>`__
 -  License: the MIT License (MIT)
 -  Contact: `click here <http://www.albertopettarin.it/contact.html>`__
@@ -168,6 +168,8 @@ As A Python Module
     s_ipa.vowels                            # "əiææɑəi"                 (vowels)
     s_ipa.letters                           # "əkinækænθɑləd͡ʒi"         (vowels and consonants)
     s_ipa.cns_vwl                           # "əkinækænθɑləd͡ʒi"         (vowels and consonants)
+    s_ipa.cns_vwl_pstr                      # "əˈkinækænˈθɑləd͡ʒi"       (  + primary stress marks)
+    s_ipa.cns_vwl_pstr_long                 # "əˈkiːnækænˈθɑləd͡ʒi"      (    + long marks)
     s_ipa.cns_vwl_str                       # "əˈkinæˌkænˈθɑləd͡ʒi"      (  + stress marks)
     s_ipa.cns_vwl_str_len                   # "əˈkiːnæˌkænˈθɑləd͡ʒi"     (    + length marks)
     s_ipa.cns_vwl_str_len_wb                # "əˈkiːn æˌkænˈθɑləd͡ʒi"    (      + word breaks)
