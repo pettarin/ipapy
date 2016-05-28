@@ -4,12 +4,13 @@
 """
 ipapy contains data and functions to work with IPA strings.
 
-This module contains the IPA to ASCII (Kirshenbaum) mapper.
+This module contains the IPA to ARPABET (ASCII IPA) mapper.
 """
 
 from __future__ import absolute_import
 from __future__ import print_function
 
+from ipapy.data import UNICODE_TO_IPA
 from ipapy.data import load_data_file
 from ipapy.mapper import Mapper
 
@@ -18,30 +19,31 @@ __copyright__ = "Copyright 2016, Alberto Pettarin (www.albertopettarin.it)"
 __license__ = "MIT"
 __email__ = "alberto@albertopettarin.it"
 
-class ASCIIMapper(Mapper):
+class ARPABETMapper(Mapper):
 
-    DATA_FILE_PATH = u"asciiipa.dat"
+    DATA_FILE_PATH = u"arpabet.dat"
 
     def __init__(self):
-        super(ASCIIMapper, self).__init__(self._load_data())
+        super(ARPABETMapper, self).__init__(self._load_data())
 
     def _load_data(self):
         """
-        Load the ASCII IPA data from the built-in ASCII IPA database.
+        Load the ARPABET ASCII IPA data from the built-in database.
         """
-        ipadesc_to_ascii_str = dict()
+        ipa_canonical_string_to_ascii_str = dict()
         for line in load_data_file(
             file_path=self.DATA_FILE_PATH,
             file_path_is_relative=True,
-            line_format=u"ssxA"
+            line_format=u"UA"
         ):
-            i_type, i_desc, i_ascii = line
-            name = "%s %s" % (i_desc, i_type)
-            descriptors = frozenset([p for p in name.split() if len(p) > 0])
-            if len(i_ascii) == 0:
+            i_unicode, i_ascii = line
+            if (len(i_unicode) == 0) or (len(i_ascii) == 0):
                 raise ValueError("Data file '%s' contains a bad line: '%s'" % (self.DATA_FILE_PATH, line))
-            ipadesc_to_ascii_str[descriptors] = i_ascii[0]
-        return ipadesc_to_ascii_str
+            i_unicode = i_unicode[0]
+            i_ascii = i_ascii[0]
+            key = tuple([UNICODE_TO_IPA[c].canonical_representation for c in i_unicode])
+            ipa_canonical_string_to_ascii_str[key] = i_ascii
+        return ipa_canonical_string_to_ascii_str
 
 
 

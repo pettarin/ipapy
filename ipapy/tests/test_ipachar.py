@@ -15,7 +15,7 @@ from ipapy.ipachar import IPASuprasegmental
 from ipapy.ipachar import IPATone
 from ipapy.ipachar import IPAVowel
 from ipapy.ipachar import is_list_of_ipachars
-from ipapy.ipachar import variant_to_frozenset
+from ipapy.ipachar import variant_to_canonical_string
 from ipapy.ipachar import variant_to_list
 
 class TestIPADescriptor(unittest.TestCase):
@@ -270,7 +270,7 @@ class TestIPAChar(unittest.TestCase):
 
     def test_ipaconsonant_descriptors(self):
         cns = self.create_generic("cns")
-        self.assertEqual(cns.descriptors, frozenset(["voiceless", "bilabial", "plosive", "consonant"]))
+        self.assertEqual(cns.descriptors, ["consonant", "voiceless", "bilabial", "plosive"])
 
     def test_ipaconsonant_descriptors_set(self):
         cns = self.create_generic("cns")
@@ -285,7 +285,7 @@ class TestIPAChar(unittest.TestCase):
             frozenset([u"voiced", u"bilabial", u"plosive", u"consonant"]),
         ]:
             cns.descriptors = v
-            self.assertEqual(cns.descriptors, frozenset(["voiced", "bilabial", "plosive", "consonant"]))
+            self.assertEqual(cns.descriptors, ["consonant", "voiced", "bilabial", "plosive"])
 
     def test_ipaconsonant_descriptors_set_bad(self):
         cns = self.create_generic("cns")
@@ -365,7 +365,7 @@ class TestIPAChar(unittest.TestCase):
 
     def test_ipavowel_descriptors(self):
         vwl = self.create_generic("vwl")
-        self.assertEqual(vwl.descriptors, frozenset(["close", "front", "unrounded", "vowel"]))
+        self.assertEqual(vwl.descriptors, ["vowel", "close", "front", "unrounded"])
 
     def test_ipavowel_descriptors_set(self):
         vwl = self.create_generic("vwl")
@@ -380,7 +380,7 @@ class TestIPAChar(unittest.TestCase):
             frozenset([u"open", u"front", u"unrounded", u"vowel"]),
         ]:
             vwl.descriptors = v
-            self.assertEqual(vwl.descriptors, frozenset(["open", "front", "unrounded", "vowel"]))
+            self.assertEqual(vwl.descriptors, ["vowel", "open", "front", "unrounded"])
 
     def test_ipavowel_descriptors_set_bad(self):
         vwl = self.create_generic("vwl")
@@ -467,27 +467,35 @@ class TestIPAChar(unittest.TestCase):
             with self.assertRaises(TypeError):
                 variant_to_list(v)
 
-    def test_variant_to_frozenset(self):
+    def test_variant_to_canonical_string(self):
         values = [
-            ([], frozenset([])),
-            (set([]), frozenset([])),
-            (frozenset([]), frozenset([])),
-            ([u"a", u"b", "c"], frozenset([u"a", u"b", u"c"])),
-            (u"a b c", frozenset([u"a", u"b", u"c"])),
-            (set([u"a", u"b", u"c"]), frozenset([u"a", u"b", u"c"])),
-            (frozenset([u"a", u"b", u"c"]), frozenset([u"a", u"b", u"c"])),
+            ([], u""),
+            (set([]), u""),
+            (frozenset([]), u""),
+            ([u"a", u"b", "c"], u""),
+            (u"a b c", u""),
+            (set([u"a", u"b", u"c"]), u""),
+            (frozenset([u"a", u"b", u"c"]), u""),
+            (u"consonant", u"consonant"),
+            (u"bilabial consonant", u"bilabial consonant"),
+            (u"consonant bilabial", u"bilabial consonant"),
+            (u"voiceless bilabial plosive consonant", u"bilabial consonant plosive voiceless"),
+            (u"voiceless bilabial plosive consonant velarized", u"bilabial consonant plosive velarized voiceless"),
+            (u"voiceless bilabial plosive consonant nasalized", u"bilabial consonant nasalized plosive voiceless"),
+            (u"vls blb stp cns", u"bilabial consonant plosive voiceless"),
+            (u"suprasegmental long", u"long suprasegmental"),
+            (u"suprasegmental primary-stress", u"primary-stress suprasegmental"),
         ]
         for v, e in values:
-            self.assertEqual(variant_to_frozenset(v), e)
+            self.assertEqual(variant_to_canonical_string(v), e)
 
-    def test_variant_to_frozenset_bad(self):
+    def test_variant_to_canonical_string_bad(self):
         values = [
             None,
             {"k": "v"}
         ]
         for v in values:
             with self.assertRaises(TypeError):
-                variant_to_frozenset(v)
-
+                variant_to_canonical_string(v)
 
 

@@ -1,20 +1,23 @@
 #
 # IPA Symbols
 #
-# Version: 0.0.3
-# Date:    2016-05-23
+# Version: 0.0.6
+# Date:    2016-05-28
 #
 # Syntax:
-# type,desc,xxxx
+# desc,unic
 #
-# type = consonant|vowel|diacritic|suprasegmental|tone
 # desc = description of the IPA symbol
-# xxxx = Unicode hexadecimal code point
+# unic = Unicode hexadecimal code point(s):
 #        N/A       = Unicode codepoint not available
 #        xxxx      = single Unicode codepoint
-#        xxxx xxxx = alternative Unicode codepoints, first is the canonical
+#        xxxx xxxx = alternative Unicode codepoints, the first is the canonical
 #        xxxx_xxxx = sequence of Unicode codepoints
 #
+#
+# Notes:
+#   1. Articulations believed to be impossible are not listed
+#   2. "???" means that no IPA string was found for the corresponding item
 #
 
 #################
@@ -25,43 +28,31 @@
 #   plosive / stop   #
 ######################
 
-consonant,voiceless bilabial plosive,0070
-consonant,voiced    bilabial plosive,0062
-
-consonant,voiceless labio-dental plosive,0070_032A
-consonant,voiced    labio-dental plosive,0062_032A
-
-consonant,voiceless linguolabial plosive,0074_033C 0070_033A
-consonant,voiced    linguolabial plosive,0064_033C 0062_033A
-
-consonant,voiceless dental plosive,0074_032A
-consonant,voiced    dental plosive,0064_032A
-
-consonant,voiceless alveolar plosive,0074
-consonant,voiced    alveolar plosive,0064
-
-#consonant,voiceless palato-alveolar plosive,???
-#consonant,voiced    palato-alveolar plosive,???
-
-consonant,voiceless retroflex plosive,0288
-consonant,voiced    retroflex plosive,0256
-
-#consonant,voiceless alveolo-palatal plosive,???
-#consonant,voiced    alveolo-palatal plosive,???
-
-consonant,voiceless palatal plosive,0063
-consonant,voiced    palatal plosive,025F
-
-consonant,voiceless velar plosive,006B
-consonant,voiced    velar plosive,0261 0067
-
-consonant,voiceless uvular plosive,0071
-consonant,voiced    uvular plosive,0262
-
-consonant,voiceless pharyngeal plosive,02A1
+voiceless bilabial          plosive consonant,0070
+voiced    bilabial          plosive consonant,0062
+voiceless labio-dental      plosive consonant,0070_032A
+voiced    labio-dental      plosive consonant,0062_032A
+voiceless linguolabial      plosive consonant,0074_033C 0070_033A
+voiced    linguolabial      plosive consonant,0064_033C 0062_033A
+voiceless dental            plosive consonant,0074_032A
+voiced    dental            plosive consonant,0064_032A
+voiceless alveolar          plosive consonant,0074
+voiced    alveolar          plosive consonant,0064
+#voiceless palato-alveolar   plosive consonant,???
+#voiced    palato-alveolar   plosive consonant,???
+voiceless retroflex         plosive consonant,0288
+voiced    retroflex         plosive consonant,0256
+#voiceless alveolo-palatal   plosive consonant,???
+#voiced    alveolo-palatal   plosive consonant,???
+voiceless palatal           plosive consonant,0063
+voiced    palatal           plosive consonant,025F
+voiceless velar             plosive consonant,006B
+voiced    velar             plosive consonant,0261 0067
+voiceless uvular            plosive consonant,0071
+voiced    uvular            plosive consonant,0262
+voiceless pharyngeal        plosive consonant,02A1
 # no voiced
-
-consonant,voiceless glottal plosive,0294
+voiceless glottal           plosive consonant,0294
 # no voiced
 
 
@@ -70,38 +61,28 @@ consonant,voiceless glottal plosive,0294
 #   nasal   #
 #############
 
-consonant,voiceless bilabial nasal,006D_0325
-consonant,voiced    bilabial nasal,006D
-
-consonant,voiceless labio-dental nasal,0271_030A 006D_032A_030A
-consonant,voiced    labio-dental nasal,0271 006D_032A
-
-consonant,voiceless linguolabial nasal,006E_033C_030A 006D_033A_030A
-consonant,voiced    linguolabial nasal,006E_033C 006D_033A
-
-consonant,voiceless dental nasal,006E_032A_030A 006E_032A_0325
-consonant,voiced    dental nasal,006E_032A
-
-consonant,voiceless alveolar nasal,006E_0325 006E_030A
-consonant,voiced    alveolar nasal,006E
-
-#consonant,voiceless palato-alveolar nasal,???
-#consonant,voiced    palato-alveolar nasal,???
-
-consonant,voiceless retroflex nasal,0273_030A 0273_0325
-consonant,voiced    retroflex nasal,0273
-
-#consonant,voiceless alveolo-palatal nasal,???
-#consonant,voiced    alveolo-palatal nasal,???
-
-consonant,voiceless palatal nasal,0272_030A 0272_0325
-consonant,voiced    palatal nasal,0272
-
-consonant,voiceless velar nasal,014B_030A 014B_0325
-consonant,voiced    velar nasal,014B
-
-consonant,voiceless uvular nasal,0274_030A 0274_0325
-consonant,voiced    uvular nasal,0274
+voiceless bilabial          nasal consonant,006D_0325
+voiced    bilabial          nasal consonant,006D
+voiceless labio-dental      nasal consonant,0271_030A 006D_032A_030A
+voiced    labio-dental      nasal consonant,0271 006D_032A
+voiceless linguolabial      nasal consonant,006E_033C_030A 006D_033A_030A
+voiced    linguolabial      nasal consonant,006E_033C 006D_033A
+voiceless dental            nasal consonant,006E_032A_030A 006E_032A_0325
+voiced    dental            nasal consonant,006E_032A
+voiceless alveolar          nasal consonant,006E_0325 006E_030A
+voiced    alveolar          nasal consonant,006E
+#voiceless palato-alveolar   nasal consonant,???
+#voiced    palato-alveolar   nasal consonant,???
+voiceless retroflex         nasal consonant,0273_030A 0273_0325
+voiced    retroflex         nasal consonant,0273
+#voiceless alveolo-palatal nasal consonant,???
+#voiced    alveolo-palatal nasal consonant,???
+voiceless palatal           nasal consonant,0272_030A 0272_0325
+voiced    palatal           nasal consonant,0272
+voiceless velar             nasal consonant,014B_030A 014B_0325
+voiced    velar             nasal consonant,014B
+voiceless uvular            nasal consonant,0274_030A 0274_0325
+voiced    uvular            nasal consonant,0274
 
 
 
@@ -109,20 +90,16 @@ consonant,voiced    uvular nasal,0274
 #   sibilant-affricate   #
 ##########################
 
-#consonant,voiceless dental sibilant-affricate,???
-#consonant,voiced    dental sibilant-affricate,???
-
-consonant,voiceless alveolar sibilant-affricate,0074_0361_0073 0074_035C_0073 0074_0073 02A6
-consonant,voiced    alveolar sibilant-affricate,0064_0361_007A 0064_035C_007A 0064_007A 02A3
-
-consonant,voiceless palato-alveolar sibilant-affricate,0074_0361_0283 0074_035C_0283 0074_0283 02A7
-consonant,voiced    palato-alveolar sibilant-affricate,0064_0361_0292 0064_035C_0292 0064_0292 02A4
-
-consonant,voiceless retroflex sibilant-affricate,0288_0361_0282 0288_035C_0282 0074_0361_0282 0074_035C_0282 0288_0282
-consonant,voiced    retroflex sibilant-affricate,0256_0361_0290 0256_035C_0290 0064_0361_0290 0064_035C_0290 0256_0290
-
-consonant,voiceless alveolo-palatal sibilant-affricate,0074_0361_0255 0074_035C_0255 0074_0255 02A8
-consonant,voiced    alveolo-palatal sibilant-affricate,0064_0361_0291 0064_035C_0291 0064_0291 02A5
+#voiceless dental            sibilant-affricate consonant,???
+#voiced    dental            sibilant-affricate consonant,???
+voiceless alveolar          sibilant-affricate consonant,0074_0361_0073 0074_035C_0073 0074_0073 02A6
+voiced    alveolar          sibilant-affricate consonant,0064_0361_007A 0064_035C_007A 0064_007A 02A3
+voiceless palato-alveolar   sibilant-affricate consonant,0074_0361_0283 0074_035C_0283 0074_0283 02A7
+voiced    palato-alveolar   sibilant-affricate consonant,0064_0361_0292 0064_035C_0292 0064_0292 02A4
+voiceless retroflex         sibilant-affricate consonant,0288_0361_0282 0288_035C_0282 0074_0361_0282 0074_035C_0282 0288_0282
+voiced    retroflex         sibilant-affricate consonant,0256_0361_0290 0256_035C_0290 0064_0361_0290 0064_035C_0290 0256_0290
+voiceless alveolo-palatal   sibilant-affricate consonant,0074_0361_0255 0074_035C_0255 0074_0255 02A8
+voiced    alveolo-palatal   sibilant-affricate consonant,0064_0361_0291 0064_035C_0291 0064_0291 02A5
 
 
 
@@ -130,43 +107,31 @@ consonant,voiced    alveolo-palatal sibilant-affricate,0064_0361_0291 0064_035C_
 #   non-sibilant-affricate   #
 ##############################
 
-consonant,voiceless bilabial non-sibilant-affricate,0070_0361_0278 0070_035C_0278 0070_0278
-consonant,voiced    bilabial non-sibilant-affricate,0062_0361_03B2 0062_035C_03B2 0062_03B2
-
-consonant,voiceless labio-dental non-sibilant-affricate,0070_032A_0361_0066 0070_032A_035C_0066 0070_032A_0066
-consonant,voiced    labio-dental non-sibilant-affricate,0062_032A_0361_0076 0062_032A_035C_076 0062_032A_076
-
-#consonant,voiceless linguolabial non-sibilant-affricate,???
-#consonant,voiced    linguolabial non-sibilant-affricate,???
-
-consonant,voiceless dental non-sibilant-affricate,0074_0361_03B8 0074_035C_03B8 0074_032A_0361_03B8 0074_031F_0361_03B8
-consonant,voiced    dental non-sibilant-affricate,0064_0361_00F0 0064_035C_00F0 0064_032A_0361_00F0 0064_031F_0361_00F0
-
-consonant,voiceless alveolar non-sibilant-affricate,0074_0361_03B8_0320 0074_0361_03B8_0333 0074_035C_03B8_0320 0074_035C_03B8_0333
-consonant,voiced    alveolar non-sibilant-affricate,0064_0361_00F0_0320 0064_0361_00F0_0333 0064_035C_00F0_0320 0064_035C_00F0_0333
-
-consonant,voiceless palato-alveolar non-sibilant-affricate,0074_0320_0361_0279_0320_030A_02D4 0074_0320_035C_0279_0320_030A_02D4 0074_0320_0279_0320_030A_02D4
-consonant,voiced    palato-alveolar non-sibilant-affricate,0064_0320_0361_0279_0320_02D4 0064_0320_035C_0279_0320_02D4 0064_0320_0279_0320_02D4
-
-#consonant,voiceless retroflex non-sibilant-affricate,???
-#consonant,voiced    retroflex non-sibilant-affricate,???
-
-#consonant,voiceless alveolo-palatal non-sibilant-affricate,???
-#consonant,voiced    alveolo-palatal non-sibilant-affricate,???
-
-consonant,voiceless palatal non-sibilant-affricate,0063_0361_00E7 0063_035C_00E7
-consonant,voiced    palatal non-sibilant-affricate,025F_0361_029D 025F_035C_029D
-
-consonant,voiceless velar non-sibilant-affricate,006B_0361_0078 006B_035C_0078 006B_0078
-consonant,voiced    velar non-sibilant-affricate,0261_0361_0263 0261_035C_0263 0261_0263
-
-consonant,voiceless uvular non-sibilant-affricate,0071_0361_03C7 0071_035C_03C7 0071_03C7
-consonant,voiced    uvular non-sibilant-affricate,0262_0361_0281 0262_035C_0281 0262_0281
-
-consonant,voiceless pharyngeal non-sibilant-affricate,02A1_0361_0127 02A1_035C_0127 02A1_0127
-consonant,voiced    pharyngeal non-sibilant-affricate,02A1_0361_0295 02A1_035C_0295 02A1_0295
-
-consonant,voiceless glottal non-sibilant-affricate,0294_0361_0068 0294_035C_0068 0294_0068
+voiceless bilabial          non-sibilant-affricate consonant,0070_0361_0278 0070_035C_0278 0070_0278
+voiced    bilabial          non-sibilant-affricate consonant,0062_0361_03B2 0062_035C_03B2 0062_03B2
+voiceless labio-dental      non-sibilant-affricate consonant,0070_032A_0361_0066 0070_032A_035C_0066 0070_032A_0066
+voiced    labio-dental      non-sibilant-affricate consonant,0062_032A_0361_0076 0062_032A_035C_076 0062_032A_076
+#voiceless linguolabial      non-sibilant-affricate consonant,???
+#voiced    linguolabial      non-sibilant-affricate consonant,???
+voiceless dental            non-sibilant-affricate consonant,0074_0361_03B8 0074_035C_03B8 0074_032A_0361_03B8 0074_031F_0361_03B8
+voiced    dental            non-sibilant-affricate consonant,0064_0361_00F0 0064_035C_00F0 0064_032A_0361_00F0 0064_031F_0361_00F0
+voiceless alveolar          non-sibilant-affricate consonant,0074_0361_03B8_0320 0074_0361_03B8_0333 0074_035C_03B8_0320 0074_035C_03B8_0333
+voiced    alveolar          non-sibilant-affricate consonant,0064_0361_00F0_0320 0064_0361_00F0_0333 0064_035C_00F0_0320 0064_035C_00F0_0333
+voiceless palato-alveolar   non-sibilant-affricate consonant,0074_0320_0361_0279_0320_030A_02D4 0074_0320_035C_0279_0320_030A_02D4 0074_0320_0279_0320_030A_02D4
+voiced    palato-alveolar   non-sibilant-affricate consonant,0064_0320_0361_0279_0320_02D4 0064_0320_035C_0279_0320_02D4 0064_0320_0279_0320_02D4
+#voiceless retroflex         non-sibilant-affricate consonant,???
+#voiced    retroflex         non-sibilant-affricate consonant,???
+#voiceless alveolo-palatal   non-sibilant-affricate consonant,???
+#voiced    alveolo-palatal   non-sibilant-affricate consonant,???
+voiceless palatal           non-sibilant-affricate consonant,0063_0361_00E7 0063_035C_00E7
+voiced    palatal           non-sibilant-affricate consonant,025F_0361_029D 025F_035C_029D
+voiceless velar             non-sibilant-affricate consonant,006B_0361_0078 006B_035C_0078 006B_0078
+voiced    velar             non-sibilant-affricate consonant,0261_0361_0263 0261_035C_0263 0261_0263
+voiceless uvular            non-sibilant-affricate consonant,0071_0361_03C7 0071_035C_03C7 0071_03C7
+voiced    uvular            non-sibilant-affricate consonant,0262_0361_0281 0262_035C_0281 0262_0281
+voiceless pharyngeal        non-sibilant-affricate consonant,02A1_0361_0127 02A1_035C_0127 02A1_0127
+voiced    pharyngeal        non-sibilant-affricate consonant,02A1_0361_0295 02A1_035C_0295 02A1_0295
+voiceless glottal           non-sibilant-affricate consonant,0294_0361_0068 0294_035C_0068 0294_0068
 # no voiced
 
 
@@ -175,20 +140,16 @@ consonant,voiceless glottal non-sibilant-affricate,0294_0361_0068 0294_035C_0068
 #   sibilant-fricative   #
 ##########################
 
-consonant,voiceless dental sibilant-fricative,0073_032A
-consonant,voiced    dental sibilant-fricative,007A_032A
-
-consonant,voiceless alveolar sibilant-fricative,0073
-consonant,voiced    alveolar sibilant-fricative,007A
-
-consonant,voiceless palato-alveolar sibilant-fricative,0283
-consonant,voiced    palato-alveolar sibilant-fricative,0292
-
-consonant,voiceless retroflex sibilant-fricative,0282
-consonant,voiced    retroflex sibilant-fricative,0290
-
-consonant,voiceless alveolo-palatal sibilant-fricative,0255
-consonant,voiced    alveolo-palatal sibilant-fricative,0291
+voiceless dental            sibilant-fricative consonant,0073_032A
+voiced    dental            sibilant-fricative consonant,007A_032A
+voiceless alveolar          sibilant-fricative consonant,0073
+voiced    alveolar          sibilant-fricative consonant,007A
+voiceless palato-alveolar   sibilant-fricative consonant,0283
+voiced    palato-alveolar   sibilant-fricative consonant,0292
+voiceless retroflex         sibilant-fricative consonant,0282
+voiced    retroflex         sibilant-fricative consonant,0290
+voiceless alveolo-palatal   sibilant-fricative consonant,0255
+voiced    alveolo-palatal   sibilant-fricative consonant,0291
 
 
 
@@ -196,44 +157,32 @@ consonant,voiced    alveolo-palatal sibilant-fricative,0291
 #   non-sibilant-fricative   #
 ##############################
 
-consonant,voiceless bilabial non-sibilant-fricative,0278 03A6
-consonant,voiced    bilabial non-sibilant-fricative,03B2
-
-consonant,voiceless labio-dental non-sibilant-fricative,0066
-consonant,voiced    labio-dental non-sibilant-fricative,0076
-
-consonant,voiceless linguolabial non-sibilant-fricative,03B8_033C 0278_033A
-consonant,voiced    linguolabial non-sibilant-fricative,00F0_033C 03B2_033A
-
-consonant,voiceless dental non-sibilant-fricative,03B8
-consonant,voiced    dental non-sibilant-fricative,00F0
-
-consonant,voiceless alveolar non-sibilant-fricative,03B8_0320 03B8_0347 0279_031D_030A
-consonant,voiced    alveolar non-sibilant-fricative,00F0_0320 00F0_0347 0279_031D
-
-consonant,voiceless palato-alveolar non-sibilant-fricative,0279_0320_030A_02D4
-consonant,voiced    palato-alveolar non-sibilant-fricative,0279_0320_02D4
-
-#consonant,voiceless retroflex non-sibilant-fricative,???
-#consonant,voiced    retroflex non-sibilant-fricative,???
-
-#consonant,voiceless alveolo-palatal non-sibilant-fricative,???
-#consonant,voiced    alveolo-palatal non-sibilant-fricative,???
-
-consonant,voiceless palatal non-sibilant-fricative,00E7
-consonant,voiced    palatal non-sibilant-fricative,029D
-
-consonant,voiceless velar non-sibilant-fricative,0078
-consonant,voiced    velar non-sibilant-fricative,0263
-
-consonant,voiceless uvular non-sibilant-fricative,03C7
-consonant,voiced    uvular non-sibilant-fricative,0281
-
-consonant,voiceless pharyngeal non-sibilant-fricative,0127
-consonant,voiced    pharyngeal non-sibilant-fricative,0295
-
-consonant,voiceless glottal non-sibilant-fricative,0068
-consonant,voiced    glottal non-sibilant-fricative,0266
+voiceless bilabial          non-sibilant-fricative consonant,0278 03A6
+voiced    bilabial          non-sibilant-fricative consonant,03B2
+voiceless labio-dental      non-sibilant-fricative consonant,0066
+voiced    labio-dental      non-sibilant-fricative consonant,0076
+voiceless linguolabial      non-sibilant-fricative consonant,03B8_033C 0278_033A
+voiced    linguolabial      non-sibilant-fricative consonant,00F0_033C 03B2_033A
+voiceless dental            non-sibilant-fricative consonant,03B8
+voiced    dental            non-sibilant-fricative consonant,00F0
+voiceless alveolar          non-sibilant-fricative consonant,03B8_0320 03B8_0347 0279_031D_030A
+voiced    alveolar          non-sibilant-fricative consonant,00F0_0320 00F0_0347 0279_031D
+voiceless palato-alveolar   non-sibilant-fricative consonant,0279_0320_030A_02D4
+voiced    palato-alveolar   non-sibilant-fricative consonant,0279_0320_02D4
+#voiceless retroflex         non-sibilant-fricative consonant,???
+#voiced    retroflex         non-sibilant-fricative consonant,???
+#voiceless alveolo-palatal   non-sibilant-fricative consonant,???
+#voiced    alveolo-palatal   non-sibilant-fricative consonant,???
+voiceless palatal           non-sibilant-fricative consonant,00E7
+voiced    palatal           non-sibilant-fricative consonant,029D
+voiceless velar             non-sibilant-fricative consonant,0078
+voiced    velar             non-sibilant-fricative consonant,0263
+voiceless uvular            non-sibilant-fricative consonant,03C7
+voiced    uvular            non-sibilant-fricative consonant,0281
+voiceless pharyngeal        non-sibilant-fricative consonant,0127
+voiced    pharyngeal        non-sibilant-fricative consonant,0295
+voiceless glottal           non-sibilant-fricative consonant,0068
+voiced    glottal           non-sibilant-fricative consonant,0266
 
 
 
@@ -241,44 +190,32 @@ consonant,voiced    glottal non-sibilant-fricative,0266
 #   approximant   #
 ###################
 
-consonant,voiceless bilabial approximant,0278_031E
-#consonant,voiced    bilabial approximant,???
-
-#consonant,voiceless labio-dental approximant,???
-consonant,voiced    labio-dental approximant,028B
-
-#consonant,voiceless linguolabial approximant,???
-#consonant,voiced    linguolabial approximant,???
-
-consonant,voiceless dental approximant,03B8_031E
-#consonant,voiced    dental approximant,???
-
-consonant,voiceless alveolar approximant,0279_0325
-consonant,voiced    alveolar approximant,0279 00F0_0320_02D5
-
-#consonant,voiceless palato-alveolar approximant,???
-#consonant,voiced    palato-alveolar approximant,???
-
-consonant,voiceless retroflex approximant,027B_030A
-consonant,voiced    retroflex approximant,027B
-
-#consonant,voiceless alveolo-palatal approximant,???
-#consonant,voiced    alveolo-palatal approximant,???
-
-consonant,voiceless palatal approximant,006A_030A 0069_032F_030A
-consonant,voiced    palatal approximant,006A
-
-consonant,voiceless velar approximant,0270_030A 0078_031E 0263_030A_02D5
-consonant,voiced    velar approximant,0270 0263_031E 0263_02D5
-
-#consonant,voiceless uvular approximant,???
-#consonant,voiced    uvular approximant,???
-
-#consonant,voiceless pharyngeal approximant,???
-#consonant,voiced    pharyngeal approximant,???
-
-#consonant,voiceless glottal approximant,???
-consonant,voiced    glottal approximant,0294_031E 0294_0330
+voiceless bilabial          approximant consonant,0278_031E
+#voiced    bilabial          approximant consonant,???
+#voiceless labio-dental      approximant consonant,???
+voiced    labio-dental      approximant consonant,028B
+#voiceless linguolabial      approximant consonant,???
+#voiced    linguolabial      approximant consonant,???
+voiceless dental            approximant consonant,03B8_031E
+#voiced    dental            approximant consonant,???
+voiceless alveolar          approximant consonant,0279_0325
+voiced    alveolar          approximant consonant,0279 00F0_0320_02D5
+#voiceless palato-alveolar   approximant consonant,???
+#voiced    palato-alveolar   approximant consonant,???
+voiceless retroflex         approximant consonant,027B_030A
+voiced    retroflex         approximant consonant,027B
+#voiceless alveolo-palatal   approximant consonant,???
+#voiced    alveolo-palatal   approximant consonant,???
+voiceless palatal           approximant consonant,006A_030A 0069_032F_030A
+voiced    palatal           approximant consonant,006A
+voiceless velar             approximant consonant,0270_030A 0078_031E 0263_030A_02D5
+voiced    velar             approximant consonant,0270 0263_031E 0263_02D5
+#voiceless uvular            approximant consonant,???
+#voiced    uvular            approximant consonant,???
+#voiceless pharyngeal        approximant consonant,???
+#voiced    pharyngeal        approximant consonant,???
+#voiceless glottal           approximant consonant,???
+voiced    glottal           approximant consonant,0294_031E 0294_0330
 
 
 
@@ -286,32 +223,24 @@ consonant,voiced    glottal approximant,0294_031E 0294_0330
 #   flap   #
 ############
 
-#consonant,voiceless bilabial flap,???
-consonant,voiced    bilabial flap,2C73 2C71_031F
-
-#consonant,voiceless labio-dental flap,???
-consonant,voiced    labio-dental flap,2C71 F25F
-
-#consonant,voiceless linguolabial flap,???
-consonant,voiced    linguolabial flap,027E_033C
-
-#consonant,voiceless dental flap,???
-#consonant,voiced    dental flap,???
-
-consonant,voiceless alveolar flap,027E_0325 027E_030A
-consonant,voiced    alveolar flap,027E
-
-#consonant,voiceless palato-alveolar flap,???
-#consonant,voiced    palato-alveolar flap,???
-
-consonant,voiceless retroflex flap,027D_030A
-consonant,voiced    retroflex flap,027D
-
-#consonant,voiceless uvular flap,???
-consonant,voiced    uvular flap,0262_0306 0280_0306
-
-#consonant,voiceless pharyngeal flap,
-consonant,voiced    pharyngeal flap,02A1_032E
+#voiceless bilabial          flap consonant,???
+voiced    bilabial          flap consonant,2C73 2C71_031F
+#voiceless labio-dental      flap consonant,???
+voiced    labio-dental      flap consonant,2C71 F25F
+#voiceless linguolabial      flap consonant,???
+voiced    linguolabial      flap consonant,027E_033C
+#voiceless dental            flap consonant,???
+#voiced    dental            flap consonant,???
+voiceless alveolar          flap consonant,027E_0325 027E_030A
+voiced    alveolar          flap consonant,027E
+#voiceless palato-alveolar   flap consonant,???
+#voiced    palato-alveolar   flap consonant,???
+voiceless retroflex         flap consonant,027D_030A
+voiced    retroflex         flap consonant,027D
+#voiceless uvular            flap consonant,???
+voiced    uvular            flap consonant,0262_0306 0280_0306
+#voiceless pharyngeal        flap consonant,
+voiced    pharyngeal        flap consonant,02A1_032E
 
 
 
@@ -319,32 +248,24 @@ consonant,voiced    pharyngeal flap,02A1_032E
 #   trill   #
 #############
 
-consonant,voiceless bilabial trill,0299_0325
-consonant,voiced    bilabial trill,0299
-
-#consonant,voiceless labio-dental trill,???
-#consonant,voiced    labio-dental trill,???
-
-consonant,voiceless linguolabial trill,0072_033C_030A
-consonant,voiced    linguolabial trill,0072_033C
-
-consonant,voiceless dental trill,0072_032A_030A
-consonant,voiced    dental trill,0072_032A
-
-consonant,voiceless alveolar trill,0072_0325
-consonant,voiced    alveolar trill,0072
-
-#consonant,voiceless palato-alveolar trill,???
-#consonant,voiced    palato-alveolar trill,???
-
-consonant,voiceless retroflex trill,027D_0361_0072_0325 027D_035C_0072_0325
-consonant,voiced    retroflex trill,027D_0361_0072 027D_035C_0072
-
-consonant,voiceless uvular trill,0280_0325
-consonant,voiced    uvular trill,0280
-
-consonant,voiceless pharyngeal trill,029C
-consonant,voiced    pharyngeal trill,02A2
+voiceless bilabial          trill consonant,0299_0325
+voiced    bilabial          trill consonant,0299
+#voiceless labio-dental      trill consonant,???
+#voiced    labio-dental      trill consonant,???
+voiceless linguolabial      trill consonant,0072_033C_030A
+voiced    linguolabial      trill consonant,0072_033C
+voiceless dental            trill consonant,0072_032A_030A
+voiced    dental            trill consonant,0072_032A
+voiceless alveolar          trill consonant,0072_0325
+voiced    alveolar          trill consonant,0072
+#voiceless palato-alveolar   trill consonant,???
+#voiced    palato-alveolar   trill consonant,???
+voiceless retroflex         trill consonant,027D_0361_0072_0325 027D_035C_0072_0325
+voiced    retroflex         trill consonant,027D_0361_0072 027D_035C_0072
+voiceless uvular            trill consonant,0280_0325
+voiced    uvular            trill consonant,0280
+voiceless pharyngeal        trill consonant,029C
+voiced    pharyngeal        trill consonant,02A2
 
 
 
@@ -352,32 +273,24 @@ consonant,voiced    pharyngeal trill,02A2
 #  lateral-affricate    #
 #########################
 
-#consonant,voiceless linguolabial lateral-affricate,???
-#consonant,voiced    linguolabial lateral-affricate,???
-
-#consonant,voiceless dental lateral-affricate,???
-#consonant,voiced    dental lateral-affricate,???
-
-consonant,voiceless alveolar lateral-affricate,0074_0361_026C 0074_035C_026C 0074_026C 019B
-consonant,voiced    alveolar lateral-affricate,0064_0361_026E 0064_035C_026E 0064_026E 03BB
-
-#consonant,voiceless palato-alveolar lateral-affricate,???
-#consonant,voiced    palato-alveolar lateral-affricate,???
-
-consonant,voiceless retroflex lateral-affricate,0288_035C_026D_030A_02D4 0288_0361_026D_030A_02D4 0288_026D_030A_02D4
-#consonant,voiced    retroflex lateral-affricate,???
-
-#consonant,voiceless alveolo-palatal lateral-affricate,???
-#consonant,voiced    alveolo-palatal lateral-affricate,???
-
-consonant,voiceless palatal lateral-affricate,0063_0361_028E_0325_02D4 0063_035C_028E_0325_02D4
-#consonant,voiced    palatal lateral-affricate,???
-
-consonant,voiceless velar lateral-affricate,006B_0361_029F_031D_030A 006B_035C_029F_031D_030A
-consonant,voiced    velar lateral-affricate,0261_0361_029F_031D 0261_035C_029F_031D
-
-#consonant,voiceless uvular lateral-affricate,???
-#consonant,voiced    uvular lateral-affricate,???
+#voiceless linguolabial      lateral-affricate consonant,???
+#voiced    linguolabial      lateral-affricate consonant,???
+#voiceless dental            lateral-affricate consonant,???
+#voiced    dental            lateral-affricate consonant,???
+voiceless alveolar          lateral-affricate consonant,0074_0361_026C 0074_035C_026C 0074_026C 019B
+voiced    alveolar          lateral-affricate consonant,0064_0361_026E 0064_035C_026E 0064_026E 03BB
+#voiceless palato-alveolar   lateral-affricate consonant,???
+#voiced    palato-alveolar   lateral-affricate consonant,???
+voiceless retroflex         lateral-affricate consonant,0288_035C_026D_030A_02D4 0288_0361_026D_030A_02D4 0288_026D_030A_02D4
+#voiced    retroflex         lateral-affricate consonant,???
+#voiceless alveolo-palatal   lateral-affricate consonant,???
+#voiced    alveolo-palatal   lateral-affricate consonant,???
+voiceless palatal           lateral-affricate consonant,0063_0361_028E_0325_02D4 0063_035C_028E_0325_02D4
+#voiced    palatal           lateral-affricate consonant,???
+voiceless velar             lateral-affricate consonant,006B_0361_029F_031D_030A 006B_035C_029F_031D_030A
+voiced    velar             lateral-affricate consonant,0261_0361_029F_031D 0261_035C_029F_031D
+#voiceless uvular            lateral-affricate consonant,???
+#voiced    uvular            lateral-affricate consonant,???
 
 
 
@@ -385,32 +298,24 @@ consonant,voiced    velar lateral-affricate,0261_0361_029F_031D 0261_035C_029F_0
 #   lateral-fricative   #
 #########################
 
-#consonant,voiceless linguolabial lateral-fricative,???
-#consonant,voiced    linguolabial lateral-fricative,???
-
-#consonant,voiceless dental lateral-fricative,???
-#consonant,voiced    dental lateral-fricative,???
-
-consonant,voiceless alveolar lateral-fricative,026C
-consonant,voiced    alveolar lateral-fricative,026E
-
-#consonant,voiceless palato-alveolar lateral-fricative,???
-#consonant,voiced    palato-alveolar lateral-fricative,???
-
-consonant,voiceless retroflex lateral-fricative,026D_030A_02D4 A78E
-#consonant,voiced    retroflex lateral-fricative,???
-
-#consonant,voiceless alveolo-palatal lateral-fricative,???
-#consonant,voiced    alveolo-palatal lateral-fricative,???
-
-consonant,voiceless palatal lateral-fricative,028E_0325_02D4 F267
-consonant,voiced    palatal lateral-fricative,028E_031D
-
-consonant,voiceless velar lateral-fricative,029F_031D_030A F268
-consonant,voiced    velar lateral-fricative,029F_031D
-
-#consonant,voiceless uvular lateral-fricative,???
-#consonant,voiced    uvular lateral-fricative,???
+#voiceless linguolabial      lateral-fricative consonant,???
+#voiced    linguolabial      lateral-fricative consonant,???
+#voiceless dental            lateral-fricative consonant,???
+#voiced    dental            lateral-fricative consonant,???
+voiceless alveolar          lateral-fricative consonant,026C
+voiced    alveolar          lateral-fricative consonant,026E
+#voiceless palato-alveolar   lateral-fricative consonant,???
+#voiced    palato-alveolar   lateral-fricative consonant,???
+voiceless retroflex         lateral-fricative consonant,026D_030A_02D4 A78E
+#voiced    retroflex         lateral-fricative consonant,???
+#voiceless alveolo-palatal   lateral-fricative consonant,???
+#voiced    alveolo-palatal   lateral-fricative consonant,???
+voiceless palatal           lateral-fricative consonant,028E_0325_02D4 F267
+voiced    palatal           lateral-fricative consonant,028E_031D
+voiceless velar             lateral-fricative consonant,029F_031D_030A F268
+voiced    velar             lateral-fricative consonant,029F_031D
+#voiceless uvular            lateral-fricative consonant,???
+#voiced    uvular            lateral-fricative consonant,???
 
 
 
@@ -418,32 +323,24 @@ consonant,voiced    velar lateral-fricative,029F_031D
 #   lateral-approximant   #
 ###########################
 
-#consonant,voiceless linguolabial lateral-approximant,???
-consonant,voiced    linguolabial lateral-approximant,006C_033C
-
-consonant,voiceless dental lateral-approximant,006C_032A_030A
-consonant,voiced    dental lateral-approximant,006C_032A
-
-consonant,voiceless alveolar lateral-approximant,006C_0325
-consonant,voiced    alveolar lateral-approximant,006C
-
-consonant,voiceless palato-alveolar lateral-approximant,006C_0320_030A
-consonant,voiced    palato-alveolar lateral-approximant,006C_0320
-
-consonant,voiceless retroflex lateral-approximant,026D_030A
-consonant,voiced    retroflex lateral-approximant,026D
-
-#consonant,voiceless alveolo-palatal lateral-approximant,???
-consonant,voiced    alveolo-palatal lateral-approximant,006C_0320_02B2 028E_031F 0234
-
-consonant,voiceless palatal lateral-approximant,028E_0325
-consonant,voiced    palatal lateral-approximant,028E
-
-consonant,voiceless velar lateral-approximant,029F_0325
-consonant,voiced    velar lateral-approximant,029F
-
-#consonant,voiceless uvular lateral-approximant,???
-consonant,voiced    uvular lateral-approximant,029F_0320
+#voiceless linguolabial      lateral-approximant consonant,???
+voiced    linguolabial      lateral-approximant consonant,006C_033C
+voiceless dental            lateral-approximant consonant,006C_032A_030A
+voiced    dental            lateral-approximant consonant,006C_032A
+voiceless alveolar          lateral-approximant consonant,006C_0325
+voiced    alveolar          lateral-approximant consonant,006C
+voiceless palato-alveolar   lateral-approximant consonant,006C_0320_030A
+voiced    palato-alveolar   lateral-approximant consonant,006C_0320
+voiceless retroflex         lateral-approximant consonant,026D_030A
+voiced    retroflex         lateral-approximant consonant,026D
+#voiceless alveolo-palatal   lateral-approximant consonant,???
+voiced    alveolo-palatal   lateral-approximant consonant,006C_0320_02B2 028E_031F 0234
+voiceless palatal           lateral-approximant consonant,028E_0325
+voiced    palatal           lateral-approximant consonant,028E
+voiceless velar             lateral-approximant consonant,029F_0325
+voiced    velar             lateral-approximant consonant,029F
+#voiceless uvular            lateral-approximant consonant,???
+voiced    uvular            lateral-approximant consonant,029F_0320
 
 
 
@@ -451,32 +348,24 @@ consonant,voiced    uvular lateral-approximant,029F_0320
 #   lateral-flap   #
 ####################
 
-#consonant,voiceless linguolabial lateral-flap,???
-consonant,voiced    linguolabial lateral-flap,027A_033C
-
-#consonant,voiceless dental lateral-flap,???
-#consonant,voiced    dental lateral-flap,???
-
-#consonant,voiceless alveolar lateral-flap,???
-consonant,voiced    alveolar lateral-flap,027A
-
-#consonant,voiceless palato-alveolar lateral-flap,???
-#consonant,voiced    palato-alveolar lateral-flap,???
-
-#consonant,voiceless retroflex lateral-flap,???
-consonant,voiced    retroflex lateral-flap,026D_0306 027A_02DE
-
-#consonant,voiceless alveolo-palatal lateral-flap,???
-#consonant,voiced    alveolo-palatal lateral-flap,???
-
-#consonant,voiceless palatal lateral-flap,???
-consonant,voiced    palatal lateral-flap,028E_032E
-
-#consonant,voiceless velar lateral-flap,???
-consonant,voiced    velar lateral-flap,029F_0306
-
-#consonant,voiceless uvular lateral-flap,???
-#consonant,voiced    uvular lateral-flap,???
+#voiceless linguolabial      lateral-flap consonant,???
+voiced    linguolabial      lateral-flap consonant,027A_033C
+#voiceless dental            lateral-flap consonant,???
+#voiced    dental            lateral-flap consonant,???
+#voiceless alveolar          lateral-flap consonant,???
+voiced    alveolar          lateral-flap consonant,027A
+#voiceless palato-alveolar   lateral-flap consonant,???
+#voiced    palato-alveolar   lateral-flap consonant,???
+#voiceless retroflex         lateral-flap consonant,???
+voiced    retroflex         lateral-flap consonant,026D_0306 027A_02DE
+#voiceless alveolo-palatal   lateral-flap consonant,???
+#voiced    alveolo-palatal   lateral-flap consonant,???
+#voiceless palatal           lateral-flap consonant,???
+voiced    palatal           lateral-flap consonant,028E_032E
+#voiceless velar             lateral-flap consonant,???
+voiced    velar             lateral-flap consonant,029F_0306
+#voiceless uvular            lateral-flap consonant,???
+#voiced    uvular            lateral-flap consonant,???
 
 
 
@@ -484,21 +373,19 @@ consonant,voiced    velar lateral-flap,029F_0306
 #   co-articulated   #
 ######################
 
-consonant,voiceless labio-velar approximant,028D 0077_0325
-consonant,voiced    labio-velar approximant,0077 0075_032F
-consonant,voiceless labio-palatal approximant,0265_030A 006A_030A_02B7
-consonant,voiced    labio-palatal approximant,0265 006A_02B7
-consonant,voiced    alveolar lateral-approximant velarized,006C_02E0 006C_02E4 026B
-
-consonant,voiceless labio-velar plosive,006B_0361_0070 006B_035C_0070 006B_0070
-consonant,voiced    labio-velar plosive,0261_0361_0062 0261_035C_0062 0261_0062
-consonant,voiced    labio-velar nasal,014B_0361_006D 014B_035C_006D 014B_006D
-consonant,voiceless palato-alveolo-velar sibilant-fricative,0267
-
-consonant,voiceless labio-alveolar plosive,0074_0361_0070 0074_035C_0070 0074_0070
-consonant,voiced    labio-alveolar plosive,0064_0361_0062 0064_035C_0062 0064_0062
-consonant,voiced    labio-alveolar nasal,006E_0361_006D 006E_035C_006D 006E_006D
-consonant,voiced    uvulo-pharyngeal plosive,0071_0361_02A1 0071_035C_02A1
+voiceless labio-velar           approximant         consonant,028D 0077_0325
+voiced    labio-velar           approximant         consonant,0077 0075_032F
+voiceless labio-palatal         approximant         consonant,0265_030A 006A_030A_02B7
+voiced    labio-palatal         approximant         consonant,0265 006A_02B7
+voiced    alveolar              lateral-approximant velarized consonant,006C_02E0 006C_02E4 026B
+voiceless labio-velar           plosive             consonant,006B_0361_0070 006B_035C_0070 006B_0070
+voiced    labio-velar           plosive             consonant,0261_0361_0062 0261_035C_0062 0261_0062
+voiced    labio-velar           nasal               consonant,014B_0361_006D 014B_035C_006D 014B_006D
+voiceless palato-alveolo-velar  sibilant-fricative  consonant,0267
+voiceless labio-alveolar        plosive             consonant,0074_0361_0070 0074_035C_0070 0074_0070
+voiced    labio-alveolar        plosive             consonant,0064_0361_0062 0064_035C_0062 0064_0062
+voiced    labio-alveolar        nasal               consonant,006E_0361_006D 006E_035C_006D 006E_006D
+voiced    uvulo-pharyngeal      plosive             consonant,0071_0361_02A1 0071_035C_02A1
 
 
 
@@ -506,30 +393,30 @@ consonant,voiced    uvulo-pharyngeal plosive,0071_0361_02A1 0071_035C_02A1
 #   clicks   #
 ##############
 
-consonant,voiceless bilabial click,0298
-consonant,voiced    bilabial click,0298_032C 1DA2_0298
-#consonant,voiced    nasal    click,0298_0303 1D51_0298
-consonant,voiceless dental   click,01C0 0287
-consonant,voiced    dental   click,01C0_032C 1DA2_01C0 0287_032C 1DA2_0287
-consonant,voiced    dento-nasal click,01C0_0303 1D51_01C0 0287_0303 1D51_0287
-consonant,voiced    dento-nasal click glottalized,01C0_0303_02C0 1D51_01C0_02C0 1D51_030A_01C0_02C0 0287_0303_02C0 1D51_0287_02C0 1D51_030A_0287_02C0
-consonant,voiceless alveolar click,01C3 0297
-consonant,voiced    alveolar click,01C3_032C 1DA2_01C3 0297_032C 1DA2_0297
-consonant,voiced    alveolo-nasal click,01C3_0303 1D51_01C3 0297_0303 1D51_0297
-consonant,voiced    alveolo-nasal click glottalized,01C3_0303_02C0 1D51_01C3_0361_0294 1D51_01C3_035C_0294 1D51_030A_01C3_02C0 0297_0303_0361_0294 0297_0303_035C_0294 1D51_0297_02C0
-consonant,voiceless palatal  click,01C2 0284_0335
-consonant,voiced    palatal  click,01C2_032C 1DA2_01C2
-consonant,voiced    palato-nasal click,01C2_0303 1D51_01C2
-consonant,voiced    palato-nasal click glottalized,01C2_0303_02C0 1D51_01C2_0361_0294 1D51_01C2_035C_0294 1D51_030A_01C2_02C0 1D51_01C2_02C0
-consonant,voiceless alveolar lateral-click,01C1 0296
-consonant,voiced    alveolar lateral-click,01C1_032C 1DA2_01C1 0296_032C 1DA2_0296
-#consonant,voiced    lateral-nasal click,01C1_0303 1D51_01C1 0296_0303 1D51_0296
-#consonant,voiced    lateral-nasal click glottalized,01C1_0303_02C0 1D51_01C1_0361_0294 1D51_030A_01C1_02C0 0296_0303_035C_0294 1D51_0296_02C0
-consonant,voiceless retroflex click,01C3_02DE 203C
-consonant,voiced    retroflex click,01C3_032C_02DE 1DA2_01C3_02DE 203C_032C 1DA2_203C
-consonant,voiced    retroflex-nasal click,01C3_0303_02DE 1D51_01C3_02DE 203C_0303 1D51_203C
-consonant,voiced    alveolo-nasal click glottalized,01C3_0303_02DE_02C0 1D51_01C3_02DE_0361_0294 1D51_01C3_02DE_035C_0294 1D51_030A_203C_02C0 1D51_203C_02C0
-consonant,voiced    velar click,029E
+voiceless bilabial          click           consonant,0298
+voiced    bilabial          click           consonant,0298_032C 1DA2_0298
+#voiced    nasal             click           consonant,0298_0303 1D51_0298
+voiceless dental            click           consonant,01C0 0287
+voiced    dental            click           consonant,01C0_032C 1DA2_01C0 0287_032C 1DA2_0287
+voiced    dento-nasal       click           consonant,01C0_0303 1D51_01C0 0287_0303 1D51_0287
+voiceless alveolar          click           consonant,01C3 0297
+voiced    alveolar          click           consonant,01C3_032C 1DA2_01C3 0297_032C 1DA2_0297
+voiced    alveolo-nasal     click           consonant,01C3_0303 1D51_01C3 0297_0303 1D51_0297
+voiceless palatal           click           consonant,01C2 0284_0335
+voiced    palatal           click           consonant,01C2_032C 1DA2_01C2
+voiced    palato-nasal      click           consonant,01C2_0303 1D51_01C2
+voiceless alveolar          lateral-click   consonant,01C1 0296
+voiced    alveolar          lateral-click   consonant,01C1_032C 1DA2_01C1 0296_032C 1DA2_0296
+#voiced    lateral-nasal     click           consonant,01C1_0303 1D51_01C1 0296_0303 1D51_0296
+voiceless retroflex         click           consonant,01C3_02DE 203C
+voiced    retroflex         click           consonant,01C3_032C_02DE 1DA2_01C3_02DE 203C_032C 1DA2_203C
+voiced    retroflex-nasal   click           consonant,01C3_0303_02DE 1D51_01C3_02DE 203C_0303 1D51_203C
+voiced    velar             click           consonant,029E
+voiced    dento-nasal       click           glottalized consonant,01C0_0303_02C0 1D51_01C0_02C0 1D51_030A_01C0_02C0 0287_0303_02C0 1D51_0287_02C0 1D51_030A_0287_02C0
+voiced    alveolo-nasal     click           glottalized consonant,01C3_0303_02C0 1D51_01C3_0361_0294 1D51_01C3_035C_0294 1D51_030A_01C3_02C0 0297_0303_0361_0294 0297_0303_035C_0294 1D51_0297_02C0
+voiced    palato-nasal      click           glottalized consonant,01C2_0303_02C0 1D51_01C2_0361_0294 1D51_01C2_035C_0294 1D51_030A_01C2_02C0 1D51_01C2_02C0
+#voiced    lateral-nasal     click           glottalized consonant,01C1_0303_02C0 1D51_01C1_0361_0294 1D51_030A_01C1_02C0 0296_0303_035C_0294 1D51_0296_02C0
+voiced    alveolo-nasal     click           glottalized consonant,01C3_0303_02DE_02C0 1D51_01C3_02DE_0361_0294 1D51_01C3_02DE_035C_0294 1D51_030A_203C_02C0 1D51_203C_02C0
 
 
 
@@ -537,23 +424,18 @@ consonant,voiced    velar click,029E
 #   implosive   #
 #################
 
-consonant,voiceless bilabial implosive,0253_0325 01A5 0070_02BC_2193
-consonant,voiced    bilabial implosive,0253
-
-consonant,voiceless alveolar implosive,0257_0325 01AD 0074_02BC_2193
-consonant,voiced    alveolar implosive,0257
-
-consonant,voiceless retroflex implosive,1D91_0325 01AD_0322 0288_02BC_2193
-consonant,voiced    retroflex implosive,1D91
-
-consonant,voiceless palatal implosive,0284_030A 0188 0063_02BC_2193
-consonant,voiced    palatal implosive,0284
-
-consonant,voiceless velar implosive,0260_030A 0199 006B_02BC_2193
-consonant,voiced    velar implosive,0260
-
-consonant,voiceless uvular implosive,029B_0325_2009 02A0 0071_02BC_2193
-consonant,voiced    uvular implosive,029B
+voiceless bilabial   implosive consonant,0253_0325 01A5 0070_02BC_2193
+voiced    bilabial   implosive consonant,0253
+voiceless alveolar   implosive consonant,0257_0325 01AD 0074_02BC_2193
+voiced    alveolar   implosive consonant,0257
+voiceless retroflex  implosive consonant,1D91_0325 01AD_0322 0288_02BC_2193
+voiced    retroflex  implosive consonant,1D91
+voiceless palatal    implosive consonant,0284_030A 0188 0063_02BC_2193
+voiced    palatal    implosive consonant,0284
+voiceless velar      implosive consonant,0260_030A 0199 006B_02BC_2193
+voiced    velar      implosive consonant,0260
+voiceless uvular     implosive consonant,029B_0325_2009 02A0 0071_02BC_2193
+voiced    uvular     implosive consonant,029B
 
 
 
@@ -561,33 +443,33 @@ consonant,voiced    uvular implosive,029B
 #   ejective   #
 ################
 
-consonant,voiceless bilabial        ejective,0070_02BC
-consonant,voiceless alveolar        ejective,0074_02BC
-consonant,voiceless retroflex       ejective,0288_02BC
-consonant,voiceless palatal         ejective,0063_02BC
-consonant,voiceless velar           ejective,006B_02BC
-consonant,voiceless uvular          ejective,0071_02BC
-consonant,voiceless pharyngeal      ejective,02A1_02BC
-consonant,voiceless labio-dental    ejective,0066_02BC
-consonant,voiceless dental          ejective,03B8_02BC
+voiceless bilabial        ejective                      consonant,0070_02BC
+voiceless alveolar        ejective                      consonant,0074_02BC
+voiceless retroflex       ejective                      consonant,0288_02BC
+voiceless palatal         ejective                      consonant,0063_02BC
+voiceless velar           ejective                      consonant,006B_02BC
+voiceless uvular          ejective                      consonant,0071_02BC
+voiceless pharyngeal      ejective                      consonant,02A1_02BC
+voiceless labio-dental    ejective                      consonant,0066_02BC
+voiceless dental          ejective                      consonant,03B8_02BC
 
-consonant,voiceless alveolar        ejective-fricative,0073_02BC
-consonant,voiceless alveolar        lateral-ejective-fricative,026C_2019
-consonant,voiceless palato-alveolar ejective-fricative,0283_02BC
-consonant,voiceless retroflex       ejective-fricative,0282_02BC
-consonant,voiceless alveolo-palatal ejective-fricative,0255_02BC
-consonant,voiceless velar           ejective-fricative,0078_02BC
-consonant,voiceless uvular          ejective-fricative,03C7_02BC
+voiceless alveolar        ejective-fricative            consonant,0073_02BC
+voiceless alveolar        lateral-ejective-fricative    consonant,026C_2019
+voiceless palato-alveolar ejective-fricative            consonant,0283_02BC
+voiceless retroflex       ejective-fricative            consonant,0282_02BC
+voiceless alveolo-palatal ejective-fricative            consonant,0255_02BC
+voiceless velar           ejective-fricative            consonant,0078_02BC
+voiceless uvular          ejective-fricative            consonant,03C7_02BC
 
-consonant,voiceless alveolar        ejective-affricate,0074_0361_0073_02BC 0074_035C_0073_02BC
-consonant,voiceless alveolar        lateral-ejective-affricate,0074_0361_026C_02BC 0074_035C_026C_02BC
-consonant,voiceless palato-alveolar ejective-affricate,0074_0361_0283_02BC 0074_035C_0283_02BC
-consonant,voiceless retroflex       ejective-affricate,0288_0361_0282_02BC 0074_035C_0282_02BC
-consonant,voiceless palatal         lateral-ejective-affricate,0063_0361_028E_031D_0325_02BC 0063_035C_028E_031D_0325_02BC
-consonant,voiceless alveolo-palatal ejective-affricate,0074_0255_02BC
-consonant,voiceless velar           ejective-affricate,006B_0361_0078_02BC 006B_035C_0078_02BC
-consonant,voiceless velar           lateral-ejective-affricate,006B_0361_029F_031D_030A_02BC 006B_035C_029F_031D_030A_02BC
-consonant,voiceless uvular          ejective-affricate,0071_0361_03C7_02BC 0071_035C_03C7_02BC
+voiceless alveolar        ejective-affricate            consonant,0074_0361_0073_02BC 0074_035C_0073_02BC
+voiceless alveolar        lateral-ejective-affricate    consonant,0074_0361_026C_02BC 0074_035C_026C_02BC
+voiceless palato-alveolar ejective-affricate            consonant,0074_0361_0283_02BC 0074_035C_0283_02BC
+voiceless retroflex       ejective-affricate            consonant,0288_0361_0282_02BC 0074_035C_0282_02BC
+voiceless palatal         lateral-ejective-affricate    consonant,0063_0361_028E_031D_0325_02BC 0063_035C_028E_031D_0325_02BC
+voiceless alveolo-palatal ejective-affricate            consonant,0074_0255_02BC
+voiceless velar           ejective-affricate            consonant,006B_0361_0078_02BC 006B_035C_0078_02BC
+voiceless velar           lateral-ejective-affricate    consonant,006B_0361_029F_031D_030A_02BC 006B_035C_029F_031D_030A_02BC
+voiceless uvular          ejective-affricate            consonant,0071_0361_03C7_02BC 0071_035C_03C7_02BC
 
 
 
@@ -601,98 +483,84 @@ consonant,voiceless uvular          ejective-affricate,0071_0361_03C7_02BC 0071_
 #   close   #
 #############
 
-vowel,close     front       unrounded,0069
-vowel,close     front         rounded,0079
-
-vowel,close     central     unrounded,0268
-vowel,close     central       rounded,0289 00FC
-
-vowel,close     back        unrounded,026F
-vowel,close     back          rounded,0075
+close     front       unrounded vowel,0069
+close     front         rounded vowel,0079
+close     central     unrounded vowel,0268
+close     central       rounded vowel,0289 00FC
+close     back        unrounded vowel,026F
+close     back          rounded vowel,0075
 
 ##################
 #   near-close   #
 ##################
 
-vowel,near-close near-front unrounded,026A 0069_033D
-vowel,near-close near-front   rounded,028F 0079_033D
-
-vowel,near-close central    unrounded,026A_0308 0268_031E 1D7B 0258_031D
-vowel,near-close central      rounded,028A_0308 0289_031E 1D7F
-
-vowel,near-close near-back unrounded,026F_033D 026F_031E_0308 028A_031C 03C9
-vowel,near-close near-back   rounded,028A 0075_033D
+near-close near-front unrounded vowel,026A 0069_033D
+near-close near-front   rounded vowel,028F 0079_033D
+near-close central    unrounded vowel,026A_0308 0268_031E 1D7B 0258_031D
+near-close central      rounded vowel,028A_0308 0289_031E 1D7F
+near-close near-back  unrounded vowel,026F_033D 026F_031E_0308 028A_031C 03C9
+near-close near-back    rounded vowel,028A 0075_033D
 
 #################
 #   close-mid   #
 #################
 
-vowel,close-mid front       unrounded,0065
-vowel,close-mid front         rounded,00F8
-
-vowel,close-mid central     unrounded,0258
-vowel,close-mid central       rounded,0275
-
-vowel,close-mid back        unrounded,0264
-vowel,close-mid back          rounded,006F
+close-mid front       unrounded vowel,0065
+close-mid front         rounded vowel,00F8
+close-mid central     unrounded vowel,0258
+close-mid central       rounded vowel,0275
+close-mid back        unrounded vowel,0264
+close-mid back          rounded vowel,006F
 
 ###########
 #   mid   #
 ###########
 
-vowel,mid       front       unrounded,0065_031E 025B_031D
-vowel,mid       front         rounded,00F8_031E 0153_031D
-
-vowel,mid       central     unrounded,0259
-vowel,mid       central       rounded,0275_031E 0259_0339 025E_031D
-
-vowel,mid       back        unrounded,0264_031E 028C_031D
-vowel,mid       back          rounded,006F_031E 0254_031D
+mid       front       unrounded vowel,0065_031E 025B_031D
+mid       front         rounded vowel,00F8_031E 0153_031D
+mid       central     unrounded vowel,0259
+mid       central       rounded vowel,0275_031E 0259_0339 025E_031D
+mid       back        unrounded vowel,0264_031E 028C_031D
+mid       back          rounded vowel,006F_031E 0254_031D
 
 # NOT in IPA chart
-vowel,mid       central     unrounded rhotacized,025A 0259_02DE
+mid       central     unrounded rhotacized vowel,025A 0259_02DE
 
 ################
 #   open-mid   #
 ################
 
-vowel,open-mid  front       unrounded,025B
-vowel,open-mid  front         rounded,0153
-
-vowel,open-mid  central     unrounded,025C 025B_0308
-vowel,open-mid  central       rounded,025E 0254_0308
-
-vowel,open-mid  back        unrounded,028C
-vowel,open-mid  back          rounded,0254
+open-mid  front       unrounded vowel,025B
+open-mid  front         rounded vowel,0153
+open-mid  central     unrounded vowel,025C 025B_0308
+open-mid  central       rounded vowel,025E 0254_0308
+open-mid  back        unrounded vowel,028C
+open-mid  back          rounded vowel,0254
 
 # NOT in IPA chart
-vowel,open-mid  central     unrounded rhotacized,025D 028C_02DE
+open-mid  central     unrounded rhotacized vowel,025D 028C_02DE
 
 #################
 #   near-open   #
 #################
 
-vowel,near-open front       unrounded,00E6
-#vowel,near-open front         rounded,???
-
-vowel,near-open central     unrounded,0250 0250_031C
-vowel,near-open central       rounded,0250_0339 025E_031E 0254_031E_0308
-
-#vowel,near-open back        unrounded,???
-#vowel,near-open back          rounded,???
+near-open front       unrounded vowel,00E6
+#near-open front         rounded vowel,???
+near-open central     unrounded vowel,0250 0250_031C
+near-open central       rounded vowel,0250_0339 025E_031E 0254_031E_0308
+#near-open back        unrounded vowel,???
+#near-open back          rounded vowel,???
 
 ############
 #   open   #
 ############
 
-vowel,open      front       unrounded,0061 0061_031F 00E6_031E
-vowel,open      front         rounded,0276
-
-vowel,open      central     unrounded,0061_0308 0061_0320 0251_0308 0250_031E
-vowel,open      central       rounded,0252_0308 0276_0308 0276_0320
-
-vowel,open      back        unrounded,0251
-vowel,open      back          rounded,0252
+open      front       unrounded vowel,0061 0061_031F 00E6_031E
+open      front         rounded vowel,0276
+open      central     unrounded vowel,0061_0308 0061_0320 0251_0308 0250_031E
+open      central       rounded vowel,0252_0308 0276_0308 0276_0320
+open      back        unrounded vowel,0251
+open      back          rounded vowel,0252
 
 
 
@@ -702,50 +570,50 @@ vowel,open      back          rounded,0252
 #   DIACRITIC   #
 #################
 
-diacritic,ejective,02BC
-diacritic,tie-bar-above,0361
-diacritic,tie-bar-below,035C
-diacritic,voiceless,0325 030A
-diacritic,voiced,032C
-diacritic,aspirated,02B0
-diacritic,more-rounded,0339
-diacritic,less-rounded,031C
-diacritic,advanced,031F
-diacritic,retracted,0320
-diacritic,centralized,0308
-diacritic,mid-centralized,033D
-diacritic,syllabic,0329
-diacritic,non-syllabic,032F
-diacritic,rhotacized,02DE
-diacritic,breathy-voiced,0324
-diacritic,creaky-voiced,0330
-diacritic,linguolabial,032B
-diacritic,labialized,02B7
-diacritic,palatalized,02B2
-diacritic,velarized,02E0
-diacritic,pharyngealized,02E4
-diacritic,velarized-or-pharyngealized,0334
-diacritic,raised,031D
-diacritic,lowered,031E
-diacritic,advanced-tongue-root,0318
-diacritic,retracted-tongue-root,0319
-diacritic,dental,032A
-diacritic,apical,033A
-diacritic,laminal,033B
-diacritic,nasalized,0303
-diacritic,nasal-release,N/A
-diacritic,lateral-release,02E1
-diacritic,no-audible-release,031A 02FA
+ejective                    diacritic,02BC
+tie-bar-above               diacritic,0361
+tie-bar-below               diacritic,035C
+voiceless                   diacritic,0325 030A
+voiced                      diacritic,032C
+aspirated                   diacritic,02B0
+more-rounded                diacritic,0339
+less-rounded                diacritic,031C
+advanced                    diacritic,031F
+retracted                   diacritic,0320
+centralized                 diacritic,0308
+mid-centralized             diacritic,033D
+syllabic                    diacritic,0329
+non-syllabic                diacritic,032F
+rhotacized                  diacritic,02DE
+breathy-voiced              diacritic,0324
+creaky-voiced               diacritic,0330
+linguolabial                diacritic,032B
+labialized                  diacritic,02B7
+palatalized                 diacritic,02B2
+velarized                   diacritic,02E0
+pharyngealized              diacritic,02E4
+velarized-or-pharyngealized diacritic,0334
+raised                      diacritic,031D
+lowered                     diacritic,031E
+advanced-tongue-root        diacritic,0318
+retracted-tongue-root       diacritic,0319
+dental                      diacritic,032A
+apical                      diacritic,033A
+laminal                     diacritic,033B
+nasalized                   diacritic,0303
+nasal-release               diacritic,N/A
+lateral-release             diacritic,02E1
+no-audible-release          diacritic,031A 02FA
 
 # NOT in IPA chart
-diacritic,voiced glottal fricative,02B1
-diacritic,alveolar trill,02B3
-diacritic,alveolar approximant,02B4
-diacritic,retroflex approximant,02B5
-diacritic,uvular approximant,02B6
-diacritic,glottal plosive,02C0
-diacritic,retroflex,0322
-diacritic,unexploded,02DA
+voiced glottal fricative    diacritic,02B1
+alveolar trill              diacritic,02B3
+alveolar approximant        diacritic,02B4
+retroflex approximant       diacritic,02B5
+uvular approximant          diacritic,02B6
+glottal plosive             diacritic,02C0
+retroflex                   diacritic,0322
+unexploded                  diacritic,02DA
 
 
 
@@ -755,16 +623,16 @@ diacritic,unexploded,02DA
 #   SUPRASEGMENTAL   #
 ######################
 
-suprasegmental,primary-stress,02C8
-suprasegmental,secondary-stress,02CC
-suprasegmental,long,02D0
-suprasegmental,half-long,02D1
-suprasegmental,extra-short,0306
-suprasegmental,minor-group,007C
-suprasegmental,major-group,007C_007C
-suprasegmental,syllable-break,002E
-suprasegmental,linking,203F
-suprasegmental,word-break,0020
+primary-stress              suprasegmental,02C8
+secondary-stress            suprasegmental,02CC
+long                        suprasegmental,02D0
+half-long                   suprasegmental,02D1
+extra-short                 suprasegmental,0306
+minor-group                 suprasegmental,007C
+major-group                 suprasegmental,007C_007C
+syllable-break              suprasegmental,002E
+linking                     suprasegmental,203F
+word-break                  suprasegmental,0020
 
 
 
@@ -774,23 +642,23 @@ suprasegmental,word-break,0020
 #   TONE   #
 ############
 
-tone,extra-high-level,030B 02E5
-tone,high-level,0301 02E6
-tone,mid-level,0304 02E7
-tone,low-level,0300 02E8
-tone,extra-low-level,030F 02E9
-tone,rising-contour,030C N/A
-tone,falling-contour,0302 N/A
-tone,high-rising-contour,1DC4 N/A
-tone,low-rising-contour,1DC5 N/A
-tone,rising-falling-contour,1DC8 N/A
-tone,downstep,A71C
-tone,upstep,A71B
-tone,global-rise,2197
-tone,global-fall,2198
+extra-high-level            tone,030B 02E5
+high-level                  tone,0301 02E6
+mid-level                   tone,0304 02E7
+low-level                   tone,0300 02E8
+extra-low-level             tone,030F 02E9
+rising-contour              tone,030C N/A
+falling-contour             tone,0302 N/A
+high-rising-contour         tone,1DC4 N/A
+low-rising-contour          tone,1DC5 N/A
+rising-falling-contour      tone,1DC8 N/A
+downstep                    tone,A71C
+upstep                      tone,A71B
+global-rise                 tone,2197
+global-fall                 tone,2198
 
 # NOT in IPA chart
-tone,mid-low-falling-contour,1DC6
-tone,high-mid-falling-contour,1DC7
-tone,falling-rising-contour,1DC9
+mid-low-falling-contour     tone,1DC6
+high-mid-falling-contour    tone,1DC7
+falling-rising-contour      tone,1DC9
 

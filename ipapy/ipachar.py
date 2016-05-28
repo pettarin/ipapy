@@ -17,40 +17,6 @@ __copyright__ = "Copyright 2016, Alberto Pettarin (www.albertopettarin.it)"
 __license__ = "MIT"
 __email__ = "alberto@albertopettarin.it"
 
-def variant_to_list(obj):
-    """
-    Return a list containing the descriptors in the given object.
-
-    The ``obj`` can be a frozenset, a set, a list of descriptor strings, or a Unicode string.
-    
-    If ``obj`` is a Unicode string, it will be split using spaces as delimiters.
-
-    :param variant obj: the object to be parsed
-    :rtype: list 
-    :raise TypeError: if the ``obj`` has a type not listed above
-    """
-    if isinstance(obj, list):
-        return obj
-    elif isinstance(obj, frozenset) or isinstance(obj, set):
-        return list(obj)
-    elif is_unicode_string(obj):
-        return [s for s in obj.split() if len(s) > 0]
-    raise TypeError("The given value must be a frozenset, a set, a list or a Unicode string.")
-
-def variant_to_frozenset(obj):
-    """
-    Return a frozenset containing the descriptors in the given object.
-
-    The ``obj`` can be a frozenset, a set, a list of descriptor strings, or a Unicode string.
-    
-    If ``obj`` is a Unicode string, it will be split using spaces as delimiters.
-
-    :param variant obj: the object to be parsed
-    :rtype: frozenset
-    :raise TypeError: if the ``obj`` has a type not listed above
-    """
-    return frozenset(variant_to_list(obj))
-
 # types
 D_CONSONANT = IPADescriptor([u"consonant", u"cns"])
 D_VOWEL = IPADescriptor([u"vowel", u"vwl"])
@@ -64,7 +30,6 @@ DG_TYPES = IPADescriptorGroup([
     D_SUPRASEGMENTAL,
     D_TONE,
 ])
-
 
 # consonants
 D_C_VOICED = IPADescriptor([u"voiced", u"vcd"])
@@ -165,7 +130,6 @@ DG_C_MANNER = IPADescriptorGroup([
 ])
 DG_CONSONANTS = DG_C_VOICING + DG_C_PLACE + DG_C_MANNER
 
-
 # vowels
 D_V_CLOSE = IPADescriptor([u"close", u"high", u"hgh"])
 D_V_NEAR_CLOSE = IPADescriptor([u"near-close", u"lowered-close", u"semi-high", u"smh"])
@@ -202,7 +166,6 @@ DG_V_ROUNDNESS = IPADescriptorGroup([
     D_V_UNROUNDED,
 ])
 DG_VOWELS = DG_V_HEIGHT + DG_V_BACKNESS + DG_V_ROUNDNESS
-
 
 # diacritics
 D_D_ADVANCED = IPADescriptor([u"advanced"])
@@ -268,7 +231,6 @@ DG_DIACRITICS = IPADescriptorGroup([
     D_D_VELARIZED_OR_PHARYNGEALIZED,
 ])
 
-
 # suprasegmentals
 D_S_PRIMARY_STRESS = IPADescriptor([u"primary-stress"])
 D_S_SECONDARY_STRESS = IPADescriptor([u"secondary-stress"])
@@ -297,7 +259,6 @@ DG_S_BREAK = IPADescriptorGroup([
     D_S_WORD_BREAK,
 ])
 DG_SUPRASEGMENTALS = DG_S_STRESS + DG_S_LENGTH + DG_S_BREAK
-
 
 # tones 
 D_T_EXTRA_HIGH_LEVEL = IPADescriptor([u"extra-high-level"])
@@ -342,9 +303,46 @@ DG_T_GLOBAL = IPADescriptorGroup([
 ])
 DG_TONES = DG_T_LEVEL + DG_T_CONTOUR + DG_T_GLOBAL
 
-
 # all descriptors
 DG_ALL_DESCRIPTORS = DG_TYPES + DG_CONSONANTS + DG_VOWELS + DG_DIACRITICS + DG_SUPRASEGMENTALS + DG_TONES
+
+
+
+def variant_to_list(obj):
+    """
+    Return a list containing the descriptors in the given object.
+
+    The ``obj`` can be a list or a set of descriptor strings, or a Unicode string.
+    
+    If ``obj`` is a Unicode string, it will be split using spaces as delimiters.
+
+    :param variant obj: the object to be parsed
+    :rtype: list 
+    :raise TypeError: if the ``obj`` has a type not listed above
+    """
+    if isinstance(obj, list):
+        return obj
+    elif is_unicode_string(obj):
+        return [s for s in obj.split() if len(s) > 0]
+    elif isinstance(obj, set) or isinstance(obj, frozenset):
+        return list(obj)
+    raise TypeError("The given value must be a list or a set of descriptor strings, or a Unicode string.")
+
+def variant_to_canonical_string(obj):
+    """
+    Return a list containing the canonical string for the given object.
+
+    The ``obj`` can be a list or a set of descriptor strings, or a Unicode string.
+    
+    If ``obj`` is a Unicode string, it will be split using spaces as delimiters.
+
+    :param variant obj: the object to be parsed
+    :rtype: str 
+    :raise TypeError: if the ``obj`` has a type not listed above
+    """
+    acc = [DG_ALL_DESCRIPTORS.canonical_value(p) for p in variant_to_list(obj)]
+    acc = sorted([a for a in acc if a is not None])
+    return u" ".join(acc)
 
 
 
@@ -354,16 +352,17 @@ class IPAChar(object):
 
     Note that an IPAChar might correspond to 0, 1, or more Unicode characters.
 
+    :param variant descriptors: the descriptors of the character
     :param str name: an arbitrary mnemonic name for the character
-    :param frozenset descriptors: the descriptors of the character
     :param str unicode_repr: the Unicode representation for the character
     """
     
     TAG = "IPAChar"
 
-    def __init__(self, name, descriptors, unicode_repr=None):
-        self.name = name
+    def __init__(self, descriptors, name=None, unicode_repr=None):
+        self.__canonical_string = None
         self.descriptors = descriptors
+        self.name = name
         self.unicode_repr = unicode_repr
 
     def __str__(self):
@@ -373,17 +372,33 @@ class IPAChar(object):
         return u"" if self.unicode_repr is None else self.unicode_repr
 
     def __repr__(self):
-        return u"%s (%s)" % (self.name, str(self.canonical_representation))
+        return self.canonical_representation
 
     @property
     def descriptors(self):
         return self.__descriptors
     @descriptors.setter
     def descriptors(self, value):
-        desc = variant_to_frozenset(value)
+        desc = variant_to_list(value)
         if len(desc) < 1:
             raise ValueError("The IPAChar must have at least one property")
         self.__descriptors = desc
+        self._compute_canonical_string()
+
+    def _compute_canonical_string(self):
+        self.__canonical_string = variant_to_canonical_string(self.descriptors)
+
+    @property
+    def canonical_representation(self):
+        """
+        The canonical representation of the character.
+
+        Each descriptor of the character is represented
+        with its canonical value.
+
+        :rtype: str 
+        """
+        return self.__canonical_string
 
     def is_equivalent(self, other):
         """
@@ -461,26 +476,6 @@ class IPAChar(object):
         :rtype: bool
         """
         return False
-
-    @property
-    def canonical_representation(self):
-        """
-        The canonical representation of the character.
-
-        Each property of the character is represented
-        with its canonical value.
-
-        The canonical representation is a frozenset
-        so that it can be hashed.
-
-        :rtype: frozenset
-        """
-        acc = []
-        for p in self.descriptors:
-            canonical = DG_ALL_DESCRIPTORS.canonical_value(p)
-            if canonical is not None:
-                acc.append(canonical)
-        return frozenset(acc)
 
     def dg_value(self, descriptor_group):
         """
@@ -572,8 +567,8 @@ class IPAConsonant(IPALetter):
 
     Modifiers (e.g. "velarized") are optional.
 
+    :param variant descriptors: the descriptors of the consonant
     :param str name: an arbitrary mnemonic name for the consonant 
-    :param frozenset descriptors: the descriptors of the consonant
     :param str unicode_repr: the (optional) Unicode representation for the consonant
     :param str voicing: the voicing of the consonant
     :param str place: the articulation place of the consonant
@@ -583,7 +578,8 @@ class IPAConsonant(IPALetter):
     
     TAG = "IPAConsonant"
 
-    def __init__(self, name, descriptors=None, unicode_repr=None, voicing=None, place=None, manner=None, modifiers=None):
+    def __init__(self, descriptors=None, name=None, unicode_repr=None, voicing=None, place=None, manner=None, modifiers=None):
+        self.__canonical_string = None
         self.name = name
         self.unicode_repr = unicode_repr
         self.height = None
@@ -608,7 +604,7 @@ class IPAConsonant(IPALetter):
     def descriptors(self):
         desc = [D_CONSONANT.canonical_label, self.voicing, self.place, self.manner]
         desc.extend(self.modifiers)
-        return frozenset(desc)
+        return desc
     @descriptors.setter
     def descriptors(self, value):
         voicing = None
@@ -631,6 +627,7 @@ class IPAConsonant(IPALetter):
             self.modifiers = modifiers
         else:
             raise ValueError("The descriptors list must contain a value for each of the following descriptors: voicing, place, and manner.")
+        self._compute_canonical_string()
 
     @property
     def voicing(self):
@@ -707,8 +704,8 @@ class IPAVowel(IPALetter):
 
     Modifiers (e.g. "more-rounded") are optional.
 
+    :param variant descriptors: the descriptors of the vowel
     :param str name: an arbitrary mnemonic name for the vowel
-    :param frozenset descriptors: the descriptors of the vowel
     :param str unicode_repr: the (optional) Unicode representation for the vowel
     :param str height: the voicing of the vowel
     :param str backness: the articulation place of the vowel
@@ -718,7 +715,8 @@ class IPAVowel(IPALetter):
     
     TAG = "IPAVowel"
 
-    def __init__(self, name, descriptors=None, unicode_repr=None, height=None, backness=None, roundness=None, modifiers=None):
+    def __init__(self, descriptors=None, name=None, unicode_repr=None, height=None, backness=None, roundness=None, modifiers=None):
+        self.__canonical_string = None
         self.name = name
         self.unicode_repr = unicode_repr
         self.height = None
@@ -743,7 +741,7 @@ class IPAVowel(IPALetter):
     def descriptors(self):
         desc = [D_VOWEL.canonical_label, self.height, self.backness, self.roundness]
         desc.extend(self.modifiers)
-        return frozenset(desc)
+        return desc
     @descriptors.setter
     def descriptors(self, value):
         height = None
@@ -766,6 +764,7 @@ class IPAVowel(IPALetter):
             self.modifiers = modifiers
         else:
             raise ValueError("The descriptors list must contain a value for each of the following descriptors: height, backness, and roundness.")
+        self._compute_canonical_string()
 
     @property
     def height(self):

@@ -3,13 +3,34 @@
 
 import unittest
 
-from ipapy.asciimapper import ASCIIMapper
+from ipapy.kirshenbaummapper import KirshenbaumMapper
 from ipapy.ipastring import IPAString
 
-class TestASCIIMapper(unittest.TestCase):
+class TestKirshenbaumMapper(unittest.TestCase):
+
+    def test_can_map_ipa_string(self):
+        mapper = KirshenbaumMapper()
+        values = [
+            (u"", True),
+            (u"foo", True),
+            (u"\u0070\u032A", True),
+            (u"\u025F", True),
+            (u"\u0294", True),
+            (u"foo\u025F\u0294", True),
+            (u"fo\u02C8o\u025F\u0294", True),
+            (u"foo bar", True),
+            (u"\u0261\u0067", True),
+            (u"ma\u0272ana", True),
+            (u"\u02A3", True),
+            (u"\u02A7", True),
+            (u"\u1DC6", False),       # valid IPA char, unmapped in Kirshenbaum
+            (u"foo\u1DC6bar", False), # valid IPA char, unmapped in Kirshenbaum
+        ]
+        for v, e in values:
+            self.assertEqual(mapper.can_map_ipa_string(IPAString(unicode_string=v)), e)
 
     def test_map_unicode_string(self):
-        mapper = ASCIIMapper()
+        mapper = KirshenbaumMapper()
         values = [
             (None, None),
             (u"", u""),
@@ -29,7 +50,7 @@ class TestASCIIMapper(unittest.TestCase):
             self.assertEqual(mapper.map_unicode_string(v), e)
 
     def test_map_ipa_string(self):
-        mapper = ASCIIMapper()
+        mapper = KirshenbaumMapper()
         values = [
             (u"", u""),
             (u"foo", u"foo"),
@@ -48,7 +69,7 @@ class TestASCIIMapper(unittest.TestCase):
             self.assertEqual(mapper.map_ipa_string(IPAString(unicode_string=v)), e)
 
     def test_map_unicode_string_ignore(self):
-        mapper = ASCIIMapper()
+        mapper = KirshenbaumMapper()
         values = [
             (None, None),
             (u"", u""),
@@ -80,7 +101,7 @@ class TestASCIIMapper(unittest.TestCase):
             self.assertEqual(mapper.map_unicode_string(v, ignore=True), e)
 
     def test_map_ipa_string_ignore(self):
-        mapper = ASCIIMapper()
+        mapper = KirshenbaumMapper()
         values = [
             (u"", u""),
             (u"foo", u"foo"),
@@ -108,10 +129,10 @@ class TestASCIIMapper(unittest.TestCase):
             (u"\u02A7M", u"tS"),
         ]
         for v, e in values:
-            self.assertEqual(mapper.map_ipa_string(IPAString(unicode_string=v, ignore=True)), e)
+            self.assertEqual(mapper.map_ipa_string(IPAString(unicode_string=v, ignore=True), ignore=True), e)
 
     def test_map_unicode_string_single(self):
-        mapper = ASCIIMapper()
+        mapper = KirshenbaumMapper()
         values = [
             (None, None),
             (u"", u""),

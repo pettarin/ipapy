@@ -64,9 +64,8 @@ def convert_unicode_field(string):
     :rtype: list of Unicode strings
     """
     values = []
-    for codepoint in [s for s in string.split(DATA_FILE_CODEPOINT_SEPARATOR) if s != DATA_FILE_VALUE_NOT_AVAILABLE]:
-        if len(codepoint) > 0:
-            values.append(u"".join([hex_to_unichr(c) for c in codepoint.split(DATA_FILE_CODEPOINT_JOINER)]))
+    for codepoint in [s for s in string.split(DATA_FILE_CODEPOINT_SEPARATOR) if (s != DATA_FILE_VALUE_NOT_AVAILABLE) and (len(s) > 0)]:
+        values.append(u"".join([hex_to_unichr(c) for c in codepoint.split(DATA_FILE_CODEPOINT_JOINER)]))
     return values
 
 def convert_ascii_field(string):
@@ -82,7 +81,9 @@ def convert_ascii_field(string):
     :rtype: list of Unicode strings
     """
     values = []
-    for codepoint in [s for s in string.split(DATA_FILE_CODEPOINT_SEPARATOR) if s != DATA_FILE_VALUE_NOT_AVAILABLE]:
+    for codepoint in [s for s in string.split(DATA_FILE_CODEPOINT_SEPARATOR) if (s != DATA_FILE_VALUE_NOT_AVAILABLE) and (len(s) > 0)]:
+        #if DATA_FILE_CODEPOINT_JOINER in codepoint:
+        #    values.append(u"".join([hex_to_unichr(c) for c in codepoint.split(DATA_FILE_CODEPOINT_JOINER)]))
         if (codepoint.startswith(DATA_FILE_ASCII_NUMERICAL_CODEPOINT_START)) or (codepoint.startswith(DATA_FILE_ASCII_UNICODE_CODEPOINT_START)):
             values.append(hex_to_unichr(codepoint))
         else:
@@ -180,28 +181,25 @@ def load_ipa_data():
     for line in load_data_file(
         file_path=u"ipa.dat",
         file_path_is_relative=True,
-        line_format=u"ssU"
+        line_format=u"sU"
     ):
         # unpack data
-        i_type, i_desc, i_unicode_keys = line
-
-        # create desc string and name string
-        desc = "%s %s" % (i_desc, i_type)
-        name = re.sub(r" [ ]*", " ", desc)
+        i_desc, i_unicode_keys = line
+        name = re.sub(r" [ ]*", " ", i_desc)
 
         # create a suitable IPACharacter obj
-        if i_type == "consonant":
-            obj = IPAConsonant(name=name, descriptors=desc)
-        elif i_type == "vowel":
-            obj = IPAVowel(name=name, descriptors=desc)
-        elif i_type == "diacritic":
-            obj = IPADiacritic(name=name, descriptors=desc)
-        elif i_type == "suprasegmental":
-            obj = IPASuprasegmental(name=name, descriptors=desc)
-        elif i_type == "tone":
-            obj = IPATone(name=name, descriptors=desc)
+        if u"consonant" in i_desc:
+            obj = IPAConsonant(name=name, descriptors=i_desc)
+        elif u"vowel" in i_desc:
+            obj = IPAVowel(name=name, descriptors=i_desc)
+        elif u"diacritic" in i_desc:
+            obj = IPADiacritic(name=name, descriptors=i_desc)
+        elif u"suprasegmental" in i_desc:
+            obj = IPASuprasegmental(name=name, descriptors=i_desc)
+        elif u"tone" in i_desc:
+            obj = IPATone(name=name, descriptors=i_desc)
         else:
-            raise ValueError("The IPA data file contains a bad line, defining an unknown type '%s': '%s'" % (i_type, line))
+            raise ValueError("The IPA data file contains a bad line, defining an unknown type: '%s'" % (line))
         ipa_signs.append(obj)
 
         # map Unicode codepoint to object, if the former is available

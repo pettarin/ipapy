@@ -15,7 +15,8 @@ import unicodedata
 
 from ipapy import is_valid_ipa
 from ipapy import remove_invalid_ipa_characters
-from ipapy.asciimapper import ASCIIMapper
+from ipapy.arpabetmapper import ARPABETMapper
+from ipapy.kirshenbaummapper import KirshenbaumMapper
 from ipapy.compatibility import to_unicode_string
 from ipapy.compatibility import unicode_to_hex
 from ipapy.ipastring import IPAString
@@ -34,7 +35,7 @@ ARGUMENTS = [
         "nargs": None,
         "type": str,
         "default": None,
-        "help": "[canonize|chars|check|clean|u2a]"
+        "help": "[canonize|chars|check|clean|u2a|u2k]"
     },
     {
         "long": "string",
@@ -181,13 +182,31 @@ def command_clean(string, vargs):
 
 def command_u2a(string, vargs):
     """
-    Print the ASCII IPA string corresponding to the given Unicode IPA string. 
+    Print the ARPABEY ASCII string corresponding to the given Unicode IPA string. 
 
     :param str string: the string to act upon
     :param dict vargs: the command line arguments
     """
     try:
-        l = ASCIIMapper().map_unicode_string(
+        l = ARPABETMapper().map_unicode_string(
+            unicode_string=string,
+            ignore=vargs["ignore"],
+            single_char_parsing=vargs["single_char_parsing"],
+            return_as_list=True
+        )
+        print(vargs["separator"].join(l))
+    except ValueError as exc:
+        print_error(str(exc))
+
+def command_u2k(string, vargs):
+    """
+    Print the Kirshenbaum ASCII string corresponding to the given Unicode IPA string. 
+
+    :param str string: the string to act upon
+    :param dict vargs: the command line arguments
+    """
+    try:
+        l = KirshenbaumMapper().map_unicode_string(
             unicode_string=string,
             ignore=vargs["ignore"],
             single_char_parsing=vargs["single_char_parsing"],
@@ -203,6 +222,7 @@ COMMAND_MAP = {
     "check": command_check,
     "clean": command_clean,
     "u2a": command_u2a,
+    "u2k": command_u2k,
 }
 
 def main():

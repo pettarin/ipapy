@@ -1,0 +1,80 @@
+#
+# ARPABET Symbols
+#
+# Version: 0.0.6
+# Date:    2016-05-28
+#
+# Syntax:
+# ipa,arpabet
+#
+
+0070,p
+0062,b
+0074,t
+0064,d
+006B,k
+006D,m
+006E,n
+006C,l
+0072,r
+# mapping 0079=>"r" as well
+0279,r
+0066,f
+0076,v
+0073,s
+007A,z
+0068,hh
+0077,w
+0261,g
+02A7,ch
+02A4,jh
+014B,ng
+03B8,th
+00F0,dh
+0283,sh
+0292,zh
+006A,y
+0069,iy
+0251,aa
+0254,ao
+0075,uw
+025D,er
+026A,ih
+# mapping "i"=>"ih" as well
+0069,ih
+025B,eh
+# mapping "e"=>"eh" as well
+0065,eh
+0153,ae
+# mapping "a"=>"ae" as well
+0061,ae
+028C,ah
+006F,oh
+028A,uh
+0259,ax
+0258_026A,ey
+0061_026A,ay
+006F_026A,oy
+006F_028A,ow
+0061_028A,aw
+
+# other symbols not in BEEP
+0294,q
+027E,dx
+0268,ix
+025A,axr
+0289,ux
+006C_0329,el
+006D_0329,em
+006E_0329,en
+014B_0329,eng
+027E_0303,nx
+
+# TODO not sure about the IPA for the following
+# peer
+026A_0279,ia
+# pair
+0259_0279,ea
+# poor
+028A_0279,ua
+

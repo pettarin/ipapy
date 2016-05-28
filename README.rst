@@ -3,8 +3,8 @@ ipapy
 
 **ipapy** is a Python module to work with IPA strings.
 
--  Version: 0.0.5
--  Date: 2016-05-26
+-  Version: 0.0.6
+-  Date: 2016-05-28
 -  Developer: `Alberto Pettarin <http://www.albertopettarin.it/>`__
 -  License: the MIT License (MIT)
 -  Contact: `click here <http://www.albertopettarin.it/contact.html>`__
@@ -38,7 +38,6 @@ As A Python Module
     ###########
     from ipapy import UNICODE_TO_IPA
     from ipapy import is_valid_ipa
-    from ipapy.asciimapper import ASCIIMapper
     from ipapy.ipachar import IPAConsonant
     from ipapy.ipachar import IPAVowel
     from ipapy.ipastring import IPAString
@@ -51,17 +50,17 @@ As A Python Module
     # Def.: an IPAChar is an IPA letter or diacritic/suprasegmental/tone mark
 
     # create IPAChar from its Unicode representation
-    c1 = UNICODE_TO_IPA[u"a"]                   # open front unrounded vowel
-    c2 = UNICODE_TO_IPA[u"e"]                   # close-mid front unrounded vowel
-    c3 = UNICODE_TO_IPA[u"\u03B2"]              # voiced bilabial non-sibilant-fricative consonant)
-    tS1 = UNICODE_TO_IPA[u"t͡ʃ"]                 # voiceless palato-alveolar sibilant-affricate consonant
-    tS2 = UNICODE_TO_IPA[u"t͜ʃ"]                 # voiceless palato-alveolar sibilant-affricate consonant
-    tS3 = UNICODE_TO_IPA[u"tʃ"]                 # voiceless palato-alveolar sibilant-affricate consonant
-    tS4 = UNICODE_TO_IPA[u"ʧ"]                  # voiceless palato-alveolar sibilant-affricate consonant
-    tS5 = UNICODE_TO_IPA[u"\u0074\u0361\u0283"] # voiceless palato-alveolar sibilant-affricate consonant
-    tS6 = UNICODE_TO_IPA[u"\u0074\u035C\u0283"] # voiceless palato-alveolar sibilant-affricate consonant
-    tS7 = UNICODE_TO_IPA[u"\u0074\u0283"]       # voiceless palato-alveolar sibilant-affricate consonant
-    tS8 = UNICODE_TO_IPA[u"\u02A7"]             # voiceless palato-alveolar sibilant-affricate consonant
+    c1 = UNICODE_TO_IPA[u"a"]                   # vowel open front unrounded
+    c2 = UNICODE_TO_IPA[u"e"]                   # vowel close-mid front unrounded
+    c3 = UNICODE_TO_IPA[u"\u03B2"]              # consonant voiced bilabial non-sibilant-fricative
+    tS1 = UNICODE_TO_IPA[u"t͡ʃ"]                 # consonant voiceless palato-alveolar sibilant-affricate
+    tS2 = UNICODE_TO_IPA[u"t͜ʃ"]                 # consonant voiceless palato-alveolar sibilant-affricate
+    tS3 = UNICODE_TO_IPA[u"tʃ"]                 # consonant voiceless palato-alveolar sibilant-affricate
+    tS4 = UNICODE_TO_IPA[u"ʧ"]                  # consonant voiceless palato-alveolar sibilant-affricate
+    tS5 = UNICODE_TO_IPA[u"\u0074\u0361\u0283"] # consonant voiceless palato-alveolar sibilant-affricate
+    tS6 = UNICODE_TO_IPA[u"\u0074\u035C\u0283"] # consonant voiceless palato-alveolar sibilant-affricate
+    tS7 = UNICODE_TO_IPA[u"\u0074\u0283"]       # consonant voiceless palato-alveolar sibilant-affricate
+    tS8 = UNICODE_TO_IPA[u"\u02A7"]             # consonant voiceless palato-alveolar sibilant-affricate
     c1 == c2    # False
     c1 == c3    # False
     c1 == tS1   # False
@@ -164,16 +163,16 @@ As A Python Module
     len(double)                             # 48
 
     # new IPAString objects containing only...
-    s_ipa.consonants                        # "knknθld͡ʒ"                (consonants)
-    s_ipa.vowels                            # "əiææɑəi"                 (vowels)
-    s_ipa.letters                           # "əkinækænθɑləd͡ʒi"         (vowels and consonants)
-    s_ipa.cns_vwl                           # "əkinækænθɑləd͡ʒi"         (vowels and consonants)
-    s_ipa.cns_vwl_pstr                      # "əˈkinækænˈθɑləd͡ʒi"       (  + primary stress marks)
-    s_ipa.cns_vwl_pstr_long                 # "əˈkiːnækænˈθɑləd͡ʒi"      (    + long marks)
-    s_ipa.cns_vwl_str                       # "əˈkinæˌkænˈθɑləd͡ʒi"      (  + stress marks)
-    s_ipa.cns_vwl_str_len                   # "əˈkiːnæˌkænˈθɑləd͡ʒi"     (    + length marks)
-    s_ipa.cns_vwl_str_len_wb                # "əˈkiːn æˌkænˈθɑləd͡ʒi"    (      + word breaks)
-    s_ipa.cns_vwl_str_len_wb_sb             # "əˈkiːn æˌkænˈθɑ.lə.d͡ʒi"  (        + syllable breaks)
+    print(s_ipa.consonants)                 # "knknθld͡ʒ"                (consonants)
+    print(s_ipa.vowels)                     # "əiææɑəi"                 (vowels)
+    print(s_ipa.letters)                    # "əkinækænθɑləd͡ʒi"         (vowels and consonants)
+    print(s_ipa.cns_vwl)                    # "əkinækænθɑləd͡ʒi"         (vowels and consonants)
+    print(s_ipa.cns_vwl_pstr)               # "əˈkinækænˈθɑləd͡ʒi"       (  + primary stress marks)
+    print(s_ipa.cns_vwl_pstr_long)          # "əˈkiːnækænˈθɑləd͡ʒi"      (    + long marks)
+    print(s_ipa.cns_vwl_str)                # "əˈkinæˌkænˈθɑləd͡ʒi"      (  + stress marks)
+    print(s_ipa.cns_vwl_str_len)            # "əˈkiːnæˌkænˈθɑləd͡ʒi"     (    + length marks)
+    print(s_ipa.cns_vwl_str_len_wb)         # "əˈkiːn æˌkænˈθɑləd͡ʒi"    (      + word breaks)
+    print(s_ipa.cns_vwl_str_len_wb_sb)      # "əˈkiːn æˌkænˈθɑ.lə.d͡ʒi"  (        + syllable breaks)
     cns = s_ipa.consonants                  # (store new IPA string)
     cns == s_ipa.consonants                 # False (two different objects)
     cns.is_equivalent(s_ipa.consonants)     # True
@@ -182,27 +181,27 @@ As A Python Module
     # print representation and name of all IPAChar objects in IPAString
     for c in s_ipa:
         print(u"%s\t%s" % (c, c.name))
-    # ə   mid central unrounded vowel
-    # ˈ   primary-stress suprasegmental
-    # k   voiceless velar plosive consonant
-    # i   close front unrounded vowel
-    # ː   long suprasegmental
-    # n   voiced alveolar nasal consonant
-    #     word-break suprasegmental
-    # æ   near-open front unrounded vowel
-    # ˌ   secondary-stress suprasegmental
-    # k   voiceless velar plosive consonant
-    # æ   near-open front unrounded vowel
-    # n   voiced alveolar nasal consonant
-    # ˈ   primary-stress suprasegmental
-    # θ   voiceless dental non-sibilant-fricative consonant
-    # ɑ   open back unrounded vowel
-    # .   syllable-break suprasegmental
-    # l   voiced alveolar lateral-approximant consonant
-    # ə   mid central unrounded vowel
-    # .   syllable-break suprasegmental
-    # d͡ʒ  voiced palato-alveolar sibilant-affricate consonant
-    # i   close front unrounded vowel
+    # ə vowel mid central unrounded
+    # ˈ suprasegmental primary-stress
+    # k consonant voiceless velar plosive
+    # i vowel close front unrounded
+    # ː suprasegmental long
+    # n consonant voiced alveolar nasal
+    #   suprasegmental word-break
+    # æ vowel near-open front unrounded
+    # ˌ suprasegmental secondary-stress
+    # k consonant voiceless velar plosive
+    # æ vowel near-open front unrounded
+    # n consonant voiced alveolar nasal
+    # ˈ suprasegmental primary-stress
+    # θ consonant voiceless dental non-sibilant-fricative
+    # ɑ vowel open back unrounded
+    # . suprasegmental syllable-break
+    # l consonant voiced alveolar lateral-approximant
+    # ə vowel mid central unrounded
+    # . suprasegmental syllable-break
+    # d͡ʒ   consonant voiced palato-alveolar sibilant-affricate
+    # i vowel close front unrounded
 
     # compare IPAString objects
     s_ipa_d = IPAString(unicode_string=u"diff")
@@ -236,10 +235,16 @@ As A Python Module
     ########################
     # CONVERSION FUNCTIONS #
     ########################
-    mapper = ASCIIMapper()                          # mapper to ASCII IPA (Kirshenbaum)
-    s_ascii_ipa = mapper.map_ipa_string(s_ipa)      # u"@'ki:n#&,k&n'TA#l@#dZi"
-    s_ascii_uni = mapper.map_unicode_string(s_uni)  # u"@'ki:n#&,k&n'TA#l@#dZi"
-    s_ascii_ipa == s_ascii_uni                      # True
+    from ipapy.kirshenbaummapper import KirshenbaumMapper
+    kmapper = KirshenbaumMapper()                               # mapper to Kirshenbaum ASCII IPA
+    s_k_ipa = kmapper.map_ipa_string(s_ipa)                     # u"@'ki:n#&,k&n'TA#l@#dZi"
+    s_k_uni = kmapper.map_unicode_string(s_uni)                 # u"@'ki:n#&,k&n'TA#l@#dZi"
+    s_k_ipa == s_k_uni                                          # True
+
+    from ipapy.arpabetmapper import ARPABETMapper
+    amapper = ARPABETMapper()                                   # mapper to ARPABET ASCII IPA (NOTE: stress marks are not supported yet)
+    s_a_ipa = amapper.map_unicode_string(u"pɹuːf")              # error, long suprasegmental not mapped
+    s_a_ipa = amapper.map_unicode_string(u"pɹuːf", ignore=True) # u"pruwf"
 
 As A Command Line Tool
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -254,7 +259,8 @@ Currently, the supported operations are:
 -  ``chars``: list all IPA characters appearing in the IPA string
 -  ``check``: check if the given Unicode string is IPA valid
 -  ``clean``: remove characters that are not IPA valid
--  ``u2a``: print the corresponding ASCII IPA (Kirshenbaum) string
+-  ``u2a``: print the corresponding ARPABET (ASCII IPA) string
+-  ``u2k``: print the corresponding Kirshenbaum (ASCII IPA) string
 
 Run with the ``--help`` parameter to list all the available options:
 
@@ -268,7 +274,7 @@ Run with the ``--help`` parameter to list all the available options:
     ipapy perform a command on the given IPA/Unicode string
 
     positional arguments:
-      command               [canonize|chars|check|clean|u2a]
+      command               [canonize|chars|check|clean|u2a|u2k]
       string                String to canonize, check, clean, or convert
 
     optional arguments:
@@ -295,24 +301,24 @@ Examples:
     e t͡ʃ i u
 
     $ python -m ipapy chars "eʧiu"
-    'e' close-mid front unrounded vowel (U+0065)
-    't͡ʃ'   voiceless palato-alveolar sibilant-affricate consonant (U+0074 U+0361 U+0283)
-    'i' close front unrounded vowel (U+0069)
-    'u' close back rounded vowel (U+0075)
+    'e' vowel close-mid front unrounded (U+0065)
+    't͡ʃ'   consonant voiceless palato-alveolar sibilant-affricate (U+0074 U+0361 U+0283)
+    'i' vowel close front unrounded (U+0069)
+    'u' vowel close back rounded (U+0075)
 
     $ python -m ipapy chars "et͡ʃiu"
-    'e' close-mid front unrounded vowel (U+0065)
-    't͡ʃ'   voiceless palato-alveolar sibilant-affricate consonant (U+0074 U+0361 U+0283)
-    'i' close front unrounded vowel (U+0069)
-    'u' close back rounded vowel (U+0075)
+    'e' vowel close-mid front unrounded (U+0065)
+    't͡ʃ'   consonant voiceless palato-alveolar sibilant-affricate (U+0074 U+0361 U+0283)
+    'i' vowel close front unrounded (U+0069)
+    'u' vowel close back rounded (U+0075)
 
     $ python -m ipapy chars "et͡ʃiu" -s
-    'e' close-mid front unrounded vowel (U+0065)
-    't' voiceless alveolar plosive consonant (U+0074)
-    '͡' tie-bar-above diacritic (U+0361)
-    'ʃ' voiceless palato-alveolar sibilant-fricative consonant (U+0283)
-    'i' close front unrounded vowel (U+0069)
-    'u' close back rounded vowel (U+0075)
+    'e' vowel close-mid front unrounded (U+0065)
+    't' consonant voiceless alveolar plosive (U+0074)
+    '͡' diacritic tie-bar-above (U+0361)
+    'ʃ' consonant voiceless palato-alveolar sibilant-fricative (U+0283)
+    'i' vowel close front unrounded (U+0069)
+    'u' vowel close back rounded (U+0075)
 
     $ python -m ipapy check "eʧiu"
     True
@@ -333,14 +339,17 @@ Examples:
     $ python -m ipapy clean "/eʧiu/"
     eʧiu
 
-    $ python -m ipapy u2a "eʧiu"
+    $ python -m ipapy u2k "eʧiu"
     etSiu
 
-    $ python -m ipapy u2a "eTa"
+    $ python -m ipapy u2k "eTa"
     The given string contains characters not IPA valid. Use the 'ignore' option to ignore them.
 
-    $ python -m ipapy u2a "eTa" -i
+    $ python -m ipapy u2k "eTa" -i
     ea
+
+    $ python -m ipapy u2a "eʧiu" --separator " "
+    eh ch ih u
 
 Unit Testing
 ------------

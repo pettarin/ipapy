@@ -3,10 +3,11 @@
 
 import unittest
 
-from ipapy import ipa_substrings
 from ipapy import invalid_ipa_characters
+from ipapy import ipa_substrings
 from ipapy import is_valid_ipa
 from ipapy import remove_invalid_ipa_characters
+from ipapy import split_using_dictionary
 
 class TestInit(unittest.TestCase):
 
@@ -181,4 +182,70 @@ class TestInit(unittest.TestCase):
         ]
         for v, e in values:
             self.assertEqual(remove_invalid_ipa_characters(v, return_invalid=True, single_char_parsing=True), e)
+
+    def test_split_using_dictionary(self):
+        d = dict()
+        d[u"a"] = 1
+        d[u"ba"] = 2
+        d[u"b"] = 3
+        d[u"c"] = 4
+        d[u"ca"] = 5
+        values = [
+            (None, None),
+            (u"", []),
+            (u"aza", [u"a", u"z", u"a"]),
+            (u"aaba", [u"a", u"a", u"ba"]),
+            (u"acaba", [u"a", u"ca", u"ba"]),
+        ]
+        for v, e in values:
+            self.assertEqual(split_using_dictionary(v, d, 2, single_char_parsing=False), e)
+
+    def test_split_using_dictionary_single(self):
+        d = dict()
+        d[u"a"] = 1
+        d[u"ba"] = 2
+        d[u"b"] = 3
+        d[u"c"] = 4
+        d[u"ca"] = 5
+        values = [
+            (None, None),
+            (u"", []),
+            (u"aza", [u"a", u"z", u"a"]),
+            (u"aaba", [u"a", u"a", u"b", u"a"]),
+            (u"acaba", [u"a", u"c", u"a", u"b", u"a"]),
+        ]
+        for v, e in values:
+            self.assertEqual(split_using_dictionary(v, d, 2, single_char_parsing=True), e)
+
+    def test_split_using_dictionary_key_one(self):
+        d = dict()
+        d[u"a"] = 1
+        d[u"b"] = 2
+        d[u"c"] = 4
+        values = [
+            (None, None),
+            (u"", []),
+            (u"aza", [u"a", u"z", u"a"]),
+            (u"aaba", [u"a", u"a", u"b", u"a"]),
+            (u"acaba", [u"a", u"c", u"a", u"b", u"a"]),
+        ]
+        for v, e in values:
+            self.assertEqual(split_using_dictionary(v, d, 1, single_char_parsing=False), e)
+
+    def test_split_using_dictionary_key_one_single(self):
+        d = dict()
+        d[u"a"] = 1
+        d[u"b"] = 2
+        d[u"c"] = 4
+        values = [
+            (None, None),
+            (u"", []),
+            (u"aza", [u"a", u"z", u"a"]),
+            (u"aaba", [u"a", u"a", u"b", u"a"]),
+            (u"acaba", [u"a", u"c", u"a", u"b", u"a"]),
+        ]
+        for v, e in values:
+            self.assertEqual(split_using_dictionary(v, d, 1, single_char_parsing=True), e)
+
+
 
