@@ -20,7 +20,7 @@ __copyright__ = "Copyright 2016, Alberto Pettarin (www.albertopettarin.it)"
 __license__ = "MIT"
 __email__ = "alberto@albertopettarin.it"
 
-__version__ = "0.0.6"
+__version__ = "0.0.7"
 __status__ = "Production"
 
 def split_using_dictionary(string, dictionary, max_key_length, single_char_parsing=False):

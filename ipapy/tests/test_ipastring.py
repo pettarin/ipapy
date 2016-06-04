@@ -180,5 +180,33 @@ class TestIPAString(unittest.TestCase):
         for v, e in values:
             self.assertEqual(len(IPAString(unicode_string=v, single_char_parsing=True).canonical_representation), e)
 
+    def test_filter_chars(self):
+        s = u"əˈkiːn æˌkænˈθɑ.lə.d͡ʒi"
+        s_ipa = IPAString(unicode_string=s)
+        values = [
+            (None, s),
+            ([], s),
+            ({}, s),
+            (u"", s),
+            (u"foo", s),
+            (u"bar", s),
+            (0, s),
+            (1, s),
+            (u"cns", u"knknθld͡ʒ"),
+            (u"consonants", u"knknθld͡ʒ"),
+            (u"vwl", u"əiææɑəi"),
+            (u"vowels", u"əiææɑəi"),
+            (u"cns_vwl", u"əkinækænθɑləd͡ʒi"),
+            (u"letters", u"əkinækænθɑləd͡ʒi"),
+            (u"cns_vwl_pstr", u"əˈkinækænˈθɑləd͡ʒi"),
+            (u"cns_vwl_pstr_long", u"əˈkiːnækænˈθɑləd͡ʒi"),
+            (u"cns_vwl_str", u"əˈkinæˌkænˈθɑləd͡ʒi"),
+            (u"cns_vwl_str_len", u"əˈkiːnæˌkænˈθɑləd͡ʒi"),
+            (u"cns_vwl_str_len_wb", u"əˈkiːn æˌkænˈθɑləd͡ʒi"),
+            (u"cns_vwl_str_len_wb_sb", u"əˈkiːn æˌkænˈθɑ.lə.d͡ʒi"),
+        ]
+        for v, e in values:
+            self.assertTrue(s_ipa.filter_chars(v).is_equivalent(IPAString(unicode_string=e)))
+
 
 

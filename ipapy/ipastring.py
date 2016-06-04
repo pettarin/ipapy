@@ -177,6 +177,45 @@ class IPAString(MutableSequence):
         """
         return IPAString(unicode_string=u"".join([c.__unicode__() for c in self.ipa_chars]))
 
+    def filter_chars(self, chars=u""):
+        """
+        Return a new IPAString, containing only the IPA characters specified
+        by the ``chars`` string.
+
+        Valid values for ``chars`` are:
+
+        * ``consonants`` or ``cns``
+        * ``vowels`` or ``vwl``
+        * ``letters``
+        * ``cns_vwl_pstr``
+        * ``cns_vwl_str``
+        * ``cns_vwl_str_len``
+        * ``cns_vwl_pstr_long``
+        * ``cns_vwl_str_len_wb``
+        * ``cns_vwl_str_len_wb_sb``
+
+        :rtype: IPAString
+        """
+        if chars in [u"cns", u"consonants"]:
+            return self.consonants
+        elif chars in [u"vwl", u"vowels"]:
+            return self.vowels
+        elif chars in [u"cns_vwl", u"letters"]:
+            return self.letters
+        elif chars in [u"cns_vwl_pstr"]:
+            return self.cns_vwl_pstr
+        elif chars in [u"cns_vwl_str"]:
+            return self.cns_vwl_str
+        elif chars in [u"cns_vwl_str_len"]:
+            return self.cns_vwl_str_len
+        elif chars in [u"cns_vwl_pstr_long"]:
+            return self.cns_vwl_pstr_long
+        elif chars in [u"cns_vwl_str_len_wb"]:
+            return self.cns_vwl_str_len_wb
+        elif chars in [u"cns_vwl_str_len_wb_sb"]:
+            return self.cns_vwl_str_len_wb_sb
+        return self
+
     @property
     def consonants(self):
         """

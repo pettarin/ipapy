@@ -2,8 +2,8 @@
 
 **ipapy** is a Python module to work with IPA strings.
 
-* Version: 0.0.6
-* Date: 2016-05-28
+* Version: 0.0.7
+* Date: 2016-06-04
 * Developer: [Alberto Pettarin](http://www.albertopettarin.it/)
 * License: the MIT License (MIT)
 * Contact: [click here](http://www.albertopettarin.it/contact.html)
