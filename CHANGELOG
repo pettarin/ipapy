@@ -1,7 +1,28 @@
 Changelog
 =========
 
-v0.0.5 (2016-05-25)
+v0.0.8 (2016-06-07)
+-------------------
+
+#. Added more IPA char aliases to filter_chars in IPAString
+#. Uppercase ARPABET symbols
+
+
+v0.0.7 (2016-06-04)
+-------------------
+
+#. Added filter_chars function to IPAString
+
+
+v0.0.6 (2016-05-28)
+-------------------
+
+#. Refactored Mapper
+#. Added ARPABETMapper
+#. Better data files
+
+
+v0.0.5 (2016-05-26)
 -------------------
 
 #. Added can_map_ipa_string to Mapper
