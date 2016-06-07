@@ -199,11 +199,17 @@ class TestIPAString(unittest.TestCase):
             (u"cns_vwl", u"əkinækænθɑləd͡ʒi"),
             (u"letters", u"əkinækænθɑləd͡ʒi"),
             (u"cns_vwl_pstr", u"əˈkinækænˈθɑləd͡ʒi"),
+            (u"cvp", u"əˈkinækænˈθɑləd͡ʒi"),
             (u"cns_vwl_pstr_long", u"əˈkiːnækænˈθɑləd͡ʒi"),
+            (u"cvpl", u"əˈkiːnækænˈθɑləd͡ʒi"),
             (u"cns_vwl_str", u"əˈkinæˌkænˈθɑləd͡ʒi"),
+            (u"cvs", u"əˈkinæˌkænˈθɑləd͡ʒi"),
             (u"cns_vwl_str_len", u"əˈkiːnæˌkænˈθɑləd͡ʒi"),
+            (u"cvsl", u"əˈkiːnæˌkænˈθɑləd͡ʒi"),
             (u"cns_vwl_str_len_wb", u"əˈkiːn æˌkænˈθɑləd͡ʒi"),
+            (u"cvslw", u"əˈkiːn æˌkænˈθɑləd͡ʒi"),
             (u"cns_vwl_str_len_wb_sb", u"əˈkiːn æˌkænˈθɑ.lə.d͡ʒi"),
+            (u"cvslws", u"əˈkiːn æˌkænˈθɑ.lə.d͡ʒi"),
         ]
         for v, e in values:
             self.assertTrue(s_ipa.filter_chars(v).is_equivalent(IPAString(unicode_string=e)))

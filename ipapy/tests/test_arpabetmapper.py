@@ -32,14 +32,14 @@ class TestARPABETMapper(unittest.TestCase):
         values = [
             (None, None),
             (u"", u""),
-            (u"p", u"p"),
-            (u"p\u03B8", u"pth"),
-            (u"\u027E", u"dx"),
-            (u"p\u0258\u026A", u"pey"),
-            (u"p\u0258\u026Aw", u"peyw"),
-            (u"p\u0258\u026A\u0258\u026Aw", u"peyeyw"),
-            (u"p\u0258\u026A\u0251w", u"peyaaw"),
-            (u"\u006A\u0075", u"yuw"),
+            (u"p", u"P"),
+            (u"p\u03B8", u"PTH"),
+            (u"\u027E", u"DX"),
+            (u"p\u0258\u026A", u"PEY"),
+            (u"p\u0258\u026Aw", u"PEYW"),
+            (u"p\u0258\u026A\u0258\u026Aw", u"PEYEYW"),
+            (u"p\u0258\u026A\u0251w", u"PEYAAW"),
+            (u"\u006A\u0075", u"YUW"),
         ]
         for v, e in values:
             self.assertEqual(mapper.map_unicode_string(v), e)
@@ -48,14 +48,14 @@ class TestARPABETMapper(unittest.TestCase):
         mapper = ARPABETMapper()
         values = [
             (u"", u""),
-            (u"p", u"p"),
-            (u"p\u03B8", u"pth"),
-            (u"\u027E", u"dx"),
-            (u"p\u0258\u026A", u"pey"),
-            (u"p\u0258\u026Aw", u"peyw"),
-            (u"p\u0258\u026A\u0258\u026Aw", u"peyeyw"),
-            (u"p\u0258\u026A\u0251w", u"peyaaw"),
-            (u"\u006A\u0075", u"yuw"),
+            (u"p", u"P"),
+            (u"p\u03B8", u"PTH"),
+            (u"\u027E", u"DX"),
+            (u"p\u0258\u026A", u"PEY"),
+            (u"p\u0258\u026Aw", u"PEYW"),
+            (u"p\u0258\u026A\u0258\u026Aw", u"PEYEYW"),
+            (u"p\u0258\u026A\u0251w", u"PEYAAW"),
+            (u"\u006A\u0075", u"YUW"),
         ]
         for v, e in values:
             self.assertEqual(mapper.map_ipa_string(IPAString(unicode_string=v)), e)
@@ -65,18 +65,18 @@ class TestARPABETMapper(unittest.TestCase):
         values = [
             (None, None),
             (u"", u""),
-            (u"p", u"p"),
-            (u"p\u03B8", u"pth"),
-            (u"\u027E", u"dx"),
-            (u"p\u0258\u026A", u"pey"),
-            (u"p\u0258\u026Aw", u"peyw"),
-            (u"p\u0258\u026A\u0258\u026Aw", u"peyeyw"),
-            (u"p\u0258\u026A\u0251w", u"peyaaw"),
-            (u"\u006A\u0075", u"yuw"),
-            (u"a\u006A\u0075", u"aeyuw"),
-            (u"o\u006A\u0075", u"ohyuw"),
-            (u"S\u006A\u0075", u"yuw"),
-            (u"S\u006A\u0075\u02C8be", u"yuwbeh"),
+            (u"p", u"P"),
+            (u"p\u03B8", u"PTH"),
+            (u"\u027E", u"DX"),
+            (u"p\u0258\u026A", u"PEY"),
+            (u"p\u0258\u026Aw", u"PEYW"),
+            (u"p\u0258\u026A\u0258\u026Aw", u"PEYEYW"),
+            (u"p\u0258\u026A\u0251w", u"PEYAAW"),
+            (u"\u006A\u0075", u"YUW"),
+            (u"a\u006A\u0075", u"AEYUW"),
+            (u"o\u006A\u0075", u"OHYUW"),
+            (u"S\u006A\u0075", u"YUW"),
+            (u"S\u006A\u0075\u02C8be", u"YUWBEH"),
         ]
         for v, e in values:
             self.assertEqual(mapper.map_unicode_string(v, ignore=True), e)
@@ -85,16 +85,16 @@ class TestARPABETMapper(unittest.TestCase):
         mapper = ARPABETMapper()
         values = [
             (u"", u""),
-            (u"p", u"p"),
-            (u"p\u03B8", u"pth"),
-            (u"\u027E", u"dx"),
-            (u"p\u0258\u026A", u"pey"),
-            (u"p\u0258\u026Aw", u"peyw"),
-            (u"p\u0258\u026A\u0258\u026Aw", u"peyeyw"),
-            (u"p\u0258\u026A\u0251w", u"peyaaw"),
-            (u"\u006A\u0075", u"yuw"),
-            (u"S\u006A\u0075", u"yuw"),
-            (u"S\u006A\u0075\u02C8be", u"yuwbeh"),
+            (u"p", u"P"),
+            (u"p\u03B8", u"PTH"),
+            (u"\u027E", u"DX"),
+            (u"p\u0258\u026A", u"PEY"),
+            (u"p\u0258\u026Aw", u"PEYW"),
+            (u"p\u0258\u026A\u0258\u026Aw", u"PEYEYW"),
+            (u"p\u0258\u026A\u0251w", u"PEYAAW"),
+            (u"\u006A\u0075", u"YUW"),
+            (u"S\u006A\u0075", u"YUW"),
+            (u"S\u006A\u0075\u02C8be", u"YUWBEH"),
         ]
         for v, e in values:
             self.assertEqual(mapper.map_ipa_string(IPAString(unicode_string=v, ignore=True), ignore=True), e)
@@ -103,14 +103,14 @@ class TestARPABETMapper(unittest.TestCase):
         mapper = ARPABETMapper()
         values = [
             (u"", u""),
-            (u"p", u"p"),
-            (u"p\u03B8", u"pth"),
-            (u"\u027E", u"dx"),
-            (u"p\u0258\u026A", u"pey"),
-            (u"p\u0258\u026Aw", u"peyw"),
-            (u"p\u0258\u026A\u0258\u026Aw", u"peyeyw"),
-            (u"p\u0258\u026A\u0251w", u"peyaaw"),
-            (u"\u006A\u0075", u"yuw"),
+            (u"p", u"P"),
+            (u"p\u03B8", u"PTH"),
+            (u"\u027E", u"DX"),
+            (u"p\u0258\u026A", u"PEY"),
+            (u"p\u0258\u026Aw", u"PEYW"),
+            (u"p\u0258\u026A\u0258\u026Aw", u"PEYEYW"),
+            (u"p\u0258\u026A\u0251w", u"PEYAAW"),
+            (u"\u006A\u0075", u"YUW"),
         ]
         for v, e in values:
             self.assertEqual(mapper.map_unicode_string(v, single_char_parsing=True), e)

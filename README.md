@@ -2,8 +2,8 @@
 
 **ipapy** is a Python module to work with IPA strings.
 
-* Version: 0.0.7
-* Date: 2016-06-04
+* Version: 0.0.8
+* Date: 2016-06-07
 * Developer: [Alberto Pettarin](http://www.albertopettarin.it/)
 * License: the MIT License (MIT)
 * Contact: [click here](http://www.albertopettarin.it/contact.html)
@@ -231,15 +231,17 @@ s_ipa_1.is_equivalent(u"at͡ʃeLoL", ignore=True)  # False (ignore chars non IPA
 # CONVERSION FUNCTIONS #
 ########################
 from ipapy.kirshenbaummapper import KirshenbaumMapper
-kmapper = KirshenbaumMapper()                               # mapper to Kirshenbaum ASCII IPA
-s_k_ipa = kmapper.map_ipa_string(s_ipa)                     # u"@'ki:n#&,k&n'TA#l@#dZi"
-s_k_uni = kmapper.map_unicode_string(s_uni)                 # u"@'ki:n#&,k&n'TA#l@#dZi"
-s_k_ipa == s_k_uni                                          # True
+kmapper = KirshenbaumMapper()                                    # mapper to Kirshenbaum ASCII IPA
+s_k_ipa = kmapper.map_ipa_string(s_ipa)                          # u"@'ki:n#&,k&n'TA#l@#dZi"
+s_k_uni = kmapper.map_unicode_string(s_uni)                      # u"@'ki:n#&,k&n'TA#l@#dZi"
+s_k_ipa == s_k_uni                                               # True
+s_k_lis = kmapper.map_unicode_string(s_uni, return_as_list=True) # [u'@', u"'", u'k', u'i', u':', u'n', u'#', u'&', u',', u'k', u'&', u'n', u"'", u'T', u'A', u'#', u'l', u'@', u'#', u'dZ', u'i']
 
 from ipapy.arpabetmapper import ARPABETMapper
-amapper = ARPABETMapper()                                   # mapper to ARPABET ASCII IPA (NOTE: stress marks are not supported yet)
-s_a_ipa = amapper.map_unicode_string(u"pɹuːf")              # error, long suprasegmental not mapped
-s_a_ipa = amapper.map_unicode_string(u"pɹuːf", ignore=True) # u"pruwf"
+amapper = ARPABETMapper()                                                    # mapper to ARPABET ASCII IPA (stress marks not supported yet)
+s_a = amapper.map_unicode_string(u"pɹuːf")                                   # error: long suprasegmental not mapped
+s_a = amapper.map_unicode_string(u"pɹuːf", ignore=True)                      # u"PRUWF"
+s_a = amapper.map_unicode_string(u"pɹuːf", ignore=True, return_as_list=True) # [u'P', u'R', u'UW', u'F']
 ```
 
 ### As A Command Line Tool
@@ -344,7 +346,7 @@ $ python -m ipapy u2k "eTa" -i
 ea
 
 $ python -m ipapy u2a "eʧiu" --separator " "
-eh ch ih u
+EH CH IH UW
 ```
 
 

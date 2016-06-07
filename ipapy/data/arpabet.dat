@@ -1,80 +1,80 @@
 #
 # ARPABET Symbols
 #
-# Version: 0.0.6
-# Date:    2016-05-28
+# Version: 0.0.8
+# Date:    2016-06-07
 #
 # Syntax:
 # ipa,arpabet
 #
 
-0070,p
-0062,b
-0074,t
-0064,d
-006B,k
-006D,m
-006E,n
-006C,l
-0072,r
-# mapping 0079=>"r" as well
-0279,r
-0066,f
-0076,v
-0073,s
-007A,z
-0068,hh
-0077,w
-0261,g
-02A7,ch
-02A4,jh
-014B,ng
-03B8,th
-00F0,dh
-0283,sh
-0292,zh
-006A,y
-0069,iy
-0251,aa
-0254,ao
-0075,uw
-025D,er
-026A,ih
-# mapping "i"=>"ih" as well
-0069,ih
-025B,eh
-# mapping "e"=>"eh" as well
-0065,eh
-0153,ae
-# mapping "a"=>"ae" as well
-0061,ae
-028C,ah
-006F,oh
-028A,uh
-0259,ax
-0258_026A,ey
-0061_026A,ay
-006F_026A,oy
-006F_028A,ow
-0061_028A,aw
+0070,P
+0062,B
+0074,T
+0064,D
+006B,K
+006D,M
+006E,N
+006C,L
+0072,R
+# mapping 0079=>"R" as well
+0279,R
+0066,F
+0076,V
+0073,S
+007A,Z
+0068,HH
+0077,W
+0261,G
+02A7,CH
+02A4,JH
+014B,NG
+03B8,TH
+00F0,DH
+0283,SH
+0292,ZH
+006A,Y
+0069,IY
+0251,AA
+0254,AO
+0075,UW
+025D,ER
+026A,IH
+# mapping "i"=>"IH" as well
+0069,IH
+025B,EH
+# mapping "e"=>"EH" as well
+0065,EH
+0153,AE
+# mapping "a"=>"AE" as well
+0061,AE
+028C,AH
+006F,OH
+028A,UH
+0259,AX
+0258_026A,EY
+0061_026A,AY
+006F_026A,OY
+006F_028A,OW
+0061_028A,AW
 
 # other symbols not in BEEP
-0294,q
-027E,dx
-0268,ix
-025A,axr
-0289,ux
-006C_0329,el
-006D_0329,em
-006E_0329,en
-014B_0329,eng
-027E_0303,nx
+0294,Q
+027E,DX
+0268,IX
+025A,AXR
+0289,UX
+006C_0329,EL
+006D_0329,EM
+006E_0329,EN
+014B_0329,ENG
+027E_0303,NX
 
 # TODO not sure about the IPA for the following
 # peer
-026A_0279,ia
+026A_0279,IA
 # pair
-0259_0279,ea
+0259_0279,EA
 # poor
-028A_0279,ua
+028A_0279,UA
 
