@@ -1,7 +1,8 @@
 ipapy
 =====
 
-**ipapy** is a Python module to work with IPA strings.
+**ipapy** is a Python module to work with International Phonetic
+Alphabet (IPA) strings.
 
 -  Version: 0.0.8
 -  Date: 2016-06-07
