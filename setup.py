@@ -25,7 +25,7 @@ setup(
     author_email="alberto@albertopettarin.it",
     url="https://github.com/pettarin/ipapy",
     license="MIT License",
-    long_description=open("README.rst", "r").read(),
+    long_description=open("README.rst", "r", encoding="utf-8").read(),
     install_requires=[],
     scripts=["bin/ipapy"],
     keywords=[
