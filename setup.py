@@ -6,6 +6,7 @@ Set ipapy package up.
 """
 
 from setuptools import setup, Extension
+import io
 
 __author__ = "Alberto Pettarin"
 __copyright__ = "Copyright 2016, Alberto Pettarin (www.albertopettarin.it)"
@@ -25,7 +26,7 @@ setup(
     author_email="alberto@albertopettarin.it",
     url="https://github.com/pettarin/ipapy",
     license="MIT License",
-    long_description=open("README.rst", "r", encoding="utf-8").read(),
+    long_description=io.open("README.rst", "r", encoding="utf-8").read(),
     install_requires=[],
     scripts=["bin/ipapy"],
     keywords=[

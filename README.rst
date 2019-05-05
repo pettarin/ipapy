@@ -4,8 +4,8 @@ ipapy
 **ipapy** is a Python module to work with International Phonetic
 Alphabet (IPA) strings.
 
--  Version: 0.0.8
--  Date: 2016-06-07
+-  Version: 0.0.9
+-  Date: 2019-05-05
 -  Developer: `Alberto Pettarin <http://www.albertopettarin.it/>`__
 -  License: the MIT License (MIT)
 -  Contact: `click here <http://www.albertopettarin.it/contact.html>`__
@@ -365,3 +365,8 @@ License
 -------
 
 **ipapy** is released under the MIT License.
+
+Acknowledgments
+---------------
+
+-  Bram Vanroy provided a fix to ``setup.py`` for Windows users
