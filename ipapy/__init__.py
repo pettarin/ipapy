@@ -16,18 +16,18 @@ from ipapy.data import UNICODE_TO_IPA
 from ipapy.data import UNICODE_TO_IPA_MAX_KEY_LENGTH
 
 __author__ = "Alberto Pettarin"
-__copyright__ = "Copyright 2016, Alberto Pettarin (www.albertopettarin.it)"
+__copyright__ = "Copyright 2016-2019, Alberto Pettarin (www.albertopettarin.it)"
 __license__ = "MIT"
 __email__ = "alberto@albertopettarin.it"
 
-__version__ = "0.0.8"
+__version__ = "0.0.9"
 __status__ = "Production"
 
 def split_using_dictionary(string, dictionary, max_key_length, single_char_parsing=False):
     """
     Return a list of (non-empty) substrings of the given string,
     where each substring is either:
-    
+
     1. the longest string starting at the current index
        that is a key in the dictionary, or
     2. a single character that is not a key in the dictionary.
@@ -47,7 +47,7 @@ def split_using_dictionary(string, dictionary, max_key_length, single_char_parsi
             return tuple([string[k][0] for k in range(i, j)])
         # just return substring
         return string[i:j]
-    
+
     if string is None:
         return None
     if (single_char_parsing) or (max_key_length < 2):
@@ -73,7 +73,7 @@ def ipa_substrings(unicode_string, single_char_parsing=False):
     """
     Return a list of (non-empty) substrings of the given string,
     where each substring is either:
-    
+
     1. the longest Unicode string starting at the current index
        representing a (known) valid IPA character, or
     2. a single Unicode character (which is not IPA valid).
@@ -112,7 +112,7 @@ def invalid_ipa_characters(unicode_string, indices=False):
     :param str unicode_string: the Unicode string to be parsed
     :param bool indices: if ``True``, return a list of pairs (index, invalid character),
                          instead of a list of str (characters).
-    :rtype: list of str or list of (int, str) 
+    :rtype: list of str or list of (int, str)
     """
     if unicode_string is None:
         return None

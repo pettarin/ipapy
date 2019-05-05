@@ -15,10 +15,10 @@ from ipapy import remove_invalid_ipa_characters
 from ipapy.compatibility import is_unicode_string
 from ipapy.compatibility import to_str
 from ipapy.ipachar import is_list_of_ipachars
-from ipapy.ipachar import IPAChar 
+from ipapy.ipachar import IPAChar
 
 __author__ = "Alberto Pettarin"
-__copyright__ = "Copyright 2016, Alberto Pettarin (www.albertopettarin.it)"
+__copyright__ = "Copyright 2016-2019, Alberto Pettarin (www.albertopettarin.it)"
 __license__ = "MIT"
 __email__ = "alberto@albertopettarin.it"
 
@@ -160,7 +160,7 @@ class IPAString(MutableSequence):
                 return False
         if is_list_of_ipachars(other):
             try:
-                return is_equivalent_to_list_of_ipachars(other) 
+                return is_equivalent_to_list_of_ipachars(other)
             except:
                 return False
         if isinstance(other, IPAString):
@@ -249,7 +249,7 @@ class IPAString(MutableSequence):
     def cns_vwl(self):
         """
         Return a new IPAString, containing only:
-        
+
         1. the consonants, and
         2. the vowels
 
@@ -263,7 +263,7 @@ class IPAString(MutableSequence):
     def cns_vwl_pstr(self):
         """
         Return a new IPAString, containing only:
-        
+
         1. the consonants,
         2. the vowels, and
         3. the primary stress diacritics
@@ -278,7 +278,7 @@ class IPAString(MutableSequence):
     def cns_vwl_str(self):
         """
         Return a new IPAString, containing only:
-        
+
         1. the consonants,
         2. the vowels, and
         3. the stress diacritics
@@ -293,7 +293,7 @@ class IPAString(MutableSequence):
     def cns_vwl_str_len(self):
         """
         Return a new IPAString, containing only:
-        
+
         1. the consonants,
         2. the vowels, and
         3. the stress diacritics, and
@@ -309,7 +309,7 @@ class IPAString(MutableSequence):
     def cns_vwl_pstr_long(self):
         """
         Return a new IPAString, containing only:
-        
+
         1. the consonants,
         2. the vowels, and
         3. the primary stress diacritics, and
@@ -325,7 +325,7 @@ class IPAString(MutableSequence):
     def cns_vwl_str_len_wb(self):
         """
         Return a new IPAString, containing only:
-        
+
         1. the consonants,
         2. the vowels, and
         3. the stress diacritics,
@@ -342,7 +342,7 @@ class IPAString(MutableSequence):
     def cns_vwl_str_len_wb_sb(self):
         """
         Return a new IPAString, containing only:
-        
+
         1. the consonants,
         2. the vowels, and
         3. the stress diacritics,

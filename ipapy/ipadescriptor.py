@@ -11,7 +11,7 @@ from __future__ import print_function
 from ipapy.compatibility import is_unicode_string
 
 __author__ = "Alberto Pettarin"
-__copyright__ = "Copyright 2016, Alberto Pettarin (www.albertopettarin.it)"
+__copyright__ = "Copyright 2016-2019, Alberto Pettarin (www.albertopettarin.it)"
 __license__ = "MIT"
 __email__ = "alberto@albertopettarin.it"
 
@@ -23,9 +23,9 @@ class IPADescriptor(object):
 
     :param list labels: list of labels, each being a (Unicode) string
     """
-    
+
     TAG = u"IPADescriptor"
-    
+
     def __init__(self, labels):
         if not isinstance(labels, list):
             raise TypeError("Parameter labels must be a list of Unicode strings")
@@ -85,9 +85,9 @@ class IPADescriptorGroup(object):
 
     :param list descriptors: list of IPADescriptor objects
     """
-    
+
     TAG = u"IPADescriptorGroup"
-    
+
     def __init__(self, descriptors):
         if not isinstance(descriptors, list):
             raise TypeError("Parameter descriptors must be a list of IPADescriptor objects")

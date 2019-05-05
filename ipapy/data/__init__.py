@@ -21,7 +21,7 @@ from ipapy.ipachar import IPASuprasegmental
 from ipapy.ipachar import IPATone
 
 __author__ = "Alberto Pettarin"
-__copyright__ = "Copyright 2016, Alberto Pettarin (www.albertopettarin.it)"
+__copyright__ = "Copyright 2016-2019, Alberto Pettarin (www.albertopettarin.it)"
 __license__ = "MIT"
 __email__ = "alberto@albertopettarin.it"
 
@@ -97,7 +97,7 @@ def convert_raw_tuple(value_tuple, format_string):
     :param tuple value_tuple: the tuple of raw values
     :param str format_string: the format of the tuple
     :rtype: list of tuples
-    """ 
+    """
     values = []
     for v, c in zip(value_tuple, format_string):
         if v is None:
@@ -209,7 +209,7 @@ def load_ipa_data():
             ipa_to_unicode[obj.canonical_representation] = first_key
             obj.unicode_repr = first_key
             max_key_length = max(max_key_length, len(first_key))
-            # add all Unicode strings 
+            # add all Unicode strings
             for key in i_unicode_keys:
                 if key in unicode_to_ipa:
                     raise ValueError("The IPA data file contains a bad line, redefining codepoint '%s': '%s'" % (key, line))

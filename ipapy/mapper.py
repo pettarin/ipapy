@@ -16,19 +16,19 @@ from ipapy.ipachar import variant_to_canonical_string
 from ipapy.ipastring import IPAString
 
 __author__ = "Alberto Pettarin"
-__copyright__ = "Copyright 2016, Alberto Pettarin (www.albertopettarin.it)"
+__copyright__ = "Copyright 2016-2019, Alberto Pettarin (www.albertopettarin.it)"
 __license__ = "MIT"
 __email__ = "alberto@albertopettarin.it"
 
 class Mapper(MutableMapping):
     """
     A Mapper contains
-    a map from IPA canonical representation 
+    a map from IPA canonical representation
     to arbitrary Unicode strings.
 
     :param dict map_dictionary: a dictionary, mapping IPA descriptors to string
     """
-    
+
     TAG = u"IPAMapper"
 
     def __init__(self, *args, **kwargs):
@@ -62,7 +62,7 @@ class Mapper(MutableMapping):
                 return tuple([variant_to_canonical_string(k) for k in key])
             except:
                 raise TypeError("The given key must be a list or a set of descriptor strings, or a Unicode string.")
-        else: 
+        else:
             try:
                 return variant_to_canonical_string(key)
             except:

@@ -22,7 +22,7 @@ from ipapy.compatibility import unicode_to_hex
 from ipapy.ipastring import IPAString
 
 __author__ = "Alberto Pettarin"
-__copyright__ = "Copyright 2016, Alberto Pettarin (www.albertopettarin.it)"
+__copyright__ = "Copyright 2016-2019, Alberto Pettarin (www.albertopettarin.it)"
 __license__ = "MIT"
 __email__ = "alberto@albertopettarin.it"
 
@@ -105,7 +105,7 @@ def print_invalid_chars(invalid_chars, vargs):
 
 def command_canonize(string, vargs):
     """
-    Print the canonical representation of the given string. 
+    Print the canonical representation of the given string.
 
     It will replace non-canonical compound characters
     with their canonical synonym.
@@ -182,7 +182,7 @@ def command_clean(string, vargs):
 
 def command_u2a(string, vargs):
     """
-    Print the ARPABEY ASCII string corresponding to the given Unicode IPA string. 
+    Print the ARPABEY ASCII string corresponding to the given Unicode IPA string.
 
     :param str string: the string to act upon
     :param dict vargs: the command line arguments
@@ -200,7 +200,7 @@ def command_u2a(string, vargs):
 
 def command_u2k(string, vargs):
     """
-    Print the Kirshenbaum ASCII string corresponding to the given Unicode IPA string. 
+    Print the Kirshenbaum ASCII string corresponding to the given Unicode IPA string.
 
     :param str string: the string to act upon
     :param dict vargs: the command line arguments

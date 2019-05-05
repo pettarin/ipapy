@@ -13,7 +13,7 @@ from ipapy.ipadescriptor import IPADescriptor
 from ipapy.ipadescriptor import IPADescriptorGroup
 
 __author__ = "Alberto Pettarin"
-__copyright__ = "Copyright 2016, Alberto Pettarin (www.albertopettarin.it)"
+__copyright__ = "Copyright 2016-2019, Alberto Pettarin (www.albertopettarin.it)"
 __license__ = "MIT"
 __email__ = "alberto@albertopettarin.it"
 
@@ -260,7 +260,7 @@ DG_S_BREAK = IPADescriptorGroup([
 ])
 DG_SUPRASEGMENTALS = DG_S_STRESS + DG_S_LENGTH + DG_S_BREAK
 
-# tones 
+# tones
 D_T_EXTRA_HIGH_LEVEL = IPADescriptor([u"extra-high-level"])
 D_T_HIGH_LEVEL = IPADescriptor([u"high-level"])
 D_T_MID_LEVEL = IPADescriptor([u"mid-level"])
@@ -293,7 +293,7 @@ DG_T_CONTOUR = IPADescriptorGroup([
     D_T_RISING_FALLING_CONTOUR,
     D_T_MID_LOW_FALLING_CONTOUR,
     D_T_HIGH_MID_FALLING_CONTOUR,
-    D_T_FALLING_RISING_CONTOUR, 
+    D_T_FALLING_RISING_CONTOUR,
 ])
 DG_T_GLOBAL = IPADescriptorGroup([
     D_T_DOWNSTEP,
@@ -313,11 +313,11 @@ def variant_to_list(obj):
     Return a list containing the descriptors in the given object.
 
     The ``obj`` can be a list or a set of descriptor strings, or a Unicode string.
-    
+
     If ``obj`` is a Unicode string, it will be split using spaces as delimiters.
 
     :param variant obj: the object to be parsed
-    :rtype: list 
+    :rtype: list
     :raise TypeError: if the ``obj`` has a type not listed above
     """
     if isinstance(obj, list):
@@ -333,11 +333,11 @@ def variant_to_canonical_string(obj):
     Return a list containing the canonical string for the given object.
 
     The ``obj`` can be a list or a set of descriptor strings, or a Unicode string.
-    
+
     If ``obj`` is a Unicode string, it will be split using spaces as delimiters.
 
     :param variant obj: the object to be parsed
-    :rtype: str 
+    :rtype: str
     :raise TypeError: if the ``obj`` has a type not listed above
     """
     acc = [DG_ALL_DESCRIPTORS.canonical_value(p) for p in variant_to_list(obj)]
@@ -356,7 +356,7 @@ class IPAChar(object):
     :param str name: an arbitrary mnemonic name for the character
     :param str unicode_repr: the Unicode representation for the character
     """
-    
+
     TAG = "IPAChar"
 
     def __init__(self, descriptors, name=None, unicode_repr=None):
@@ -367,7 +367,7 @@ class IPAChar(object):
 
     def __str__(self):
         return u"" if self.unicode_repr is None else self.unicode_repr
-    
+
     def __unicode__(self):
         return u"" if self.unicode_repr is None else self.unicode_repr
 
@@ -396,7 +396,7 @@ class IPAChar(object):
         Each descriptor of the character is represented
         with its canonical value.
 
-        :rtype: str 
+        :rtype: str
         """
         return self.__canonical_string
 
@@ -525,12 +525,12 @@ class IPALetter(IPAChar):
     """
     An IPA letter, either a consonant or a vowel.
     """
-    
+
     TAG = "IPALetter"
 
     @property
     def is_letter(self):
-        return True 
+        return True
 
     @property
     def modifiers(self):
@@ -568,14 +568,14 @@ class IPAConsonant(IPALetter):
     Modifiers (e.g. "velarized") are optional.
 
     :param variant descriptors: the descriptors of the consonant
-    :param str name: an arbitrary mnemonic name for the consonant 
+    :param str name: an arbitrary mnemonic name for the consonant
     :param str unicode_repr: the (optional) Unicode representation for the consonant
     :param str voicing: the voicing of the consonant
     :param str place: the articulation place of the consonant
     :param str manner: the articulation manner of the consonant
     :param variant modifiers: optional modifiers of the consonant
     """
-    
+
     TAG = "IPAConsonant"
 
     def __init__(self, descriptors=None, name=None, unicode_repr=None, voicing=None, place=None, manner=None, modifiers=None):
@@ -712,7 +712,7 @@ class IPAVowel(IPALetter):
     :param str roundness: the articulation manner of the vowel
     :param variant modifiers: optional modifiers of the vowel
     """
-    
+
     TAG = "IPAVowel"
 
     def __init__(self, descriptors=None, name=None, unicode_repr=None, height=None, backness=None, roundness=None, modifiers=None):
@@ -829,9 +829,9 @@ class IPADiacritic(IPAChar):
     """
     An IPA diacritic mark.
     """
-    
+
     TAG = "IPADiacritic"
-    
+
     @property
     def is_diacritic(self):
         return True
@@ -842,9 +842,9 @@ class IPASuprasegmental(IPAChar):
     """
     An IPA suprasegmental mark.
     """
-    
+
     TAG = "IPASuprasegmental"
-    
+
     @property
     def is_suprasegmental(self):
         return True
@@ -946,7 +946,7 @@ class IPASuprasegmental(IPAChar):
     def is_minor_or_major_break(self):
         """
         Return ``True`` if the suprasegmental is a minor (foot) or major (intonation) break.
-        
+
         :rtype: bool
         """
         return self.has_descriptor(D_S_MINOR_GROUP) or self.has_descriptor(D_S_MAJOR_GROUP)
@@ -988,7 +988,7 @@ class IPATone(IPAChar):
     def is_level_or_contour(self):
         """
         Return ``True`` if the tone mark is a tone level or a tone contour mark.
-        
+
         :rtype: bool
         """
         return (self.tone_level is not None) or (self.tone_contour is not None)
@@ -997,7 +997,7 @@ class IPATone(IPAChar):
     def is_global(self):
         """
         Return ``True`` if the tone mark is a global tone mark.
-        
+
         :rtype: bool
         """
         return self.dg_value(DG_T_GLOBAL) is not None
