@@ -7,8 +7,11 @@ ipapy contains data and functions to work with IPA strings.
 
 from __future__ import absolute_import
 from __future__ import print_function
-from collections import MutableMapping
-
+import sys
+if sys.version_info[:2] >= (3, 8):
+    from collections.abc import MutableMapping
+else:
+    from collections import MutableMapping
 from ipapy import split_using_dictionary
 from ipapy.compatibility import is_unicode_string
 from ipapy.data import load_data_file
