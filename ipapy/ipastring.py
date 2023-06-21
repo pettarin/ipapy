@@ -7,7 +7,7 @@ ipapy contains data and functions to work with IPA strings.
 
 from __future__ import absolute_import
 from __future__ import print_function
-from collections import MutableSequence
+from collections.abc import MutableSequence
 
 from ipapy import UNICODE_TO_IPA
 from ipapy import is_valid_ipa
